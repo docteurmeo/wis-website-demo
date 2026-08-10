@@ -193,7 +193,14 @@ img{display:block}
 .c-content .cta{display:inline-block;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid rgba(247,241,230,.5);padding:12px 26px;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .45s ease .15s,transform .45s ease .15s,background .35s,color .35s}
 .card:hover .c-content .cta{opacity:1;transform:none;pointer-events:auto;margin-top:20px}
 .c-content .cta:hover{background:var(--bone);color:var(--ink)}
-@media(max-width:860px){ .svc-panel{position:relative;transform:none;transition:none} .acc{flex-direction:column} .card{height:40vh} .acc .card:hover,.acc:hover .card{flex-grow:1} .c-content .dt{max-height:none;opacity:1;margin-top:10px} }
+/* touch: tap a card to expand (mirrors hover) */
+.acc.sel .card{flex-grow:.6}
+.acc .card.active{flex-grow:4}
+.card.active>img{filter:brightness(.92)}
+.card.active .c-content .nm{font-size:clamp(2rem,2.8vw,3.1rem)}
+.card.active .c-content .dt{max-height:140px;opacity:1;margin-top:14px}
+.card.active .c-content .cta{opacity:1;transform:none;pointer-events:auto;margin-top:20px}
+@media(max-width:860px){ .svc-panel{position:relative;transform:none;transition:none} .acc{flex-direction:column} .card{height:40vh} .acc .card:hover,.acc:hover .card,.acc.sel .card,.acc .card.active{flex-grow:1} .c-content .dt{max-height:none;opacity:1;margin-top:10px} }
 </style>
 <!-- ===== FEATURED WORKS (drift in, converge into a story) ===== -->
 <style>
@@ -489,6 +496,23 @@ img{display:block}
   var c=document.getElementById('contact'); if(!c) return;
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ c.classList.add('in'); io.unobserve(c); } }); },{threshold:.25});
   io.observe(c);
+})();
+</script>
+<!-- ===== Services: tap-to-expand on touch (no hover on iPad/mobile) ===== -->
+<script>
+(function(){
+  if(!(window.matchMedia && matchMedia('(pointer: coarse)').matches)) return;
+  var acc=document.querySelector('.acc'); if(!acc) return;
+  var cards=[].slice.call(acc.querySelectorAll('.card'));
+  cards.forEach(function(c){
+    c.addEventListener('click', function(e){
+      e.preventDefault();
+      var was=c.classList.contains('active');
+      cards.forEach(function(x){ x.classList.remove('active'); });
+      if(!was) c.classList.add('active');
+      acc.classList.toggle('sel', !was);
+    });
+  });
 })();
 </script>
 <!-- ===== O2 INDEX MENU (The Index - light drawer, slides from right) ===== -->

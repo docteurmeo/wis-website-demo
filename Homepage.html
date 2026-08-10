@@ -917,16 +917,26 @@
 (function(){
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches;
-  if(reduce || coarse) return;
+  if(reduce) return;
   var hero = document.getElementById('hero'); if(!hero) return;
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
 
   [].forEach.call(hero.querySelectorAll('.word'), function(el){
     var canvas, ctx, parts, raf, active=false, leaving=false, mx=-9999, my=-9999, cssW=0, cssH=0, R=0, color;
 
-    el.addEventListener('pointerenter', enter);
-    el.addEventListener('pointermove', function(e){ if(!canvas) return; var r=canvas.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; });
-    el.addEventListener('pointerleave', function(){ leaving=true; mx=-9999; my=-9999; });
+    function setPos(cx, cy){ if(!canvas) return; var r=canvas.getBoundingClientRect(); mx=cx-r.left; my=cy-r.top; }
+    if(coarse){
+      // touch: press / press-hold a word (drag beyond threshold = scroll, so let it reform)
+      var sx=0, sy=0, moved=false;
+      el.addEventListener('touchstart', function(e){ var t=e.touches[0]; sx=t.clientX; sy=t.clientY; moved=false; enter(); setPos(t.clientX,t.clientY); }, {passive:true});
+      el.addEventListener('touchmove', function(e){ var t=e.touches[0]; if(!moved && Math.hypot(t.clientX-sx,t.clientY-sy)>12){ moved=true; leaving=true; mx=-9999; my=-9999; return; } if(!moved) setPos(t.clientX,t.clientY); }, {passive:true});
+      var tend=function(){ leaving=true; mx=-9999; my=-9999; };
+      el.addEventListener('touchend', tend); el.addEventListener('touchcancel', tend);
+    } else {
+      el.addEventListener('pointerenter', enter);
+      el.addEventListener('pointermove', function(e){ setPos(e.clientX, e.clientY); });
+      el.addEventListener('pointerleave', function(){ leaving=true; mx=-9999; my=-9999; });
+    }
     window.addEventListener('scroll', function(){ if(active){ leaving=true; mx=-9999; my=-9999; } }, {passive:true});
 
     function enter(){
