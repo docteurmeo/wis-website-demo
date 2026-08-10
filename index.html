@@ -3,62 +3,55 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WIS - Demo Index</title>
+<title>Wed in Style - Demo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#161310;--paper:#F4EEE2;--paper2:#ECE3D1;--accent:#A9633B;--dim:#8A7F6B;
-    --serif:'Instrument Serif',Georgia,serif;--hand:'Pinyon Script',cursive;
-    --sans:system-ui,-apple-system,'Segoe UI',sans-serif}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);padding:clamp(30px,6vw,88px)}
-  .head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;
-    border-bottom:1px solid rgba(22,19,16,.16);padding-bottom:22px}
-  h1{font-size:clamp(2rem,4.4vw,3.4rem);font-weight:400;margin:0;letter-spacing:-.01em}
-  h1 .hand{font-family:var(--hand);color:var(--accent);font-size:1.15em}
-  .meta{font-family:var(--sans);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);text-align:right;line-height:1.8}
-  .note{font-family:var(--sans);font-size:.72rem;letter-spacing:.02em;color:var(--dim);max-width:70ch;line-height:1.9;margin:24px 0 8px}
-  .grp{margin-top:clamp(30px,5vh,56px)}
-  .grp>.lb{font-family:var(--sans);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;display:block}
-  .grp>.sub{font-family:var(--sans);font-size:.62rem;letter-spacing:.04em;color:var(--dim);margin-bottom:10px;display:block}
-  a.row{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:baseline;text-decoration:none;color:var(--ink);
-    padding:22px 0;border-bottom:1px solid rgba(22,19,16,.12);transition:color .3s}
-  a.row:hover{color:var(--accent)}
-  .name{font-size:clamp(1.5rem,3vw,2.3rem);line-height:1.05}
-  .desc{font-family:var(--sans);font-size:.64rem;letter-spacing:.03em;color:var(--dim);text-transform:uppercase;margin-top:7px;max-width:64ch;line-height:1.7}
-  .go{font-family:var(--sans);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);white-space:nowrap;padding-top:.5em}
-  footer{margin-top:clamp(40px,6vh,72px);font-family:var(--hand);font-size:1.7rem;color:var(--accent)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{font-family:'Instrument Serif',Georgia,serif;overflow:hidden}
+  .wrap{display:flex;height:100vh}
+  .half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    text-decoration:none;padding:6vh 5vw;transition:flex .7s cubic-bezier(.16,1,.3,1),background .5s ease}
+  .o1{background:#161310;color:#F7F1E6}
+  .o2{background:#F4EEE2;color:#161310}
+  .half:hover{flex:1.35}
+  .o1:hover{background:#1e150c}
+  .o2:hover{background:#efe6d5}
+  .eyebrow{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;opacity:.55;margin-bottom:22px}
+  .name{font-weight:400;font-size:clamp(2.8rem,6.5vw,6.6rem);line-height:.98;letter-spacing:-.01em}
+  .name em{font-style:italic}
+  .o1 .name{color:#F7F1E6}
+  .sub{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;margin-top:26px;opacity:.5}
+  .go{font-family:'Pinyon Script',cursive;font-size:1.9rem;margin-top:20px;opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .5s ease}
+  .o1 .go{color:#E6B26A} .o2 .go{color:#A9633B}
+  .half:hover .go{opacity:1;transform:none}
+  .brand{position:fixed;top:28px;left:0;right:0;text-align:center;z-index:5;
+    font-family:'Pinyon Script',cursive;font-size:2rem;color:#fff;mix-blend-mode:difference;pointer-events:none}
+  @media(max-width:720px){
+    .wrap{flex-direction:column}
+    .half:hover{flex:1}
+    .name{font-size:clamp(2.4rem,11vw,4rem)}
+    .go{opacity:1;transform:none}
+  }
 </style>
 </head>
 <body>
-  <div class="head">
-    <h1>Wed in Style <span class="hand">demo</span></h1>
-    <div class="meta">2 options / 2 pages each<br>2026</div>
+  <div class="brand">wed in style</div>
+  <div class="wrap">
+    <a class="half o1" href="Homepage.html">
+      <span class="eyebrow">Option 01</span>
+      <span class="name"><em>Editorial</em></span>
+      <span class="sub">Warm-dark, cinematic</span>
+      <span class="go">enter</span>
+    </a>
+    <a class="half o2" href="O2_Homepage.html">
+      <span class="eyebrow">Option 02</span>
+      <span class="name">The Walk</span>
+      <span class="sub">Warm daylight, spatial</span>
+      <span class="go">enter</span>
+    </a>
   </div>
-  <p class="note">Bản demo self-contained, mở trực tiếp bằng trình duyệt. Hai hướng thẩm mỹ để so sánh; mỗi hướng một trang chủ và một trang thường (case study). Các bản nghiên cứu R&D nằm trong explorations/.</p>
-
-  <div class="grp">
-    <span class="lb">Option 2 - The Walk</span>
-    <span class="sub">Warm daylight, spatial, chuyển động đi ngang. Instrument Serif + chữ viết tay Pinyon. Bản mới nhất.</span>
-    <a class="row" href="O2_Homepage.html"><span><span class="name">Homepage</span><span class="desc">Hero drift + Philosophy bay vào + Services panel trượt + Featured Works + Cultural pan ngang + Testimonial + Contact. Menu "The Index" ngăn kéo phải.</span></span><span class="go">Mở</span></a>
-    <a class="row" href="O2_Case.html"><span><span class="name">Case - Catherine &amp; Johnny</span><span class="desc">3 hồi, trục giữa đi ngang: cuộn dọc kéo cả ngày cưới trôi ngang qua mặt. Chương đặt tên bằng chữ viết tay.</span></span><span class="go">Mở</span></a>
-    <a class="row" href="O2_Hero.html"><span><span class="name">Hero (khoá)</span><span class="desc">Bản hero standalone của Option 2.</span></span><span class="go">Mở</span></a>
-  </div>
-
-  <div class="grp">
-    <span class="lb">Option 1 - Warm-dark Editorial</span>
-    <span class="sub">Nền mực tối, full-bleed cinema. MADE Mirage + Beau Sweet Sans.</span>
-    <a class="row" href="Homepage.html"><span><span class="name">Homepage</span><span class="desc">Preload > Hero > Philosophy > Services > Featured Works > Cultural > Testimonial > Contact, một trang cuộn liền mạch.</span></span><span class="go">Mở</span></a>
-    <a class="row" href="Case_CatherineJohnny.html"><span><span class="name">Case - Catherine &amp; Johnny</span><span class="desc">Trang thường editorial, chương chữ chứa ảnh, wipe reveal, climax + gallery.</span></span><span class="go">Mở</span></a>
-  </div>
-
-  <div class="grp">
-    <span class="lb">Explorations - R&amp;D</span>
-    <span class="sub">Lưu trữ quá trình: 9 hướng concept + các bản dựng section rời + bản O2 trước khi thêm chữ viết tay.</span>
-    <a class="row" href="explorations/index.html"><span><span class="name">Mở kho explorations</span><span class="desc">Gallery 9 hướng concept trang chủ (Duong Chi, Type Index, Fine Art Gallery, A Wedding Day...) và các file section rời.</span></span><span class="go">Mở</span></a>
-  </div>
-
-  <footer>we craft glory stories</footer>
 </body>
 </html>
