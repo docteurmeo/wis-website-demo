@@ -912,5 +912,97 @@
   }
 })();
 </script>
+<!-- ===== Hero words: dissolve-to-dust on hover, following cursor ===== -->
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches;
+  if(reduce || coarse) return;
+  var hero = document.getElementById('hero'); if(!hero) return;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  [].forEach.call(hero.querySelectorAll('.word'), function(el){
+    var canvas, ctx, parts, raf, active=false, leaving=false, mx=-9999, my=-9999, cssW=0, cssH=0, color;
+
+    el.addEventListener('pointerenter', enter);
+    el.addEventListener('pointermove', function(e){ if(!canvas) return; var r=canvas.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top; });
+    el.addEventListener('pointerleave', function(){ leaving=true; mx=-9999; my=-9999; });
+    window.addEventListener('scroll', function(){ if(active){ leaving=true; mx=-9999; my=-9999; } }, {passive:true});
+
+    function enter(){
+      if(active || !el.classList.contains('in')) return;
+      var rect = el.getBoundingClientRect();
+      cssW = rect.width; cssH = rect.height;
+      var cs = getComputedStyle(el);
+      color = cs.color;
+      canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:fixed;pointer-events:none;left:'+rect.left+'px;top:'+rect.top+'px;width:'+cssW+'px;height:'+cssH+'px;z-index:'+(cs.zIndex||'3')+';';
+      canvas.width = Math.max(1, Math.round(cssW*dpr));
+      canvas.height = Math.max(1, Math.round(cssH*dpr));
+      document.body.appendChild(canvas);
+      ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      ctx.font = cs.fontStyle+' '+cs.fontWeight+' '+cs.fontSize+' '+cs.fontFamily;
+      ctx.fillStyle = '#fff';
+      ctx.textBaseline = 'alphabetic';
+      var text = el.textContent;
+      var m = ctx.measureText(text);
+      var fs = parseFloat(cs.fontSize);
+      var asc = m.actualBoundingBoxAscent || fs*0.8;
+      var desc = m.actualBoundingBoxDescent || fs*0.2;
+      var baseY = (cssH - (asc+desc))/2 + asc;
+      ctx.fillText(text, 0, baseY);
+      var data = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+      var W = canvas.width, step = Math.max(2, Math.round(4*dpr));
+      parts = [];
+      for(var yy=0; yy<canvas.height; yy+=step){
+        for(var xx=0; xx<W; xx+=step){
+          if(data[(yy*W+xx)*4+3] > 130){
+            var ox = xx/dpr, oy = yy/dpr;
+            parts.push({ox:ox, oy:oy, x:ox, y:oy, vx:0, vy:0, a:1, s:1.1+Math.random()*0.7});
+          }
+        }
+      }
+      el.style.color = 'transparent';
+      active = true; leaving = false;
+      if(!raf) raf = requestAnimationFrame(loop);
+    }
+
+    function loop(){
+      if(!active){ raf=null; return; }
+      ctx.clearRect(0,0,cssW,cssH);
+      ctx.fillStyle = color;
+      var R = 46, settled = true, i, p, dx, dy, d, inv, f;
+      for(i=0;i<parts.length;i++){
+        p = parts[i];
+        dx = p.x-mx; dy = p.y-my; d = Math.sqrt(dx*dx+dy*dy);
+        if(!leaving && d < R){
+          f = (R-d)/R; inv = d ? 1/d : 0;
+          p.vx += dx*inv*f*0.55;
+          p.vy += dy*inv*f*0.55 - f*0.55;   // gentle upward drift
+          p.a  -= f*0.16;                    // dissolve
+        } else {
+          p.vx += (p.ox-p.x)*0.055;
+          p.vy += (p.oy-p.y)*0.055;
+          p.a  += 0.045;                     // re-form
+        }
+        p.vx *= 0.88; p.vy *= 0.88;
+        p.x += p.vx; p.y += p.vy;
+        if(p.a < 0) p.a = 0; else if(p.a > 1) p.a = 1;
+        if(p.a > 0.02){ ctx.globalAlpha = p.a; ctx.fillRect(p.x, p.y, p.s, p.s); }
+        if(settled && (p.a < 0.985 || Math.abs(p.x-p.ox) > 0.5 || Math.abs(p.y-p.oy) > 0.5)) settled = false;
+      }
+      ctx.globalAlpha = 1;
+      if(leaving && settled){
+        el.style.color = '';
+        if(canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
+        canvas = ctx = parts = null; active = false; raf = null;
+        return;
+      }
+      raf = requestAnimationFrame(loop);
+    }
+  });
+})();
+</script>
 </body>
 </html>
