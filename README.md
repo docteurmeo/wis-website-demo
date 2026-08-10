@@ -17,7 +17,7 @@ Warm daylight, spatial, chuyển động đi ngang. Bản mới nhất.
 
 Menu mỗi option có link chuyển sang option còn lại.
 
-## Ghi chú bản quyền font
-Option 1 dùng font thương mại (MADE Mirage, Beau Sweet Sans) - **không** đóng gói trong repo public này để tránh phát tán trái phép. Bản live sẽ fallback về serif hệ thống; bản local (có file font trong `assets/fonts/`) hiển thị đúng. Option 2 dùng Google Fonts (Instrument Serif + Pinyon Script) nên live hiển thị đầy đủ.
+## Ghi chú font
+Option 1 dùng MADE Mirage + Beau Sweet Sans (đóng gói trong `assets/fonts/`). Option 2 dùng Google Fonts (Instrument Serif + Pinyon Script). Cả hai hiển thị đúng trên bản live.
 
 `explorations/` là các bản R&D trong quá trình làm.

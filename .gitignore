@@ -1,8 +1,3 @@
-# Commercial fonts - NOT licensed for public web redistribution.
-# Option 1 falls back to system serifs on the live site; locally the .otf/.ttf render correctly.
-assets/fonts/*.otf
-assets/fonts/*.ttf
-
 # OS junk
 .DS_Store
 Thumbs.db
