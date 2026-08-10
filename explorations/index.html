@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Demo trang chu</title>
+<style>
+  :root{--ink:#16110B;--bone:#ECE4D2;--dim:#8A8069;--hair:#322A1F;--accent:#C6A15B;--ember:#C15E2C;
+    --serif:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;
+    --mono:ui-monospace,'SFMono-Regular','Cascadia Mono','Segoe UI Mono',Consolas,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--serif);
+    padding:clamp(28px,6vw,80px)}
+  .head{border-bottom:1px solid var(--hair);padding-bottom:22px;margin-bottom:8px;
+    display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}
+  h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:400;margin:0;letter-spacing:-.01em}
+  .meta{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-align:right;line-height:1.7}
+  .note{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:var(--dim);
+    max-width:70ch;line-height:1.8;margin:22px 0 40px}
+  .list{display:grid;gap:0}
+  a.row{display:grid;grid-template-columns:3.4rem 1fr auto;gap:clamp(14px,3vw,40px);align-items:baseline;
+    text-decoration:none;color:var(--bone);padding:26px 0;border-bottom:1px solid var(--hair);transition:color .3s}
+  a.row:hover{color:var(--ember)}
+  .num{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--dim);padding-top:.5em}
+  .row:hover .num{color:var(--ember)}
+  .name{font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.05}
+  .desc{font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;color:var(--dim);
+    text-transform:uppercase;line-height:1.7;margin-top:8px;max-width:60ch}
+  .go{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+    justify-self:end;padding-top:.6em;white-space:nowrap}
+  footer{margin-top:40px;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>Wed in Style - Demo trang chu</h1>
+    <div class="meta">Concept homepage<br>6 huong / 2026</div>
+  </div>
+  <p class="note">Sau khi luu ban co the mo truc tiep tung file bang trinh duyet, khong can Claude. Anh trong cac demo la placeholder mau, se thay bang anh cuoi that cua WIS.</p>
+
+  <div class="list">
+    <a class="row" href="01_Duong_Chi.html">
+      <span class="num">01</span>
+      <span><span class="name">Duong Chi</span><span class="desc">Nen toi dien anh. Signature soi chi vang tu ve logo roi chay doc trang, that nut o cac quyet dinh.</span></span>
+      <span class="go">Mo</span>
+    </a>
+    <a class="row" href="02_Khung_Nhin_Van_Hoa.html">
+      <span class="num">02</span>
+      <span><span class="name">Khung Nhin Van Hoa</span><span class="desc">Nen am thu cong. Moi anh trong mot khung vom, motion mo ong kinh khi vao trang.</span></span>
+      <span class="go">Mo</span>
+    </a>
+    <a class="row" href="03_Type_Index.html">
+      <span class="num">03</span>
+      <span><span class="name">Type Index</span><span class="desc">Editorial type-forward. Hero chu lon lap day anh nen chuyen dong, danh muc anh hien theo con tro.</span></span>
+      <span class="go">Mo</span>
+    </a>
+    <a class="row" href="04_Layout_Rebuild.html">
+      <span class="num">04</span>
+      <span><span class="name">Layout Rebuild</span><span class="desc">Dung lai theo nghien cuu layout: chu lam kien truc, bo cuc lech, chu tran mep, so hieu o le, luoi Swiss bi pha.</span></span>
+      <span class="go">Mo</span>
+    </a>
+    <a class="row" href="05_Woven_Type.html">
+      <span class="num">05</span>
+      <span><span class="name">Woven Type</span><span class="desc">Typography song. Dong chu glory stories duoc det tu hang nghin soi chi, tho va tan ra theo con tro.</span></span>
+      <span class="go">Mo</span>
+    </a>
+    <a class="row" href="06_Constellation.html">
+      <span class="num">06</span>
+      <span><span class="name">Constellation</span><span class="desc">Phi tuyen. Ban do sao cac glory story noi nhau bang chi, WIS o trung tam, keo de di lang thang.</span></span>
+      <span class="go">Mo</span>
+    </a>
+    <a class="row" href="07_Fine_Art_Gallery.html">
+      <span class="num">07</span>
+      <span><span class="name">Fine Art Gallery</span><span class="desc">Huong my thuat va cuoi. Trang chu nhu phong trung bay tranh, moi dam cuoi la mot buc hoa dong khung, co net ve tay va thu phap, bam vao case Mai Trung Thu.</span></span>
+      <span class="go">Mo</span>
+    </a>
+    <a class="row" href="08_Full_Bleed_Gallery.html">
+      <span class="num">08</span>
+      <span><span class="name">Full-Bleed Gallery</span><span class="desc">Ban 07 dung lai full man hinh cho FHD. Hero tranh tran vien, chu neo o goc, feature chia doi tran mep, collection la day tranh cuon ngang. Khong con cot giua hep.</span></span>
+      <span class="go">Mo</span>
+    </a>
+    <a class="row" href="09_A_Wedding_Day.html">
+      <span class="num">09</span>
+      <span><span class="name">A Wedding Day</span><span class="desc">Full man hinh, dien anh. Ca trang la mot ngay cuoi troi qua: cuon xuong la thoi gian va anh sang doi tu tinh mo sang vang chieu roi dem nen, ca man hinh doi sac theo gio.</span></span>
+      <span class="go">Mo</span>
+    </a>
+  </div>
+
+  <footer>Wed in Style / Since 2009</footer>
+</body>
+</html>

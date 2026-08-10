@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Services</title>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+  :root{
+    --ink:#160F08; --bone:#EEE6D4; --dim:#9A8E76; --gold:#C6A15B;
+    --title:'Mirage','Palatino Linotype',Georgia,serif;
+    --body:'SweetSans','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body);overflow-x:hidden}
+
+  /* frame 1920x1520 -> proportional (vw); 56px=2.92vw */
+  .serv{position:relative;min-height:79.17vw;padding:5.73vw 2.92vw 7vw}
+
+  /* Headline : Title/Statement (Mirage 111px / 104%) */
+  .serv-title{font-family:var(--title);font-weight:400;font-size:clamp(2.4rem,5.78vw,7rem);line-height:1.04;
+    letter-spacing:0;color:var(--bone);margin:0;max-width:46.4vw}
+  /* Intro : SweetSans 20px / 160%, dim */
+  .serv-intro{margin:2.6vw 0 0;max-width:46.4vw;font-family:var(--body);font-weight:300;
+    font-size:clamp(.95rem,1.04vw,1.3rem);line-height:1.6;color:var(--dim)}
+
+  /* Services list */
+  .serv-list{list-style:none;margin:10.42vw 0 0;padding:0;display:flex;flex-direction:column;gap:.94vw;width:max-content;max-width:46.4vw}
+  .serv-item{display:flex;align-items:baseline;gap:1.25vw;cursor:pointer}
+  .serv-num{flex:none;font-family:var(--body);font-size:clamp(.7rem,.73vw,.95rem);letter-spacing:.2em;
+    color:var(--dim);transition:color .35s ease}
+  /* Serif/Large : MADE Mirage Thin 40px / 142% */
+  .serv-name{font-family:var(--title);font-weight:200;font-size:clamp(1.4rem,2.08vw,2.6rem);line-height:1.42;
+    color:var(--bone);opacity:.3;transition:opacity .35s ease}
+  .serv-item.active .serv-num{color:var(--gold)}
+  .serv-item.active .serv-name{opacity:1}
+
+  /* CTA : border 1px, SweetSans 12px / .24em */
+  .serv-cta{display:inline-block;margin:11.67vw 0 0;border:1px solid rgba(238,230,212,.38);
+    padding:.83vw 1.67vw;font-family:var(--body);font-size:clamp(.66rem,.625vw,.82rem);letter-spacing:.24em;
+    text-transform:uppercase;color:var(--bone);text-decoration:none;
+    transition:color .35s ease,border-color .35s ease,background .35s ease}
+  .serv-cta:hover{color:var(--ink);background:var(--gold);border-color:var(--gold)}
+
+  /* Image : x1126 y382 w738 h998 (3/4), reveal wipe right->left */
+  .serv-media{position:absolute;top:19.9vw;right:2.92vw;width:38.44vw;height:51.98vw}
+  .serv-figs{position:relative;width:100%;height:100%;overflow:hidden}
+  .serv-fig{position:absolute;inset:0;clip-path:inset(0 0 0 100%);will-change:clip-path}
+  .serv-fig img{width:100%;height:100%;object-fit:cover;display:block}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .serv.in .reveal{opacity:1;transform:none}
+  .serv.in .r2{transition-delay:.12s}
+  .serv.in .r3{transition-delay:.24s}
+
+  @media(max-width:860px){
+    .serv{min-height:0;padding:16vh 22px 12vh}
+    .serv-title,.serv-intro,.serv-list{max-width:none}
+    .serv-title{font-size:12vw}
+    .serv-name{font-size:6.4vw}
+    .serv-intro{font-size:1rem;margin-top:5vw}
+    .serv-list{margin-top:9vw;gap:2.4vw;width:auto}
+    .serv-cta{margin-top:9vw;padding:14px 26px}
+    .serv-media{position:relative;top:auto;right:auto;width:100%;height:auto;aspect-ratio:3/4;margin-top:10vw}
+  }
+  @media(prefers-reduced-motion:reduce){ .reveal{opacity:1;transform:none;transition:none} .serv-fig{clip-path:none!important} }
+</style>
+</head>
+<body>
+  <section class="serv" id="serv">
+    <h2 class="serv-title reveal">Different kinds<br>of care.</h2>
+    <p class="serv-intro reveal r2">Our goal is to design distinctive and creative weddings that embody your identity. We want to create an intimate environment that inspires creativity. Together with you, we want to learn the story of your relationship, the places you have traveled to together, the hobbies that spark your curiosity, and even the aesthetic that you love. These little touches, when put together, delicately blend to produce a wedding that is unmistakably both of you.</p>
+
+    <ul class="serv-list reveal r2">
+      <li class="serv-item" data-i="0"><span class="serv-num">01</span><span class="serv-name">Standard Wedding</span></li>
+      <li class="serv-item" data-i="1"><span class="serv-num">02</span><span class="serv-name">Premium Wedding</span></li>
+      <li class="serv-item" data-i="2"><span class="serv-num">03</span><span class="serv-name">Elopement Wedding</span></li>
+      <li class="serv-item" data-i="3"><span class="serv-num">04</span><span class="serv-name">Destination Wedding</span></li>
+      <li class="serv-item" data-i="4"><span class="serv-num">05</span><span class="serv-name">Decoration</span></li>
+    </ul>
+
+    <a class="serv-cta reveal r3" href="#">Explore our services</a>
+
+    <div class="serv-media">
+      <div class="serv-figs">
+        <figure class="serv-fig" data-i="0"><img src="../assets/works/km1.jpg" alt=""></figure>
+        <figure class="serv-fig" data-i="1"><img src="../assets/works/cj1.jpg" alt=""></figure>
+        <figure class="serv-fig" data-i="2"><img src="../assets/works/pl3.jpg" alt=""></figure>
+        <figure class="serv-fig" data-i="3"><img src="../assets/works/pl1.jpg" alt=""></figure>
+        <figure class="serv-fig" data-i="4"><img src="../assets/works/cj3.jpg" alt=""></figure>
+      </div>
+    </div>
+  </section>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var section=document.getElementById('serv');
+  var items=[].slice.call(document.querySelectorAll('.serv-item'));
+  var figs=[].slice.call(document.querySelectorAll('.serv-fig'));
+  var cur=-1, zc=1;
+  function setActive(i){
+    if(i===cur)return; cur=i;
+    items.forEach(function(it,k){ it.classList.toggle('active', k===i); });
+    var fig=figs[i]; fig.style.zIndex=(++zc);
+    if(reduce){ fig.style.clipPath='none'; return; }
+    fig.style.transition='none'; fig.style.clipPath='inset(0 0 0 100%)'; fig.getBoundingClientRect();
+    fig.style.transition='clip-path .95s cubic-bezier(.76,0,.20,1)'; fig.style.clipPath='inset(0 0 0 0)';
+  }
+  items.forEach(function(it,i){
+    it.addEventListener('mouseenter',function(){ setActive(i); });
+    it.addEventListener('click',function(){ setActive(i); });
+  });
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ section.classList.add('in'); setActive(0); io.disconnect(); } }); },{threshold:.2});
+  io.observe(section);
+})();
+</script>
+</body>
+</html>

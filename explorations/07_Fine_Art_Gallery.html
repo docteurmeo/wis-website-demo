@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Fine Art Gallery</title>
+</head>
+<body>
+<style>
+  :root{
+    --ink:#191207; --ink2:#211910; --bone:#EEE6D4; --dim:#948871; --hair:#39301F;
+    --gold:#C6A15B; --gold-hi:#E7CE93; --ember:#B7592F;
+    --serif:'Palatino Linotype','Book Antiqua',Palatino,'Iowan Old Style',Georgia,serif;
+    --mono:ui-monospace,'SFMono-Regular','Cascadia Mono','Segoe UI Mono',Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  .page{position:relative;background:var(--ink);color:var(--bone);font-family:var(--serif);overflow-x:hidden}
+  .page::after{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;opacity:.05;
+    background-image:radial-gradient(rgba(255,240,210,.5) .5px,transparent .5px);background-size:3px 3px}
+  .glow{position:fixed;top:-30vh;left:50%;transform:translateX(-50%);width:120vw;height:90vh;z-index:0;
+    pointer-events:none;background:radial-gradient(closest-side,rgba(214,161,91,.14),rgba(183,89,47,.05) 55%,transparent 72%)}
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+  .mono{font-family:var(--mono);letter-spacing:.16em;text-transform:uppercase}
+
+  /* framed artwork */
+  .frame{position:relative;background:linear-gradient(150deg,#2a2013,#171008 60%);
+    padding:11px;border:1px solid rgba(198,161,91,.5);
+    box-shadow:0 46px 100px rgba(0,0,0,.6),inset 0 0 0 1px rgba(231,206,147,.12)}
+  .mat{position:relative;background:#0e0a06;padding:16px;box-shadow:inset 0 0 40px rgba(0,0,0,.55)}
+  .art{position:relative;width:100%;height:100%;overflow:hidden;filter:brightness(.5) saturate(.6);
+    transition:filter 1.6s ease}
+  .frame.lit .art{filter:brightness(1) saturate(1)}
+  .art .paint{position:absolute;inset:-8%;filter:url(#oil)}
+  .art .tooth{position:absolute;inset:0;opacity:.5;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .art .sheen{position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,240,210,.10),transparent 40%)}
+  .a1 .paint{background:radial-gradient(45% 40% at 32% 26%,rgba(201,162,75,.85),transparent 60%),radial-gradient(50% 46% at 70% 68%,rgba(155,58,46,.9),transparent 62%),radial-gradient(60% 60% at 50% 50%,rgba(46,74,107,.8),transparent 70%),linear-gradient(150deg,#243a56,#5a3330)}
+  .a2 .paint{background:radial-gradient(50% 44% at 66% 28%,rgba(201,162,75,.8),transparent 60%),radial-gradient(50% 50% at 30% 70%,rgba(74,99,80,.85),transparent 64%),linear-gradient(160deg,#3a4a3a,#5a4a2c 60%,#7a3a24)}
+  .a3 .paint{background:radial-gradient(46% 42% at 30% 30%,rgba(155,58,46,.9),transparent 60%),radial-gradient(50% 46% at 74% 66%,rgba(46,74,107,.85),transparent 62%),linear-gradient(150deg,#2b2b40,#6a3330)}
+  .a4 .paint{background:radial-gradient(50% 44% at 60% 30%,rgba(201,162,75,.85),transparent 60%),radial-gradient(48% 48% at 28% 72%,rgba(120,70,40,.85),transparent 62%),linear-gradient(150deg,#5a3a24,#33435a)}
+
+  .plate{margin-top:14px;text-align:center;font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--dim);line-height:1.9}
+  .plate b{color:var(--gold);font-weight:400}
+
+  /* hero */
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,86px);
+    align-items:center;padding:14vh 0 8vh}
+  .hero .frame{align-self:center}
+  .hero .art{aspect-ratio:4/5}
+  .htext .eye{color:var(--gold);margin-bottom:26px;display:block;font-size:.7rem}
+  h1{font-size:clamp(2.5rem,5vw,4.3rem);line-height:1.04;font-weight:400;margin:0;letter-spacing:-.01em;max-width:16ch}
+  h1 .flo{position:relative;display:inline-block}
+  h1 .flo svg{position:absolute;left:-4%;top:96%;width:108%;height:24px;overflow:visible}
+  h1 .flo path{fill:none;stroke:var(--ember);stroke-width:2;stroke-linecap:round}
+  .htext p{font-size:1.1rem;line-height:1.72;color:var(--dim);max-width:44ch;margin:30px 0 0}
+  .htext .cta{margin-top:40px}
+  .cta{display:inline-flex;align-items:center;gap:11px;font-family:var(--mono);font-size:.72rem;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--bone);text-decoration:none;
+    border-bottom:1px solid rgba(198,161,91,.5);padding-bottom:6px;transition:color .3s,border-color .3s}
+  .cta:hover,.cta:focus-visible{color:var(--gold);border-color:var(--gold)}
+  .cta svg{width:24px;height:12px}.cta path{stroke:currentColor;stroke-width:1.4;fill:none}
+  .sprig{position:absolute;right:-6px;top:-40px;width:120px;height:150px;overflow:visible;z-index:2}
+  .sprig path,.sprig circle{fill:none;stroke:var(--gold);stroke-width:1.4;stroke-linecap:round}
+  .sprig circle{fill:var(--gold);stroke:none}
+  .htext{position:relative}
+
+  /* collection */
+  .coll{padding:8vh 0 4vh}
+  .coll .ch{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--hair);
+    padding-bottom:16px;margin-bottom:44px}
+  .coll .ch h2{font-size:clamp(1.4rem,2.4vw,2rem);font-weight:400;margin:0}
+  .coll .ch h2 em{font-style:italic;color:var(--gold)}
+  .coll .ch span{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .salon{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3.5vw,52px);align-items:end}
+  .salon .work{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+  .salon .work.in{opacity:1;transform:none}
+  .salon .art{aspect-ratio:4/5}
+  .salon .work.mid{transform:translateY(24px)}
+  .salon .work.mid.in{transform:none}
+
+  /* quote */
+  .quote{padding:20vh 0;text-align:center}
+  .quote p{font-style:italic;font-size:clamp(1.8rem,4.2vw,3.2rem);line-height:1.28;margin:0 auto;max-width:22ch}
+  .quote .att{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-top:30px;display:block}
+
+  .closing{padding:6vh 0 20vh;text-align:center}
+  .closing h3{font-size:clamp(2.4rem,6.5vw,5.4rem);line-height:.98;font-weight:400;margin:0 0 40px;letter-spacing:-.02em}
+  .closing h3 em{font-style:italic;color:var(--ember)}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity 1s ease,transform 1s ease}
+  .reveal.in{opacity:1;transform:none}
+  footer{border-top:1px solid var(--hair);padding:28px 0 54px;display:flex;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+
+  @media(max-width:840px){
+    .hero{grid-template-columns:1fr;gap:40px;padding-top:12vh}
+    .hero .frame{max-width:340px}
+    .salon{grid-template-columns:1fr;max-width:320px;margin:0 auto}
+    .salon .work.mid{transform:none}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .reveal,.salon .work{opacity:1!important;transform:none!important;transition:none!important}
+    .frame .art{filter:brightness(1) saturate(1)}
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="oil"><feTurbulence type="fractalNoise" baseFrequency="0.009 0.013" numOctaves="3" seed="7" result="n"/>
+  <feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G"/></filter>
+</svg>
+
+<div class="page" id="page">
+  <div class="glow"></div>
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="frame" data-lit>
+        <div class="mat">
+          <div class="art a1"><div class="paint"></div><div class="tooth"></div><div class="sheen"></div></div>
+        </div>
+        <div class="plate"><b>L + A</b> &nbsp;/&nbsp; A House in the Colors of a Painting<br>after Mai Trung Thứ, oil on silk &nbsp;/&nbsp; Saigon 2026</div>
+      </div>
+
+      <div class="htext">
+        <svg class="sprig" viewBox="0 0 120 150" aria-hidden="true">
+          <path id="sp1" d="M60 148 C 58 110 54 92 44 72 C 36 56 30 44 30 26"/>
+          <path id="sp2" d="M44 78 C 26 74 16 64 12 48 C 30 50 42 58 46 74"/>
+          <path id="sp3" d="M50 96 C 70 92 82 82 86 66 C 66 66 54 74 50 92"/>
+          <path id="sp4" d="M38 58 C 24 52 18 42 18 30 C 32 34 40 44 42 56"/>
+          <circle cx="30" cy="24" r="2.4"/><circle cx="86" cy="64" r="2"/>
+        </svg>
+        <span class="eye mono">An exhibition of weddings</span>
+        <h1>Every wedding, a work made <span class="flo">once<svg viewBox="0 0 120 24"><path id="flo1" d="M2 14 C 26 26 60 26 84 12 C 98 4 112 8 118 16"/></svg></span>.</h1>
+        <p>We compose each celebration the way a painter approaches a canvas: drawn from a real life,
+          never from a template, and never made twice.</p>
+        <a class="cta" href="#">Begin the conversation
+          <svg viewBox="0 0 24 12"><path d="M0 6 H22 M17 1 L22 6 L17 11"/></svg></a>
+      </div>
+    </section>
+
+    <section class="coll">
+      <div class="ch">
+        <h2 class="reveal" data-io>The <em>collection</em></h2>
+        <span class="reveal" data-io>Nine weddings / 2022 to 2026</span>
+      </div>
+      <div class="salon" id="salon">
+        <a class="work" href="#" data-io>
+          <div class="frame" data-lit><div class="mat"><div class="art a2"><div class="paint"></div><div class="tooth"></div><div class="sheen"></div></div></div>
+          <div class="plate"><b>H + H</b> &nbsp;/&nbsp; At 1,600 Meters<br>Sapa 2025</div></div>
+        </a>
+        <a class="work mid" href="#" data-io>
+          <div class="frame" data-lit><div class="mat"><div class="art a3"><div class="paint"></div><div class="tooth"></div><div class="sheen"></div></div></div>
+          <div class="plate"><b>A + T</b> &nbsp;/&nbsp; Coincidence<br>Hanoi 2025</div></div>
+        </a>
+        <a class="work" href="#" data-io>
+          <div class="frame" data-lit><div class="mat"><div class="art a4"><div class="paint"></div><div class="tooth"></div><div class="sheen"></div></div></div>
+          <div class="plate"><b>N + P</b> &nbsp;/&nbsp; The Museum of Us<br>Ninh Binh 2023</div></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="quote">
+      <p class="reveal" data-io>What comes from the heart, goes to the heart.</p>
+      <span class="att reveal" data-io>The line we have kept since 2009</span>
+    </section>
+
+    <section class="closing">
+      <h3 class="reveal" data-io>Let us compose <em>yours.</em></h3>
+      <a class="cta reveal" data-io href="#">Begin the conversation
+        <svg viewBox="0 0 24 12" width="24" height="12"><path d="M0 6 H22 M17 1 L22 6 L17 11" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></a>
+    </section>
+
+    <footer>
+      <span>Wed in Style</span>
+      <span>Demo concept 7 / fine-art gallery / anh that WIS se thay vao cac khung</span>
+      <span>Since 2009</span>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function drawLine(el,dur,delay){
+    if(!el)return; var len=el.getTotalLength();
+    el.style.strokeDasharray=len; el.style.strokeDashoffset=len;
+    if(reduce){el.style.strokeDashoffset=0;return;}
+    el.style.transition='stroke-dashoffset '+dur+'ms cubic-bezier(.6,.02,.2,1) '+(delay||0)+'ms';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){el.style.strokeDashoffset=0;});});
+  }
+  // hero botanical + flourish draw
+  ['sp1','sp2','sp3','sp4'].forEach(function(id,i){drawLine(document.getElementById(id),1400,500+i*260);});
+  drawLine(document.getElementById('flo1'),900,1500);
+
+  // light up frames when in view
+  var lit=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},reduce?0:200);lit.unobserve(e.target);}
+  });},{threshold:.3});
+  document.querySelectorAll('[data-lit]').forEach(function(el){lit.observe(el);});
+
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+  });},{threshold:.2});
+  document.querySelectorAll('[data-io]').forEach(function(el){io.observe(el);});
+  var sio=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){e.target.querySelectorAll('.work').forEach(function(w,i){setTimeout(function(){w.classList.add('in');},reduce?0:i*160);});sio.disconnect();}
+  });},{threshold:.15});
+  sio.observe(document.getElementById('salon'));
+})();
+</script>
+
+</body>
+</html>

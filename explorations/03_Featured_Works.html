@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Featured Works</title>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+  :root{
+    --ink:#160F08; --bone:#EEE6D4; --dim:#9A8E76; --gold:#C6A15B;
+    --title:'Mirage','Palatino Linotype',Georgia,serif;
+    --body:'SweetSans','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body);overflow-x:hidden}
+
+  .works{position:relative;padding:0 0 12vh}
+  .whead-band{height:54vh;display:flex;align-items:center;overflow:hidden}
+  .whead{white-space:nowrap;font-family:var(--title);font-weight:400;font-size:10.42vw;line-height:1;
+    color:var(--bone);padding-left:56px;margin:0;transform:translateX(100vw);will-change:transform}
+  .wintro{padding:0 56px 8vh;margin:0;max-width:min(1006px,86vw);font-family:var(--title);font-weight:200;
+    font-size:clamp(1.3rem,2.08vw,40px);line-height:1.42;color:var(--bone)}
+
+  .projects{position:relative;margin-top:36vh}
+  /* & : faint backdrop, BEHIND the images */
+  .ampbar{position:sticky;top:50vh;height:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .7s ease}
+  .ampbar.show{opacity:1}
+  .amp{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);width:46.4vw}
+  .amp svg{width:100%;height:auto;display:block}
+  /* names + tagline : ABOVE the images */
+  .namebar{position:sticky;top:50vh;height:0;z-index:5;pointer-events:none;opacity:0;transition:opacity .7s ease}
+  .namebar.show{opacity:1}
+  .nm{position:absolute;top:0;transform:translateY(-50%);font-family:var(--title);font-weight:400;
+    font-size:10.42vw;line-height:1;color:var(--gold);transition:opacity .3s ease;text-shadow:0 2px 46px rgba(0,0,0,.4)}
+  .bride{left:56px}
+  .groom{right:56px}
+  .slogan{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);font-family:var(--body);font-weight:500;
+    font-size:clamp(.8rem,1.04vw,20px);letter-spacing:.28em;text-transform:uppercase;color:var(--bone);
+    white-space:nowrap;transition:opacity .3s ease;text-shadow:0 2px 34px rgba(0,0,0,.7)}
+
+  .gallery{position:relative;z-index:2;width:min(30.5vw,586px);margin:0 auto;padding:16vh 0}
+  .g{overflow:hidden;margin:0 0 13vh}
+  .g img{width:100%;height:100%;object-fit:cover;display:block;clip-path:inset(0 0 0 100%);
+    transition:clip-path .95s cubic-bezier(.76,0,.20,1)}
+  .g.vis img{clip-path:inset(0 0 0 0)}
+  .gA{width:100%;aspect-ratio:3/4}
+  .gB{width:57.3%;aspect-ratio:4/5;margin-left:auto}
+  .gC{width:78.3%;aspect-ratio:5/4;margin-right:auto}
+  .pcap{position:relative;z-index:2;display:flex;justify-content:center;gap:16px;margin:7vh 0 0;
+    font-family:var(--body);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+  .pcap b{color:var(--dim);font-weight:400}
+
+  @media(max-width:820px){
+    .gallery{width:min(62vw,420px)} .amp{width:70vw} .nm{font-size:17vw} .whead{font-size:17vw}
+  }
+  @media(prefers-reduced-motion:reduce){ .g img{clip-path:none!important;transition:none} .whead{transform:none!important;transition:none} }
+</style>
+</head>
+<body>
+  <section class="works" id="works">
+    <div class="whead-band"><h2 class="whead" id="whead">Selected glory stories</h2></div>
+    <p class="wintro">Each begins with one small truth. The rest is made around it.</p>
+
+    <div class="projects" id="projects">
+      <div class="ampbar">
+        <div class="amp"><svg viewBox="0 0 891 790" xmlns="http://www.w3.org/2000/svg"><path opacity="0.1" d="M756.813 0C798.322 0 830.884 10.0181 854.501 30.0544C878.834 50.0906 891 80.8605 891 122.364C891 158.859 880.623 191.06 859.869 218.967C839.115 246.875 805.836 272.278 760.034 295.177C728.545 310.919 671.292 333.818 588.275 363.872C640.518 407.523 666.64 461.191 666.64 524.878C666.64 572.822 652.326 617.188 623.7 657.976C595.073 698.048 553.565 730.249 499.175 754.579C445.5 778.193 382.164 790 309.166 790C213.983 790 138.481 769.964 82.659 729.891C27.553 689.103 0 633.646 0 563.519C0 500.548 21.4699 444.733 64.4096 396.073C108.065 346.698 163.529 312.708 230.801 294.103C206.469 281.223 187.861 264.049 174.98 242.582C162.098 221.114 155.657 198.216 155.657 173.886C155.657 142.4 166.034 115.208 186.788 92.3098C208.258 69.4112 235.453 51.8795 268.374 39.7147C301.294 27.5498 334.572 21.4674 368.208 21.4674C408.286 21.4674 440.133 30.0544 463.749 47.2283C488.082 64.4022 500.248 86.943 500.248 114.851C500.248 140.611 490.945 160.648 472.337 174.959C453.73 188.555 432.618 195.353 409.001 195.353L411.148 176.033C431.187 176.033 447.289 171.024 459.455 161.005C471.622 150.272 477.705 135.602 477.705 116.997C477.705 93.3832 467.686 74.4203 447.647 60.1087C428.324 45.7971 403.634 38.6413 373.576 38.6413C329.92 38.6413 293.78 53.6685 265.153 83.7228C236.527 113.777 222.213 152.061 222.213 198.573C222.213 231.49 230.086 261.187 245.83 287.663C271.594 283.37 294.137 281.223 313.46 281.223C339.224 281.223 352.106 288.736 352.106 303.764C352.106 310.919 348.886 316.644 342.445 320.938C336.004 324.515 328.131 326.304 318.828 326.304C300.936 326.304 276.246 318.433 244.757 302.69C196.092 317.002 156.372 343.836 125.599 383.193C95.541 421.834 80.512 465.485 80.512 514.144C80.512 576.399 105.202 624.701 154.583 659.049C204.68 693.397 269.805 710.571 349.959 710.571C405.065 710.571 455.161 702.341 500.248 685.883C545.335 669.425 580.76 646.168 606.524 616.114C632.288 585.344 645.17 550.281 645.17 510.924C645.17 485.163 639.087 459.76 626.92 434.715C614.754 408.954 596.863 387.486 573.246 370.313L436.912 420.761C404.707 432.926 377.87 447.237 356.4 463.696C334.93 480.154 324.195 501.264 324.195 527.024C324.195 549.207 332.783 566.739 349.959 579.62C367.851 592.5 389.678 598.94 415.442 598.94C443.353 598.94 466.254 592.142 484.146 578.546C502.037 564.95 515.635 550.639 524.939 535.611L538.894 545.272C510.267 592.5 467.686 616.114 411.148 616.114C378.228 616.114 350.675 607.885 328.489 591.427C306.304 574.968 295.211 548.134 295.211 510.924C295.211 469.42 309.882 435.072 339.224 407.88C369.282 380.688 414.011 356.001 473.411 333.818L526.012 314.497C562.511 301.617 602.588 287.305 646.243 271.563C690.614 255.104 725.682 240.435 751.446 227.554C786.513 211.096 813.708 193.564 833.031 174.959C852.354 155.639 862.016 133.456 862.016 108.41C862.016 81.9339 851.639 60.1087 830.884 42.9348C810.846 25.0453 785.798 16.1006 755.74 16.1006C737.133 16.1006 725.682 19.3207 721.388 25.7609C728.545 30.0544 733.912 35.779 737.49 42.9348C741.784 50.0906 743.931 57.962 743.931 66.5489C743.931 83.0073 736.775 97.3189 722.461 109.484C708.148 121.649 691.688 127.731 673.081 127.731C658.767 127.731 646.959 123.795 637.655 115.924C629.067 108.053 624.773 96.9611 624.773 82.6495C624.773 67.6223 629.783 54.3841 639.802 42.9348C649.822 31.4855 662.704 22.183 678.448 15.0272C701.349 5.00908 727.471 0 756.813 0Z" fill="#EEE6D4"/></svg></div>
+      </div>
+      <div class="namebar" id="namebar">
+        <span class="nm bride" id="bride">C</span>
+        <span class="nm groom" id="groom">J</span>
+        <span class="slogan" id="slogan">Love flavor</span>
+      </div>
+
+      <div class="gallery" data-b="C" data-g="J" data-slogan="Love flavor">
+        <figure class="g gA"><img src="../assets/works/cj1.jpg" alt=""></figure>
+        <figure class="g gB"><img src="../assets/works/cj2.jpg" alt=""></figure>
+        <figure class="g gC"><img src="../assets/works/cj3.jpg" alt=""></figure>
+        <div class="pcap"><b>Catherine &amp; Johnny</b><span>Ninh Binh, Vietnam</span></div>
+      </div>
+
+      <div class="gallery" data-b="K" data-g="M" data-slogan="Ace of heart">
+        <figure class="g gA"><img src="../assets/works/km1.jpg" alt=""></figure>
+        <figure class="g gB"><img src="../assets/works/km2.jpg" alt=""></figure>
+        <figure class="g gC"><img src="../assets/works/km3.jpg" alt=""></figure>
+        <div class="pcap"><b>Kaido &amp; Mai</b><span>Hanoi</span></div>
+      </div>
+
+      <div class="gallery" data-b="P" data-g="L" data-slogan="Electric heart">
+        <figure class="g gA"><img src="../assets/works/pl1.jpg" alt=""></figure>
+        <figure class="g gB"><img src="../assets/works/pl2.jpg" alt=""></figure>
+        <figure class="g gC"><img src="../assets/works/pl3.jpg" alt=""></figure>
+        <div class="pcap"><b>Phong &amp; Linh</b><span>Phu Quoc Island</span></div>
+      </div>
+    </div>
+  </section>
+
+<script>
+(function(){
+  var namebar=document.getElementById('namebar'), ampbar=document.querySelector('.ampbar');
+  if(!namebar) return;
+  var whead=document.getElementById('whead'), band=document.querySelector('.whead-band');
+  function headScroll(){ if(!band||!whead) return; var r=band.getBoundingClientRect(), vw=window.innerWidth, vh=window.innerHeight;
+    var prog=(vh-r.top)/(vh+r.height); prog=Math.min(1,Math.max(0,prog));
+    whead.style.transform='translateX('+(vw - prog*(vw+whead.scrollWidth)).toFixed(1)+'px)'; }
+
+  var gio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('vis'); gio.unobserve(e.target); } }); },{threshold:.16});
+  document.querySelectorAll('.g').forEach(function(g){ gio.observe(g); });
+
+  var galleries=[].slice.call(document.querySelectorAll('.gallery'));
+  var brideEl=document.getElementById('bride'), groomEl=document.getElementById('groom'), sloganEl=document.getElementById('slogan');
+  var curActive=0, swapping=false;
+  function swapNames(i){ var g=galleries[i];
+    brideEl.style.opacity='0'; groomEl.style.opacity='0'; sloganEl.style.opacity='0'; swapping=true;
+    setTimeout(function(){ brideEl.textContent=g.getAttribute('data-b'); groomEl.textContent=g.getAttribute('data-g'); sloganEl.textContent=g.getAttribute('data-slogan');
+      brideEl.style.opacity='1'; groomEl.style.opacity='1'; sloganEl.style.opacity='1'; swapping=false; },210); }
+  function updateNames(){ var vh=window.innerHeight, cy=vh/2;
+    var firstTop=galleries[0].getBoundingClientRect().top, lastBot=galleries[galleries.length-1].getBoundingClientRect().bottom;
+    var show=firstTop<vh*0.40 && lastBot>vh*0.28;
+    namebar.classList.toggle('show', show); if(ampbar) ampbar.classList.toggle('show', show);
+    var active=curActive, bestIn=false, bestDist=Infinity;
+    for(var i=0;i<galleries.length;i++){ var r=galleries[i].getBoundingClientRect();
+      if(cy>=r.top && cy<=r.bottom){ active=i; bestIn=true; break; }
+      var d=Math.min(Math.abs(cy-r.top),Math.abs(cy-r.bottom)); if(!bestIn && d<bestDist){ bestDist=d; active=i; } }
+    if(active!==curActive && !swapping){ swapNames(active); curActive=active; } }
+  var wt=false;
+  function wframe(){ headScroll(); updateNames(); wt=false; }
+  window.addEventListener('scroll',function(){ if(!wt){requestAnimationFrame(wframe);wt=true;} },{passive:true});
+  window.addEventListener('resize',wframe);
+  wframe();
+})();
+</script>
+</body>
+</html>

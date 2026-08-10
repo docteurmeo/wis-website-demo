@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Philosophy</title>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+  :root{
+    --ink:#160F08; --bone:#EEE6D4; --dim:#9A8E76; --gold:#C6A15B;
+    --title:'Mirage','Palatino Linotype',Georgia,serif;
+    --body:'SweetSans','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body)}
+
+  .marg{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;justify-content:space-between;
+    padding:26px clamp(22px,4vw,56px);font-family:var(--body);font-size:.64rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--dim);pointer-events:none}
+
+  .phil{position:relative;height:280vh}
+  .stage{position:sticky;top:0;height:100vh;overflow:hidden}
+
+  .manifesto{position:absolute;left:0;right:0;text-align:center;padding:0 clamp(20px,3vw,56px);
+    top:50%;transform:translateY(-50%);
+    transition:top 1s cubic-bezier(.7,0,.15,1),transform 1s cubic-bezier(.7,0,.15,1)}
+  .stage.engaged .manifesto{top:9vh;transform:translateY(0)}
+  .statement{font-family:var(--title);font-weight:400;font-size:clamp(2.2rem,5.78vw,7rem);
+    line-height:1.04;letter-spacing:0;margin:0 auto clamp(28px,2.6vw,50px);max-width:none}
+  .statement .accent{color:var(--gold)}
+  .intro{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,2.08vw,2.1rem);
+    line-height:1.42;color:var(--bone);opacity:.95;margin:0 auto;max-width:min(1503px,88vw)}
+
+  .noteslot{position:absolute;left:0;right:0;top:55vh;bottom:6vh;
+    opacity:0;transition:opacity .9s ease .15s}
+  .stage.engaged .noteslot{opacity:1}
+  .note{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:0 clamp(24px,5vw,96px);opacity:0;transition:opacity .45s ease;pointer-events:none}
+  .note.active{opacity:1}
+  .note .num{font-family:var(--title);font-weight:400;font-size:clamp(5rem,10.42vw,12.5rem);line-height:.8;
+    background:linear-gradient(180deg,rgba(198,161,91,.6) 0%,rgba(198,161,91,.12) 66%,rgba(198,161,91,0) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:.02em}
+  .note .lab{font-family:var(--body);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:16px}
+  .note .txt{font-family:var(--body);font-weight:400;font-size:clamp(1rem,1vw,1.2rem);line-height:1.7;
+    letter-spacing:.01em;color:var(--bone);opacity:.9;max-width:min(1500px,84vw);margin:0}
+
+  .dots{position:fixed;right:clamp(20px,3vw,44px);top:50%;transform:translateY(-50%);z-index:6;
+    display:flex;flex-direction:column;gap:14px;opacity:0;transition:opacity .6s ease}
+  .dots.show{opacity:1}
+  .dots i{width:7px;height:7px;border-radius:50%;background:rgba(198,161,91,.25);transition:background .4s,transform .4s;display:block}
+  .dots i.on{background:var(--gold);transform:scale(1.4)}
+
+  .w{display:inline-block;opacity:0;filter:blur(6px);transition:opacity .6s ease,filter .65s ease}
+  .w.in{opacity:1;filter:blur(0)}
+
+  @media(prefers-reduced-motion:reduce){ .w{opacity:1;filter:none;transition:none} .stage .manifesto{top:9vh;transform:none} .noteslot{opacity:1} }
+</style>
+</head>
+<body>
+  <div class="marg"><span>02 &nbsp;/&nbsp; The Method</span><span>Wed in Style</span></div>
+  <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+
+  <section class="phil" id="phil">
+    <div class="stage" id="stage">
+      <div class="manifesto">
+        <h2 class="statement tw" aria-label="The first thing we make is time.">The first thing we make is <span class="accent">time.</span></h2>
+        <p class="intro tw">Before the room, before the guest list, before the first sketch, there is time. Time to speak plainly, to notice what keeps returning, and to stay with a thought until it begins to open.</p>
+      </div>
+      <div class="noteslot">
+        <div class="note active" data-i="0"><div class="num">01</div><div class="lab">The first conversation</div><p class="txt">We begin without a ready answer. A place, a song, a family custom or a colour can be enough to open the room.</p></div>
+        <div class="note" data-i="1"><div class="num">02</div><div class="lab">What returns</div><p class="txt">The important thing is often the thing that returns: a memory, a gesture, a certain way of gathering people together.</p></div>
+        <div class="note" data-i="2"><div class="num">03</div><div class="lab">The form</div><p class="txt">Then the work finds its form. Planning, styling and the rhythm of the day begin to hold the same idea.</p></div>
+      </div>
+    </div>
+  </section>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function split(el){ var parts=el.textContent.split(/(\s+)/); el.textContent=''; var spans=[];
+    parts.forEach(function(p){ if(p==='')return; if(/^\s+$/.test(p)){el.appendChild(document.createTextNode(p));return;} var s=document.createElement('span'); s.className='w'; s.textContent=p; el.appendChild(s); spans.push(s); }); return spans; }
+  function splitKeep(el){ var spans=[]; [].slice.call(el.childNodes).forEach(function(node){
+      if(node.nodeType===3){ var parts=node.textContent.split(/(\s+)/),frag=document.createDocumentFragment();
+        parts.forEach(function(p){ if(p==='')return; if(/^\s+$/.test(p)){frag.appendChild(document.createTextNode(p));return;} var s=document.createElement('span'); s.className='w'; s.textContent=p; frag.appendChild(s); spans.push(s);}); el.replaceChild(frag,node);
+      } else if(node.nodeType===1){ node.classList.add('w'); spans.push(node); } }); return spans; }
+  function cascade(words,start,per){ var t=start; words.forEach(function(w){ setTimeout(function(){w.classList.add('in');}, t); t+=per; }); return t; }
+
+  var stWords=splitKeep(document.querySelector('.statement'));
+  var introWords=split(document.querySelector('.intro'));
+  var notes=[].slice.call(document.querySelectorAll('.note'));
+  var noteWords=notes.map(function(n){ return { lab:split(n.querySelector('.lab')), txt:split(n.querySelector('.txt')) }; });
+  var dots=[].slice.call(document.querySelectorAll('.dots i'));
+  var dotsEl=document.getElementById('dots'), stage=document.getElementById('stage'), phil=document.getElementById('phil');
+  var revealed=[false,false,false];
+  function revealNote(i){ if(revealed[i])return; revealed[i]=true; var t=cascade(noteWords[i].lab,200,26); cascade(noteWords[i].txt,t+120,24); }
+
+  if(reduce){ document.querySelectorAll('.w').forEach(function(w){w.classList.add('in');}); stage.classList.add('engaged'); dotsEl.classList.add('show'); return; }
+
+  var manifestoShown=false;
+  function showManifesto(){ if(manifestoShown)return; manifestoShown=true; var t=cascade(stWords,120,85); cascade(introWords,t+260,28); }
+
+  var engaged=false, cur=0;
+  function engage(){ if(engaged)return; engaged=true; stage.classList.add('engaged'); dotsEl.classList.add('show'); revealNote(0); }
+  function setNote(i){ if(i===cur)return; notes[cur].classList.remove('active'); notes[i].classList.add('active'); dots[cur].classList.remove('on'); dots[i].classList.add('on'); cur=i; revealNote(i); }
+
+  function onScroll(){
+    var range=phil.offsetHeight-window.innerHeight;
+    var p=range>0 ? Math.min(1,Math.max(0,(-phil.getBoundingClientRect().top)/range)) : 0;
+    showManifesto();
+    if(p>0.09){ engage();
+      var q=(p-0.09)/0.91; var seg=q*3; var idx=Math.min(2,Math.floor(seg)); var local=Math.min(1,seg-idx);
+      for(var d=0;d<dots.length;d++){ dots[d].classList.toggle('on', d===idx); }
+      for(var i=0;i<notes.length;i++){
+        var n=notes[i], nm=n.querySelector('.num');
+        if(i===idx){
+          n.classList.add('active');
+          if(nm){ nm.style.opacity=numFade(local).toFixed(3); nm.style.transform='translateY('+((0.42-local)*160).toFixed(1)+'px)'; }
+          if(local>=0.42) revealNote(i);
+        } else { n.classList.remove('active'); if(nm) nm.style.opacity='0'; }
+      }
+    }
+  }
+  function numFade(x){ if(x<0.20) return x/0.20; if(x>0.82) return Math.max(0,(1-x)/0.18); return 1; }
+  var ticking=false;
+  window.addEventListener('scroll',function(){ if(!ticking){requestAnimationFrame(function(){onScroll();ticking=false;});ticking=true;} },{passive:true});
+  window.addEventListener('resize',onScroll);
+  window.addEventListener('load',function(){ showManifesto(); onScroll(); });
+  showManifesto();
+})();
+</script>
+</body>
+</html>

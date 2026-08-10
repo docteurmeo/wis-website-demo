@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Khung Nhin Van Hoa (warm craft)</title>
+</head>
+<body>
+<style>
+  :root{
+    --paper:#EBE1CE; --paper-2:#E2D6BE; --paper-3:#D8CAAF;
+    --ink:#241D16; --ink-soft:#6B6150; --hair:#C8B79A;
+    --clay:#B0592F; --clay-soft:rgba(176,89,47,.4); --jade:#5C7360;
+    --gutter:0px;
+    --serif:'Palatino Linotype','Book Antiqua',Palatino,'Iowan Old Style',Georgia,serif;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  .page{position:relative;background:var(--paper);color:var(--ink);
+    font-family:var(--serif);overflow-x:hidden}
+  .page::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+    background-image:radial-gradient(rgba(90,60,30,.7) .5px,transparent .5px);background-size:3px 3px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(22px,5vw,56px)}
+
+  .eyebrow{font-family:var(--sans);font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--clay)}
+  .cta{display:inline-block;font-family:var(--sans);font-size:.78rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink);text-decoration:none;padding:13px 26px;
+    border:1px solid var(--ink);border-radius:999px;transition:background .35s,color .35s}
+  .cta:hover,.cta:focus-visible{background:var(--ink);color:var(--paper)}
+
+  /* aperture arch */
+  .arch{position:relative;overflow:hidden;
+    border-radius:47% 47% 9px 9px/60% 60% 7px 7px;
+    box-shadow:0 24px 70px rgba(36,29,22,.22)}
+  .arch .media{position:absolute;inset:-14% 0;background-size:cover;background-position:center;
+    clip-path:circle(0% at 50% 60%);will-change:clip-path,transform}
+  .arch.open .media{clip-path:circle(135% at 50% 60%);
+    transition:clip-path 1.6s cubic-bezier(.68,0,.14,1)}
+  .arch .frameline{position:absolute;inset:0;border:1.5px solid var(--clay-soft);
+    border-radius:inherit;z-index:3;pointer-events:none}
+  .arch .cap{position:absolute;left:0;right:0;bottom:16px;z-index:3;text-align:center;
+    font-family:var(--sans);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+    color:rgba(235,225,206,.9);opacity:0;transition:opacity .8s .5s}
+  .arch.open .cap{opacity:1}
+
+  .p1{background:radial-gradient(120% 90% at 30% 8%,rgba(224,200,150,.4),transparent 55%),
+      linear-gradient(160deg,#3A567A,#4A4A63 45%,#8C4A3C 82%,#B07A44)}
+  .p2{background:radial-gradient(120% 100% at 78% 4%,rgba(224,200,150,.44),transparent 60%),
+      linear-gradient(200deg,#A5462F,#6A3330 60%,#33304C)}
+  .p3{background:radial-gradient(100% 100% at 30% 100%,rgba(224,200,150,.5),transparent 55%),
+      linear-gradient(20deg,#556E56,#7A6D3C 55%,#C7A24A 120%)}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;padding:12vh 0 8vh;position:relative}
+  .topbar{position:absolute;top:0;left:0;right:0;display:flex;align-items:baseline;
+    justify-content:space-between;max-width:1080px;margin:0 auto;
+    padding:24px clamp(22px,5vw,56px) 0;gap:20px;flex-wrap:wrap}
+  .logo{font-size:1.04rem;letter-spacing:.02em}
+  .topnav{display:flex;gap:20px;font-family:var(--sans);font-size:.7rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-soft);flex-wrap:wrap}
+  .topnav a{color:inherit;text-decoration:none;transition:color .3s}
+  .topnav a:hover{color:var(--clay)}
+  .hero-arch{width:min(38vh,300px);aspect-ratio:3/4.1;margin-bottom:42px}
+  .hero .eyebrow{margin-bottom:22px}
+  .rise{opacity:0;transform:translateY(16px);transition:opacity 1s ease,transform 1s ease}
+  .rise.in{opacity:1;transform:none}
+  h1{font-size:clamp(2.7rem,6.6vw,5.4rem);line-height:1.02;font-weight:400;margin:0;
+    max-width:16ch;letter-spacing:-.01em;text-wrap:balance}
+  h1 em{font-style:italic;color:var(--clay)}
+  .hero .cta{margin-top:40px}
+
+  /* interlude */
+  .interlude{padding:16vh 0;text-align:center}
+  .interlude p{font-size:clamp(1.5rem,3.4vw,2.7rem);line-height:1.28;margin:0 auto;max-width:22ch}
+  .divider{width:1px;height:70px;background:var(--hair);margin:0 auto;transform:scaleY(0);
+    transform-origin:top;transition:transform 1s cubic-bezier(.7,0,.2,1)}
+  .divider.in{transform:scaleY(1)}
+
+  /* featured */
+  .featured{padding:6vh 0 14vh;text-align:center}
+  .kicker{font-family:var(--sans);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--clay);margin-bottom:18px}
+  .featured h2{font-size:clamp(2rem,4.6vw,3.4rem);line-height:1.08;font-weight:400;margin:0 auto 22px;
+    max-width:18ch;text-wrap:balance}
+  .featured h2 em{font-style:italic;color:var(--clay)}
+  .lede{font-size:1.1rem;line-height:1.7;color:var(--ink-soft);max-width:54ch;margin:0 auto 56px}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:end}
+  .gallery .arch{aspect-ratio:3/4}
+  .gallery .arch.mid{aspect-ratio:3/4.5;transform:translateY(-26px)}
+
+  .storyrow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);
+    align-items:center;text-align:left;margin-top:12vh}
+  .storyrow .arch{aspect-ratio:4/5}
+  .storyrow h3{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:400;margin:0 0 18px;line-height:1.15}
+  .storyrow p{font-size:1.05rem;line-height:1.72;color:var(--ink-soft);margin:0}
+  .storyrow .eyebrow{margin-bottom:16px;display:block}
+
+  .closing{padding:16vh 0 20vh;text-align:center}
+  .closing .eyebrow{margin-bottom:22px}
+  .closing p{font-size:clamp(1.9rem,4.2vw,3rem);line-height:1.2;margin:0 auto 42px;max-width:18ch}
+
+  footer{border-top:1px solid var(--hair);padding:32px 0 58px;display:flex;
+    justify-content:space-between;gap:18px;flex-wrap:wrap;font-family:var(--sans);
+    font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  .note{color:#9a8c72}
+
+  .replay{position:fixed;right:18px;bottom:18px;z-index:70;font-family:var(--sans);
+    font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+    background:rgba(235,225,206,.9);border:1px solid var(--hair);border-radius:999px;
+    padding:10px 16px;cursor:pointer;backdrop-filter:blur(6px);transition:border-color .3s,color .3s}
+  .replay:hover,.replay:focus-visible{border-color:var(--clay);color:var(--clay)}
+
+  @media(max-width:760px){
+    .gallery{grid-template-columns:1fr;max-width:320px;margin:0 auto}
+    .gallery .arch.mid{transform:none}
+    .storyrow{grid-template-columns:1fr;text-align:center}
+    .topnav{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .rise,.divider{opacity:1!important;transform:none!important;transition:none}
+    .arch .media{clip-path:none!important;transition:none}
+    .arch .cap{opacity:1}
+  }
+</style>
+
+<div class="page" id="page">
+  <div class="topbar">
+    <div class="logo">Wed in Style</div>
+    <nav class="topnav" aria-label="Chinh">
+      <a href="#">Our Works</a><a href="#">Approach</a>
+      <a href="#">Destinations</a><a href="#">Journal</a><a href="#">Contact</a>
+    </nav>
+  </div>
+
+  <section class="hero">
+    <div class="arch hero-arch" data-aperture data-hero>
+      <div class="media p2" data-parallax></div>
+      <div class="frameline"></div>
+    </div>
+    <div class="eyebrow rise" data-r>Weddings in Vietnam, since 2009</div>
+    <h1 class="rise" data-r>Made from a life <em>already lived.</em></h1>
+    <a class="cta rise" data-r href="#">Begin the conversation</a>
+  </section>
+
+  <div class="wrap">
+    <section class="interlude">
+      <p class="rise" data-io>The work begins before the moodboard.</p>
+      <div class="divider" data-io style="margin-top:48px"></div>
+    </section>
+
+    <section class="featured">
+      <div class="kicker rise" data-io>A Glory Story</div>
+      <h2 class="rise" data-io>A house kept in the <em>colors of a painting.</em></h2>
+      <p class="lede rise" data-io>Lily and Antoine returned from France to marry at The Reverie Saigon,
+        and built the day around the paintings of Mai Trung Thứ, a Vietnamese artist who kept his
+        homeland alive in silk and color.</p>
+
+      <div class="gallery">
+        <div class="arch" data-aperture><div class="media p1" data-parallax></div><div class="frameline"></div><div class="cap">Silk and candlelight</div></div>
+        <div class="arch mid" data-aperture><div class="media p2" data-parallax></div><div class="frameline"></div><div class="cap">Invitations by hand</div></div>
+        <div class="arch" data-aperture><div class="media p3" data-parallax></div><div class="frameline"></div><div class="cap">His palette on the table</div></div>
+      </div>
+
+      <div class="storyrow">
+        <div class="arch" data-aperture><div class="media p1" data-parallax></div><div class="frameline"></div></div>
+        <div>
+          <span class="eyebrow rise" data-io>The turning point</span>
+          <h3 class="rise" data-io>The color of his canvases decided the color of the room.</h3>
+          <p class="rise" data-io>Every invitation painted by hand. Every place card a name, not a number.
+            Đàn tranh at the door as guests arrived. Ivory silk to close, the color he painted his women in most.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="interlude">
+      <p class="rise" data-io>Vietnam, in the present tense.</p>
+      <div class="divider" data-io style="margin-top:48px"></div>
+    </section>
+
+    <section class="closing">
+      <div class="eyebrow rise" data-io>The conversation</div>
+      <p class="rise" data-io>A place you have in mind is enough. So is a feeling.</p>
+      <a class="cta rise" data-io href="#">Begin the conversation</a>
+    </section>
+
+    <footer>
+      <span>Wed in Style</span>
+      <span class="note">Ban demo concept 2, anh that WIS se thay vao cac khung vom</span>
+      <span>Since 2009</span>
+    </footer>
+  </div>
+
+  <button class="replay" id="replay" type="button">Xem lai hieu ung</button>
+</div>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // aperture open (on load for hero, on scroll for others)
+  var apIO=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('open'); apIO.unobserve(e.target); }
+  });},{threshold:.25});
+  document.querySelectorAll('[data-aperture]').forEach(function(el){
+    if(el.hasAttribute('data-hero')) return; apIO.observe(el);
+  });
+
+  // generic rise reveal
+  var rIO=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('in'); rIO.unobserve(e.target); }
+  });},{threshold:.3});
+  document.querySelectorAll('[data-io]').forEach(function(el){rIO.observe(el);});
+
+  // parallax inside arch frames
+  var pxEls=[].slice.call(document.querySelectorAll('[data-parallax]'));
+  var ticking=false;
+  function px(){
+    var vh=window.innerHeight;
+    pxEls.forEach(function(el){
+      var r=el.parentElement.getBoundingClientRect();
+      if(r.bottom<-50||r.top>vh+50) return;
+      var c=(r.top+r.height/2-vh/2)/vh; // -0.5..0.5
+      el.style.transform='translateY('+(c*-7).toFixed(2)+'%)';
+    });
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){if(!ticking&&!reduce){requestAnimationFrame(px);ticking=true;}},{passive:true});
+  window.addEventListener('resize',px);
+
+  function runHero(){
+    var hero=document.querySelector('[data-hero]');
+    var rises=document.querySelectorAll('.hero .rise');
+    hero.classList.remove('open'); rises.forEach(function(el){el.classList.remove('in');});
+    void hero.offsetWidth;
+    setTimeout(function(){hero.classList.add('open');},reduce?0:150);
+    if(reduce){rises.forEach(function(el){el.classList.add('in');});}
+    else rises.forEach(function(el,i){setTimeout(function(){el.classList.add('in');},700+i*180);});
+  }
+
+  document.getElementById('replay').addEventListener('click',function(){
+    window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+    setTimeout(runHero,reduce?0:520);
+  });
+
+  window.addEventListener('load',function(){runHero();px();});
+  runHero(); px();
+})();
+</script>
+
+</body>
+</html>

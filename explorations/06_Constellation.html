@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Constellation</title>
+</head>
+<body>
+<style>
+  :root{
+    --ink:#15110B; --bone:#ECE4D2; --bone-dim:#8A8069; --hair:#322A1F;
+    --accent:#C6A15B; --ember:#C15E2C;
+    --mono:ui-monospace,'SFMono-Regular','Cascadia Mono','Segoe UI Mono',Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  .page{position:fixed;inset:0;background:var(--ink);color:var(--bone);overflow:hidden;
+    font-family:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif}
+  .page::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;opacity:.045;
+    background-image:radial-gradient(rgba(255,255,255,.6) .5px,transparent .5px);background-size:3px 3px}
+  #map{position:absolute;inset:0;z-index:1;display:block;cursor:grab;touch-action:none}
+  #map.drag{cursor:grabbing}
+
+  .chrome{position:absolute;inset:0;z-index:3;pointer-events:none;
+    padding:24px clamp(16px,4vw,52px) 30px}
+  .chrome a{pointer-events:auto}
+  .mtop{display:flex;justify-content:space-between;align-items:baseline;gap:20px}
+  .mtop .logo{font-size:1.05rem;letter-spacing:.02em}
+  .mtop .meta{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--bone-dim);text-align:right;line-height:1.7}
+  .hint{position:absolute;left:50%;top:50%;transform:translate(-50%,120px);font-family:var(--mono);
+    font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(138,128,105,.7);
+    opacity:0;transition:opacity 1.2s ease 1.4s;text-align:center}
+  .hint.show{opacity:1}
+  .hbot{position:absolute;left:clamp(16px,4vw,52px);right:clamp(16px,4vw,52px);bottom:30px;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+  .hbot .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--bone-dim);line-height:1.7;max-width:40ch}
+  .cta{display:inline-flex;align-items:center;gap:11px;font-family:var(--mono);font-size:.7rem;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--bone);text-decoration:none;
+    border-bottom:1px solid rgba(198,161,91,.5);padding-bottom:6px;transition:color .3s,border-color .3s}
+  .cta:hover,.cta:focus-visible{color:var(--accent);border-color:var(--accent)}
+  .cta svg{width:24px;height:12px}.cta path{stroke:currentColor;stroke-width:1.4;fill:none}
+  .reset{position:absolute;right:16px;bottom:16px;z-index:6;font-family:var(--mono);font-size:.62rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--bone);background:rgba(30,24,16,.86);
+    border:1px solid var(--hair);border-radius:999px;padding:9px 15px;cursor:pointer;
+    pointer-events:auto;transition:border-color .3s,color .3s}
+  .reset:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+
+<div class="page" id="page">
+  <canvas id="map"></canvas>
+  <div class="chrome">
+    <div class="mtop">
+      <div class="logo">Wed in Style</div>
+      <div class="meta">Weddings in Vietnam<br>Hanoi and Saigon / Est. 2009</div>
+    </div>
+    <div class="hint show" id="hint">Drag to wander the archive</div>
+    <div class="hbot">
+      <div class="k">Every celebration we have woven, held together by the threads that made each one singular.</div>
+      <a class="cta" href="#">Begin the conversation
+        <svg viewBox="0 0 24 12"><path d="M0 6 H22 M17 1 L22 6 L17 11"/></svg></a>
+    </div>
+    <button class="reset" id="reset" type="button">Ve trung tam</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cvs=document.getElementById('map'), ctx=cvs.getContext('2d');
+  var W,H,DPR;
+
+  // constellation in virtual space coords
+  var CX=1300, CY=880;
+  var center={x:CX,y:CY,title:'We craft glory stories',meta:'WED IN STYLE / SINCE 2009',hub:true,ph:0};
+  var stories=[
+    {x:CX-560,y:CY-300,title:'A House in the Colors of a Painting',meta:'STORY.01 / SAIGON 2026'},
+    {x:CX+430,y:CY-360,title:'Coincidence',meta:'STORY.02 / HANOI 2025'},
+    {x:CX+640,y:CY+140,title:'At 1,600 Meters',meta:'STORY.03 / SAPA 2025'},
+    {x:CX+220,y:CY+430,title:'The River Remembers',meta:'STORY.04 / HOI AN 2024'},
+    {x:CX-360,y:CY+400,title:'The Museum of Us',meta:'STORY.05 / NINH BINH 2023'},
+    {x:CX-720,y:CY+120,title:'A Garden Neither Grew Up In',meta:'STORY.06 / DA LAT 2024'},
+    {x:CX-140,y:CY-470,title:'Ace of Heart',meta:'STORY.07 / HANOI 2023'},
+    {x:CX+860,y:CY-120,title:'Longing, Homeward',meta:'STORY.08 / HUE 2022'},
+    {x:CX-880,y:CY-260,title:'Salt and Ginger',meta:'STORY.09 / HANOI 2022'}
+  ];
+  stories.forEach(function(s,i){s.ph=i*1.7;});
+  center.ph=0;
+  var nodes=[center].concat(stories);
+  // links: each story to hub + to next story (a woven ring)
+  var links=[];
+  stories.forEach(function(s,i){
+    links.push([0,i+1]);
+    links.push([i+1, (i+1)%stories.length + 1]);
+  });
+
+  var panX=0,panY=0,tPanX=0,tPanY=0;
+  var dragging=false,last=null,vel={x:0,y:0};
+  var mouse={x:-1e4,y:-1e4}, hoverIdx=-1, startT=0;
+
+  function resize(){
+    DPR=Math.min(2,window.devicePixelRatio||1);
+    W=window.innerWidth; H=window.innerHeight;
+    cvs.width=Math.floor(W*DPR); cvs.height=Math.floor(H*DPR);
+    cvs.style.width=W+'px'; cvs.style.height=H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    center.x=CX; center.y=CY;
+  }
+  function centerPan(){ tPanX=W/2-CX; tPanY=H/2-CY; if(startT===0){panX=tPanX;panY=tPanY;} }
+
+  function bob(n,t){ return {x:n.x+(reduce?0:Math.sin(t*0.0006+n.ph)*7), y:n.y+(reduce?0:Math.cos(t*0.0005+n.ph)*7)}; }
+
+  function draw(t){
+    if(!startT)startT=t; var el=t-startT;
+    // ease pan toward target (used by reset / inertia settle)
+    panX+=(tPanX-panX)*0.08; panY+=(tPanY-panY)*0.08;
+    if(!dragging){ tPanX+=vel.x; tPanY+=vel.y; vel.x*=0.92; vel.y*=0.92; }
+    ctx.clearRect(0,0,W,H);
+    // compute draw positions
+    var pos=nodes.map(function(n){var b=bob(n,el);return {x:b.x+panX, y:b.y+panY};});
+    // hover detection
+    hoverIdx=-1; var best=1e9;
+    for(var i=1;i<nodes.length;i++){var dx=pos[i].x-mouse.x,dy=pos[i].y-mouse.y,d=dx*dx+dy*dy; if(d<best&&d<9000){best=d;hoverIdx=i;}}
+    // threads
+    for(var l=0;l<links.length;l++){
+      var a=pos[links[l][0]], b=pos[links[l][1]];
+      var hot=(hoverIdx===links[l][0]||hoverIdx===links[l][1]);
+      ctx.strokeStyle= hot?'rgba(198,161,91,0.55)':'rgba(198,161,91,0.14)';
+      ctx.lineWidth= hot?1.1:0.6;
+      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+    }
+    // nodes
+    for(var n=0;n<nodes.length;n++){
+      var nd=nodes[n], p=pos[n], hub=nd.hub, hov=(n===hoverIdx);
+      // dot
+      ctx.beginPath(); ctx.arc(p.x,p.y, hub?5.5:(hov?4.5:3), 0, 6.2832);
+      ctx.fillStyle= hub?'#ECE4D2':(hov?'#C15E2C':'#C6A15B'); ctx.fill();
+      if(hub){ ctx.beginPath(); ctx.arc(p.x,p.y,11,0,6.2832); ctx.strokeStyle='rgba(198,161,91,.4)'; ctx.lineWidth=1; ctx.stroke(); }
+      // label
+      var ty=p.y - (hub?26:16);
+      ctx.textAlign='center';
+      ctx.fillStyle= hub?'#ECE4D2':(hov?'#ECE4D2':'rgba(236,228,210,0.82)');
+      ctx.font=(hub?'400 30px ':(hov?'400 26px ':'400 22px '))+'"Palatino Linotype",Georgia,serif';
+      ctx.fillText(nd.title, p.x, ty);
+      // meta
+      ctx.fillStyle= hov||hub?'rgba(198,161,91,0.95)':'rgba(138,128,105,0.85)';
+      ctx.font='11px '+'ui-monospace,monospace';
+      if(ctx.letterSpacing!==undefined) ctx.letterSpacing='2px';
+      ctx.fillText(nd.meta, p.x, p.y + (hub?24:18));
+      if(ctx.letterSpacing!==undefined) ctx.letterSpacing='0px';
+    }
+    cvs.style.cursor = dragging?'grabbing':(hoverIdx>0?'pointer':'grab');
+    requestAnimationFrame(draw);
+  }
+
+  // clamp target pan so constellation stays roughly in view
+  function clampTarget(){
+    var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+    nodes.forEach(function(n){minX=Math.min(minX,n.x);maxX=Math.max(maxX,n.x);minY=Math.min(minY,n.y);maxY=Math.max(maxY,n.y);});
+    var m=260;
+    tPanX=Math.min(m-minX, Math.max(W-m-maxX, tPanX));
+    tPanY=Math.min(m-minY, Math.max(H-m-maxY, tPanY));
+  }
+
+  function pt(e){ return e.touches?e.touches[0]:e; }
+  cvs.addEventListener('pointerdown',function(e){dragging=true;last={x:e.clientX,y:e.clientY};vel={x:0,y:0};document.getElementById('hint').classList.remove('show');cvs.classList.add('drag');cvs.setPointerCapture&&cvs.setPointerCapture(e.pointerId);});
+  window.addEventListener('pointermove',function(e){
+    var r=cvs.getBoundingClientRect(); mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top;
+    if(dragging&&last){var dx=e.clientX-last.x,dy=e.clientY-last.y; tPanX+=dx;tPanY+=dy;panX+=dx;panY+=dy;vel.x=dx*0.6;vel.y=dy*0.6;last={x:e.clientX,y:e.clientY};clampTarget();}
+  });
+  window.addEventListener('pointerup',function(){dragging=false;last=null;cvs.classList.remove('drag');clampTarget();});
+  cvs.addEventListener('click',function(e){
+    if(hoverIdx>0){ var n=nodes[hoverIdx]; tPanX=W/2-n.x; tPanY=H/2-n.y; clampTarget(); }
+  });
+
+  document.getElementById('reset').addEventListener('click',function(){tPanX=W/2-CX;tPanY=H/2-CY;});
+
+  var rt=null; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){resize();clampTarget();},160);});
+  resize(); centerPan(); requestAnimationFrame(draw);
+})();
+</script>
+
+</body>
+</html>

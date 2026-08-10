@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Preload</title>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+  :root{
+    --ink:#160F08; --ink2:#1E160D; --bone:#EEE6D4; --dim:#9A8E76; --gold:#C6A15B;
+    --title:'Mirage','Palatino Linotype',Georgia,serif;
+    --body:'SweetSans','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body);overflow:hidden}
+
+  /* hero placeholder revealed underneath */
+  .hero{position:fixed;inset:0;z-index:1;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;padding:0 6vw;
+    background:radial-gradient(120% 90% at 50% 35%,#241a10,#140e07)}
+  .hero h1{font-family:var(--title);font-size:clamp(2.6rem,7vw,7rem);font-weight:400;margin:0;letter-spacing:-.01em;line-height:.98}
+  .hero .n{margin-top:26px;font-family:var(--body);font-size:.62rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--dim)}
+
+  /* preload overlay */
+  .pl{position:fixed;inset:0;z-index:10;background:var(--ink);overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:transform 1s cubic-bezier(.76,0,.14,1)}
+  .pl.lift{transform:translateY(-101%)}
+  .pl::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;
+    background-image:radial-gradient(rgba(255,240,210,.6) .5px,transparent .5px);background-size:3px 3px}
+
+  img.bglogo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:clamp(506px,79vw,1144px);height:auto;z-index:0;pointer-events:none;
+    filter:brightness(0) invert(1);opacity:0;transition:opacity 1.6s ease}
+  img.bglogo.in{opacity:.16}
+
+  .deck{position:relative;z-index:2;width:clamp(214px,25vw,360px);aspect-ratio:2/3;
+    box-shadow:0 40px 90px rgba(0,0,0,.6)}
+  .card{position:absolute;inset:0;overflow:hidden;opacity:0;
+    transform:scale(.08);transform-origin:center center;
+    transition:opacity .25s ease,transform .6s cubic-bezier(.2,.72,.16,1)}
+  .card.show{opacity:1;transform:scale(1)}
+  .card img{width:calc(100% + 2px);height:calc(100% + 2px);object-fit:cover;display:block;
+    filter:brightness(.98) saturate(.98)}
+  .card::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(238,230,212,.10)}
+
+  .pl-foot{position:absolute;z-index:3;bottom:8vh;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:16px;width:min(360px,64vw)}
+  .counter{font-family:var(--body);font-size:.9rem;letter-spacing:.28em;color:var(--gold)}
+  .bar{width:100%;height:1px;background:rgba(198,161,91,.22);position:relative;overflow:hidden}
+  .bar i{position:absolute;left:0;top:0;height:100%;width:0;background:var(--gold);display:block}
+  .cap{font-family:var(--body);font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+
+  .replay{position:fixed;right:16px;bottom:16px;z-index:20;font-family:var(--body);font-size:.62rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--bone);background:rgba(30,22,13,.86);
+    border:1px solid rgba(198,161,91,.3);border-radius:999px;padding:9px 15px;cursor:pointer}
+  .replay:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+</head>
+<body>
+  <section class="hero">
+    <h1>We craft glory stories.</h1>
+    <div class="n">Hero la section rieng - day chi la nen de preload mo ra</div>
+  </section>
+
+  <div class="pl" id="pl">
+    <img class="bglogo" id="bglogo" src="../assets/wis_logo_mark.svg" alt="Wed in Style">
+    <div class="deck" id="deck"></div>
+    <div class="pl-foot">
+      <div class="counter" id="counter">[000]</div>
+      <div class="bar"><i id="bar"></i></div>
+      <div class="cap">Premium Wedding Planner in Vietnam</div>
+    </div>
+  </div>
+
+  <button class="replay" id="replay" type="button">Xem lai</button>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var imgs=['../assets/preload/p1_davidthuy.jpg','../assets/preload/p2_snp.jpg','../assets/preload/p3_catherine.jpg','../assets/preload/p4_km.jpg','../assets/preload/p5_vdn.jpg'];
+  var N=10, DUR=3200;
+  var deck=document.getElementById('deck'), counter=document.getElementById('counter'),
+      bar=document.getElementById('bar'), pl=document.getElementById('pl'), logo=document.getElementById('bglogo');
+  var cards=[];
+
+  function build(){
+    deck.innerHTML=''; cards=[];
+    for(var i=0;i<N;i++){
+      var c=document.createElement('div'); c.className='card';
+      var im=document.createElement('img'); im.src=imgs[i%imgs.length]; im.alt='';
+      c.appendChild(im); deck.appendChild(c); cards.push(c);
+    }
+  }
+  function pad(n){n=Math.max(0,Math.min(100,n|0));return '['+('00'+n).slice(-3)+']';}
+
+  var raf=null;
+  function run(){
+    if(raf)cancelAnimationFrame(raf);
+    cards.forEach(function(c){c.classList.remove('show');});
+    pl.classList.remove('lift'); logo.classList.add('in');
+    counter.textContent='[000]'; bar.style.width='0%';
+    if(reduce){
+      cards.forEach(function(c){c.classList.add('show');});
+      counter.textContent='[100]'; bar.style.width='100%';
+      setTimeout(function(){pl.classList.add('lift');},700); return;
+    }
+    var t0=null, shown=0;
+    function step(t){
+      if(t0===null)t0=t;
+      var p=Math.min(1,(t-t0)/DUR);
+      var target=Math.max(1,Math.floor(p*N));
+      for(;shown<target;shown++){ if(cards[shown]) cards[shown].classList.add('show'); }
+      counter.textContent=pad(p*100); bar.style.width=(p*100).toFixed(1)+'%';
+      if(p<1){raf=requestAnimationFrame(step);}
+      else{ counter.textContent='[100]'; for(;shown<N;shown++){if(cards[shown])cards[shown].classList.add('show');}
+            setTimeout(function(){pl.classList.add('lift');},450); }
+    }
+    raf=requestAnimationFrame(step);
+  }
+
+  document.getElementById('replay').addEventListener('click',run);
+  build(); run();
+})();
+</script>
+</body>
+</html>

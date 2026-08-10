@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS - Hero</title>
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+  :root{
+    --ink:#160F08; --bone:#EEE6D4; --dim:#9A8E76; --gold:#C6A15B;
+    --title:'Mirage','Palatino Linotype',Georgia,serif;
+    --body:'SweetSans','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body);overflow:hidden}
+
+  /* ---------- PRELOAD ---------- */
+  .pl{position:fixed;inset:0;z-index:10;background:var(--ink);overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .pl::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;z-index:5;
+    background-image:radial-gradient(rgba(255,240,210,.6) .5px,transparent .5px);background-size:3px 3px}
+  img.bglogo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:clamp(506px,79vw,1144px);height:auto;z-index:0;pointer-events:none;
+    filter:brightness(0) invert(1);opacity:0;transition:opacity 1.6s ease}
+  img.bglogo.in{opacity:.16}
+  .deck{position:relative;z-index:2;width:clamp(214px,25vw,360px);aspect-ratio:2/3;
+    box-shadow:0 40px 90px rgba(0,0,0,.6)}
+  .card{position:absolute;inset:0;overflow:hidden;opacity:0;
+    transform:scale(.08);transform-origin:center center;
+    transition:opacity .25s ease,transform .6s cubic-bezier(.2,.72,.16,1)}
+  .card.show{opacity:1;transform:scale(1)}
+  .card img{width:calc(100% + 2px);height:calc(100% + 2px);object-fit:cover;display:block}
+  .card.lastcard img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:100vw;height:100vh;max-width:none;max-height:none;object-fit:cover}
+  .pl-foot{position:absolute;z-index:3;bottom:8vh;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:16px;width:min(360px,64vw);transition:opacity .5s ease}
+  .counter{font-family:var(--body);font-size:.9rem;letter-spacing:.28em;color:var(--gold)}
+  .bar{width:100%;height:1px;background:rgba(198,161,91,.22);position:relative;overflow:hidden}
+  .bar i{position:absolute;left:0;top:0;height:100%;width:0;background:var(--gold);display:block}
+  .cap{font-family:var(--body);font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+
+  /* ---------- BANNER SLIDESHOW ---------- */
+  .slide{position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;z-index:12;opacity:0;
+    transition:opacity 1.9s ease}
+  .slide.on{opacity:1}
+
+  /* ---------- HERO ---------- */
+  .hero{position:fixed;inset:0;z-index:20;opacity:0;pointer-events:none;color:var(--bone);transition:opacity .5s ease}
+  .hero.on{opacity:1;pointer-events:auto}
+  .veil{position:absolute;inset:0;
+    background:linear-gradient(to bottom,rgba(12,8,3,.50),rgba(12,8,3,.10) 26%,rgba(12,8,3,.16) 56%,rgba(12,8,3,.60))}
+  .nav{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;
+    justify-content:space-between;padding:26px clamp(20px,4vw,56px);gap:20px}
+  .nav .logo{position:absolute;left:50%;top:24px;transform:translateX(-50%);
+    width:clamp(78px,8vw,116px);height:auto;filter:brightness(0) invert(1);opacity:.96}
+  .nav-left{display:flex;gap:22px}
+  .nav-left a,.menu{font-family:var(--body);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(238,230,212,.9);text-decoration:none;transition:opacity .3s}
+  .nav-left a:hover,.menu:hover{opacity:.55}
+  .menu{display:inline-flex;align-items:center;gap:11px;background:none;border:0;cursor:pointer;padding:0}
+  .menu .mlines{width:24px;height:9px;position:relative;display:inline-block}
+  .menu .mlines::before,.menu .mlines::after{content:"";position:absolute;left:0;right:0;height:1px;background:currentColor}
+  .menu .mlines::before{top:1px}.menu .mlines::after{bottom:1px}
+
+  /* scattered headline words */
+  .word{position:absolute;z-index:2;font-family:var(--title);font-weight:400;
+    font-size:10.42vw;line-height:.96;letter-spacing:-.01em;white-space:nowrap;color:var(--bone);
+    text-shadow:0 4px 44px rgba(0,0,0,.32);
+    opacity:0;filter:blur(12px);transition:opacity 1.5s ease,filter 1.7s ease}
+  .word.in{opacity:1;filter:blur(0)}
+  .word.wc{transform:translateX(-50%)}
+
+  .eyebrow{position:absolute;z-index:2;left:50%;top:96.5%;transform:translateX(-50%);
+    font-family:var(--body);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:rgba(238,230,212,.92);white-space:nowrap;opacity:0;transition:opacity 1.4s ease}
+  .eyebrow.in{opacity:1}
+
+  .replay{position:fixed;right:16px;bottom:16px;z-index:40;font-family:var(--body);font-size:.62rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--bone);background:rgba(30,22,13,.86);
+    border:1px solid rgba(198,161,91,.3);border-radius:999px;padding:9px 15px;cursor:pointer}
+  .replay:hover{border-color:var(--gold);color:var(--gold)}
+
+  @media(prefers-reduced-motion:reduce){
+    .word,.eyebrow{opacity:1!important;filter:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+  <div class="pl" id="pl">
+    <img class="bglogo" id="bglogo" src="../assets/wis_logo_mark.svg" alt="Wed in Style">
+    <div class="deck" id="deck"></div>
+    <div class="pl-foot" id="foot">
+      <div class="counter" id="counter">[000]</div>
+      <div class="bar"><i id="bar"></i></div>
+      <div class="cap">Premium Wedding Planner in Vietnam</div>
+    </div>
+  </div>
+
+  <img class="slide" src="../assets/preload/hero_ninhbinh.jpg" alt="">
+  <img class="slide" src="../assets/preload/p3_catherine.jpg" alt="">
+  <img class="slide" src="../assets/preload/p2_snp.jpg" alt="">
+  <img class="slide" src="../assets/preload/p1_davidthuy.jpg" alt="">
+  <img class="slide" src="../assets/preload/p5_vdn.jpg" alt="">
+
+  <div class="hero" id="hero">
+    <div class="veil"></div>
+    <header class="nav">
+      <div class="nav-left"><a href="#">Instagram</a><a href="#">Facebook</a></div>
+      <img class="logo" src="../assets/wis_logo_mark.svg" alt="Wed in Style">
+      <button class="menu" type="button"><span class="mlines"></span>Menu</button>
+    </header>
+    <span class="word wc" style="left:50%;top:12.13%">We</span>
+    <span class="word" style="left:3.49%;top:26.94%">craft</span>
+    <span class="word" style="right:2.66%;top:57.96%">glory</span>
+    <span class="word wc" style="left:51.85%;top:72.78%">stories.</span>
+    <div class="eyebrow">Weddings in Vietnam, since 2009</div>
+  </div>
+
+  <button class="replay" id="replay" type="button">Xem lai</button>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var imgs=['../assets/preload/p1_davidthuy.jpg','../assets/preload/p2_snp.jpg','../assets/preload/p3_catherine.jpg','../assets/preload/p4_km.jpg','../assets/preload/hero_ninhbinh.jpg'];
+  var N=10, DUR=3200;
+  var deck=document.getElementById('deck'), counter=document.getElementById('counter'), bar=document.getElementById('bar'),
+      pl=document.getElementById('pl'), bglogo=document.getElementById('bglogo'), foot=document.getElementById('foot'),
+      hero=document.getElementById('hero');
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var cards=[], slideTimer=null;
+
+  function build(){
+    deck.innerHTML=''; cards=[];
+    for(var i=0;i<N;i++){
+      var c=document.createElement('div'); c.className='card'+(i===N-1?' lastcard':'');
+      var im=document.createElement('img'); im.src=imgs[i%imgs.length]; im.alt='';
+      c.appendChild(im); deck.appendChild(c); cards.push(c);
+    }
+  }
+  function pad(n){n=Math.max(0,Math.min(100,n|0));return '['+('00'+n).slice(-3)+']';}
+
+  function startSlides(){
+    if(reduce||slideTimer) return;
+    var cur=0, zc=12;
+    slideTimer=setInterval(function(){
+      var nx=(cur+1)%slides.length; zc++;
+      slides[nx].style.zIndex=zc; slides[nx].classList.add('on');
+      var prev=cur;
+      setTimeout(function(){ slides[prev].classList.remove('on'); }, 1900);
+      cur=nx;
+    }, 3800);
+  }
+
+  function revealHero(){
+    // slide 0 = exact same image/framing as the expanded card; show it INSTANTLY (no fade gap)
+    slides[0].style.transition='none';
+    slides[0].classList.add('on');
+    slides[0].getBoundingClientRect();
+    requestAnimationFrame(function(){ slides[0].style.transition=''; });
+    // drop the whole preload layer (expanded card + the other stacked cards) so nothing flashes through
+    pl.style.display='none';
+    hero.classList.add('on');
+    var ws=hero.querySelectorAll('.word');
+    if(reduce){ ws.forEach(function(w){w.classList.add('in');}); hero.querySelector('.eyebrow').classList.add('in'); startSlides(); return; }
+    ws.forEach(function(w,i){ setTimeout(function(){ w.classList.add('in'); }, i*430+250); });
+    setTimeout(function(){ hero.querySelector('.eyebrow').classList.add('in'); }, ws.length*430+400);
+    startSlides();
+  }
+
+  function expand(){
+    var last=cards[N-1];
+    var r=last.getBoundingClientRect();
+    last.style.transition='none'; last.style.zIndex='13'; last.style.position='fixed'; last.style.margin='0'; last.style.transform='none';
+    last.style.top=Math.round(r.top)+'px'; last.style.left=Math.round(r.left)+'px';
+    last.style.width=Math.round(r.width)+'px'; last.style.height=Math.round(r.height)+'px';
+    last.getBoundingClientRect();
+    bglogo.style.transition='opacity .5s ease'; bglogo.style.opacity='0'; foot.style.opacity='0';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      last.style.transition='top 1.15s cubic-bezier(.76,0,.14,1),left 1.15s cubic-bezier(.76,0,.14,1),width 1.15s cubic-bezier(.76,0,.14,1),height 1.15s cubic-bezier(.76,0,.14,1)';
+      last.style.top='0px'; last.style.left='0px'; last.style.width='100vw'; last.style.height='100vh';
+    });});
+    setTimeout(revealHero, 1250);
+  }
+
+  var raf=null;
+  function run(){
+    if(raf)cancelAnimationFrame(raf);
+    if(slideTimer){clearInterval(slideTimer);slideTimer=null;}
+    build();
+    pl.style.display='';
+    slides.forEach(function(s){s.classList.remove('on');s.style.zIndex='';s.style.transition='';});
+    bglogo.classList.remove('in'); bglogo.style.opacity=''; bglogo.style.transition=''; foot.style.opacity='';
+    hero.classList.remove('on'); hero.querySelectorAll('.word,.eyebrow').forEach(function(e){e.classList.remove('in');});
+    counter.textContent='[000]'; bar.style.width='0%'; bglogo.classList.add('in');
+    if(reduce){
+      cards.forEach(function(c){c.classList.add('show');});
+      var last=cards[N-1]; last.style.position='fixed';last.style.top='0';last.style.left='0';last.style.width='100vw';last.style.height='100vh';last.style.transform='none';last.style.zIndex='13';
+      counter.textContent='[100]'; bar.style.width='100%'; bglogo.style.opacity='0'; foot.style.opacity='0';
+      setTimeout(revealHero,250); return;
+    }
+    var t0=null, shown=0;
+    function step(t){
+      if(t0===null)t0=t;
+      var p=Math.min(1,(t-t0)/DUR);
+      var target=Math.max(1,Math.floor(p*N));
+      for(;shown<target;shown++){ if(cards[shown]) cards[shown].classList.add('show'); }
+      counter.textContent=pad(p*100); bar.style.width=(p*100).toFixed(1)+'%';
+      if(p<1){raf=requestAnimationFrame(step);}
+      else{ counter.textContent='[100]'; for(;shown<N;shown++){if(cards[shown])cards[shown].classList.add('show');} setTimeout(expand,450); }
+    }
+    raf=requestAnimationFrame(step);
+  }
+
+  document.getElementById('replay').addEventListener('click',run);
+  run();
+})();
+</script>
+</body>
+</html>

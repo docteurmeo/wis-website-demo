@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catherine & Johnny - Love Flavor | Wed in Style</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+  :root{
+    --ink:#160F08; --bone:#EEE6D4; --dim:#9A8E76; --gold:#C6A15B;
+    --title:'Mirage','Palatino Linotype',Georgia,serif;
+    --body:'SweetSans','Helvetica Neue',Arial,sans-serif;
+    --pad:clamp(22px,4vw,56px);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body);overflow-x:hidden}
+  .eyebrow{font-family:var(--body);font-weight:500;font-size:clamp(.62rem,.66vw,.78rem);letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+  .fig{font-family:var(--body);font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+
+  /* header */
+  .hd{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:24px var(--pad);transition:background .4s ease}
+  .hd img{width:clamp(64px,6vw,92px);height:auto;filter:brightness(0) invert(1);opacity:.95}
+  .hd a{font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,230,212,.9);text-decoration:none;transition:opacity .3s}
+  .hd a:hover{opacity:.55}
+
+  /* reveal signatures */
+  .rv{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .in .rv{opacity:1;transform:none}
+  .in .d1{transition-delay:.12s} .in .d2{transition-delay:.24s} .in .d3{transition-delay:.36s}
+  .wipe{overflow:hidden}
+  .wipe img{clip-path:inset(0 0 0 100%);transition:clip-path 1.05s cubic-bezier(.76,0,.2,1)}
+  .in .wipe img,.wipe.in img{clip-path:inset(0 0 0 0)}
+  .hw{display:inline-block;opacity:0;filter:blur(10px);transform:translateY(12px);transition:opacity 1.2s ease,filter 1.3s ease,transform 1.3s cubic-bezier(.16,1,.3,1)}
+  .hw.in{opacity:1;filter:blur(0);transform:none}
+
+  /* B02 hero off-canvas */
+  .hero{position:relative;height:100vh;overflow:hidden}
+  .hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:kb 16s ease-out forwards}
+  @keyframes kb{to{transform:scale(1)}}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,8,3,.5),rgba(12,8,3,.1) 30%,rgba(12,8,3,.18) 58%,rgba(12,8,3,.78))}
+  .hero-margin{position:absolute;left:clamp(14px,2vw,30px);top:0;bottom:0;display:flex;align-items:center;z-index:3}
+  .hero-margin span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--body);font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(238,230,212,.7)}
+  .hero-cap{position:absolute;left:var(--pad);right:var(--pad);bottom:10vh;z-index:2}
+  .hero-cap .tag{display:block;margin-bottom:22px}
+  .hero-cap h1{font-family:var(--title);font-weight:400;font-size:clamp(2.8rem,11vw,12rem);line-height:.9;letter-spacing:-.01em;color:var(--bone);margin:0;text-shadow:0 4px 50px rgba(0,0,0,.4);white-space:nowrap}
+  .hero-cap .loc{display:block;margin-top:26px;font-family:var(--body);font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(238,230,212,.85)}
+
+  /* meta strip (short credits) */
+  .meta{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(20px,2.5vw,44px);padding:8vh var(--pad);border-bottom:1px solid rgba(238,230,212,.12)}
+  .meta .k{font-family:var(--body);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+  .meta .v{font-family:var(--title);font-weight:400;font-size:clamp(.95rem,1.05vw,1.2rem);color:var(--bone)}
+
+  /* B03 breath */
+  .breath{min-height:78vh;display:flex;align-items:center;padding:14vh var(--pad)}
+  .breath p{font-family:var(--title);font-weight:400;font-size:clamp(1.8rem,3.6vw,4rem);line-height:1.24;color:var(--bone);margin:0;max-width:20ch}
+  .breath.c2{justify-content:flex-end;text-align:right}
+
+  /* Vision */
+  .vision{padding:14vh var(--pad);display:grid;grid-template-columns:.4fr .6fr;gap:clamp(30px,5vw,90px)}
+  .vision .lead{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2vw,2.3rem);line-height:1.3;color:var(--gold);margin:.6em 0 0}
+  .vision .body{font-family:var(--body);font-weight:300;font-size:clamp(1.02rem,1.1vw,1.28rem);line-height:1.78;color:rgba(238,230,212,.86);margin:0;max-width:52ch}
+  .vision .body+.body{margin-top:1.3em}
+
+  /* B04 full-bleed */
+  .fb{position:relative;height:100vh;overflow:hidden}
+  .fb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 0 0 100%);transition:clip-path 1.1s cubic-bezier(.76,0,.2,1)}
+  .fb.in img{clip-path:inset(0 0 0 0)}
+  .fb .chap{position:absolute;left:var(--pad);bottom:8vh;z-index:2;font-family:var(--body);font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(238,230,212,.85)}
+
+  /* B05 diptych text */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,110px);align-items:center;padding:14vh var(--pad)}
+  .two.rev .col-fig{order:2}
+  .col-fig{position:relative;overflow:hidden;aspect-ratio:4/5}
+  .col-fig img{width:100%;height:100%;object-fit:cover;display:block;clip-path:inset(0 0 0 100%);transition:clip-path 1.05s cubic-bezier(.76,0,.2,1)}
+  .two.in .col-fig img{clip-path:inset(0 0 0 0)}
+  .col-txt{max-width:44ch}
+  .p-lead{font-family:var(--title);font-weight:400;font-size:clamp(1.2rem,1.7vw,1.9rem);line-height:1.4;color:var(--gold);margin:.8em 0 1em}
+  .p-body{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.06vw,1.22rem);line-height:1.75;color:rgba(238,230,212,.86);margin:0}
+
+  /* B14 mask chapter */
+  .mask{min-height:74vh;display:flex;align-items:center;justify-content:center;padding:10vh var(--pad);text-align:center}
+  .mask .w{font-family:var(--title);font-weight:400;font-size:clamp(4rem,20vw,20rem);line-height:.9;letter-spacing:-.01em;
+    background-position:center;background-size:cover;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .mask .cl{display:block;margin-bottom:20px}
+
+  /* B06 text 20/80 */
+  .t2080{display:grid;grid-template-columns:1fr clamp(150px,20vw,320px);gap:clamp(30px,5vw,80px);padding:16vh var(--pad);align-items:center}
+  .t2080 .t-main{min-width:0}
+  .t2080 h2{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4.6vw,5rem);line-height:1.08;color:var(--bone);margin:0;max-width:20ch}
+  .t2080 .small{width:100%;aspect-ratio:3/4;overflow:hidden;align-self:start}
+  .t2080 .small img{width:100%;height:100%;object-fit:cover;display:block;clip-path:inset(0 0 0 100%);transition:clip-path 1.05s cubic-bezier(.76,0,.2,1)}
+  .t2080.in .small img{clip-path:inset(0 0 0 0)}
+  .t2080 .note{margin-top:5vh;max-width:40ch;font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.06vw,1.2rem);line-height:1.75;color:rgba(238,230,212,.8)}
+
+  /* B07 triptych staggered */
+  .trip{padding:12vh var(--pad)}
+  .trip .lead{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2vw,2.3rem);color:var(--gold);margin:0 0 clamp(40px,5vw,72px);max-width:24ch}
+  .trip-row{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,40px);align-items:start}
+  .trip-row figure{margin:0}
+  .trip-row .t2{margin-top:9vh} .trip-row .t3{margin-top:4vh}
+  .trip-row .ph{overflow:hidden;aspect-ratio:3/4}
+  .trip-row img{width:100%;height:100%;object-fit:cover;display:block;clip-path:inset(0 0 0 100%);transition:clip-path 1.05s cubic-bezier(.76,0,.2,1)}
+  .trip.in .ph img{clip-path:inset(0 0 0 0)}
+  .trip figcaption{margin-top:14px}
+
+  /* detail cluster */
+  .det{padding:12vh var(--pad)}
+  .det .lab{margin-bottom:clamp(30px,4vw,56px)}
+  .det-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,28px)}
+  .det-grid .ph{overflow:hidden;aspect-ratio:1/1}
+  .det-grid img{width:100%;height:100%;object-fit:cover;display:block;clip-path:inset(0 0 0 100%);transition:clip-path 1s cubic-bezier(.76,0,.2,1)}
+  .det.in .ph img{clip-path:inset(0 0 0 0)}
+
+  /* IMAGE SET - overlap (grid based, template-safe: no per-image pixel positions) */
+  .col{position:relative;padding:12vh var(--pad)}
+  .col .cline{position:relative;z-index:3;text-align:center;font-family:var(--title);font-weight:400;font-size:clamp(1.6rem,2.6vw,3rem);line-height:1.3;color:var(--bone);max-width:22ch;margin:0 auto clamp(40px,6vw,90px)}
+  .col-stack{position:relative;z-index:1;display:grid;grid-template-columns:repeat(12,1fr)}
+  .col-stack .ph{grid-row:1;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+  .col-stack .ph img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transform:translateY(40px) scale(1.04);transition:opacity 1s ease,transform 1.2s cubic-bezier(.16,1,.3,1)}
+  .col.in .ph img{opacity:1;transform:none}
+  .col-stack .ph:nth-child(1){grid-column:1 / 8;aspect-ratio:4/5;z-index:1}
+  .col-stack .ph:nth-child(2){grid-column:7 / 13;aspect-ratio:3/4;margin-top:20%;z-index:2}
+  .col-stack .ph:nth-child(3){grid-column:4 / 9;aspect-ratio:5/4;margin-top:56%;z-index:3}
+
+  /* B09 pinned journey (CSS sticky) */
+  .pj{display:grid;grid-template-columns:.42fr .58fr;gap:clamp(30px,5vw,90px);padding:0 var(--pad)}
+  .pj-text{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center}
+  .pj-text .chap{margin-bottom:26px}
+  .pj-text h2{font-family:var(--title);font-weight:400;font-size:clamp(2rem,3.4vw,3.8rem);line-height:1.08;color:var(--bone);margin:0 0 .7em;max-width:14ch}
+  .pj-text p{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.06vw,1.22rem);line-height:1.78;color:rgba(238,230,212,.84);margin:0;max-width:40ch}
+  .pj-imgs{display:flex;flex-direction:column;gap:6vh;padding:18vh 0}
+  .pj-imgs .ph{overflow:hidden;aspect-ratio:4/5}
+  .pj-imgs img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .pj-imgs .ph.in img{opacity:1;transform:none}
+
+  /* B13 climax hero */
+  .climax{position:relative;height:100vh;overflow:hidden}
+  .climax img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.14);transition:transform 2s cubic-bezier(.16,1,.3,1)}
+  .climax.in img{transform:scale(1)}
+  .climax .veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,8,3,.6),rgba(12,8,3,.05) 45%,rgba(12,8,3,.2))}
+  .climax .cap{position:absolute;left:var(--pad);right:var(--pad);bottom:11vh;z-index:2;text-align:center}
+  .climax .cap .chap{display:block;margin-bottom:18px}
+  .climax .cap p{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.6vw,3rem);line-height:1.3;color:var(--bone);margin:0 auto;max-width:22ch;text-shadow:0 3px 40px rgba(0,0,0,.4)}
+
+  /* B12 pull-quote */
+  .pq{padding:18vh var(--pad);text-align:center}
+  .pq p{font-family:var(--title);font-weight:400;font-size:clamp(1.9rem,4vw,4.6rem);line-height:1.22;color:var(--bone);margin:0 auto;max-width:20ch}
+  .pq p b{font-weight:400;color:var(--gold)}
+  .pq .by{display:block;margin-top:clamp(30px,4vh,54px);font-family:var(--body);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+
+  /* B10 contact sheet horizontal */
+  .cs{padding:12vh 0 12vh var(--pad)}
+  .cs .lab{margin-bottom:clamp(24px,3vw,44px);padding-right:var(--pad)}
+  .cs-strip{display:flex;gap:clamp(12px,1.4vw,22px);overflow-x:auto;padding-right:var(--pad);scroll-snap-type:x proximity;scrollbar-width:none}
+  .cs-strip::-webkit-scrollbar{display:none}
+  .cs-strip figure{flex:none;margin:0;height:46vh;aspect-ratio:3/4;overflow:hidden;scroll-snap-align:start}
+  .cs-strip figure.w{aspect-ratio:3/2}
+  .cs-strip img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* B15 gallery masonry */
+  .gal{padding:12vh var(--pad)}
+  .gal .lab{margin-bottom:clamp(30px,4vw,56px)}
+  .gal-wall{columns:3;column-gap:clamp(14px,1.4vw,26px)}
+  .gal-wall .gi{break-inside:avoid;margin:0 0 clamp(14px,1.4vw,26px);overflow:hidden}
+  .gal-wall .gi img{width:100%;display:block;opacity:0;transform:translateY(30px) scale(1.04);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .gal-wall .gi.in img{opacity:1;transform:none}
+
+  /* ledger credits full */
+  .led{padding:14vh var(--pad);border-top:1px solid rgba(238,230,212,.14)}
+  .led .lab{margin-bottom:clamp(40px,5vw,72px)}
+  .led-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(30px,4vw,56px) clamp(30px,5vw,90px);max-width:1200px}
+  .led-item .k{font-family:var(--body);font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+  .led-item .v{font-family:var(--title);font-weight:400;font-size:clamp(1.1rem,1.4vw,1.6rem);color:var(--bone)}
+  .led-item .v.tba{color:var(--dim);font-style:italic;font-size:.9em}
+
+  /* related works */
+  .rel{padding:12vh var(--pad)}
+  .rel .lab{margin-bottom:clamp(36px,4vw,64px)}
+  .rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.4vw,44px)}
+  .rel-card{text-decoration:none;display:block}
+  .rel-card .ph{overflow:hidden;aspect-ratio:4/5;margin-bottom:20px}
+  .rel-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+  .rel-card:hover img{transform:scale(1.05)}
+  .rel-card .nm{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,1.7vw,2rem);color:var(--bone)}
+  .rel-card .tg{font-family:var(--body);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:8px}
+
+  /* next / cta */
+  .nx{padding:16vh var(--pad);text-align:center}
+  .nx .eyebrow{color:var(--dim)}
+  .nx h2{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4.4vw,4.6rem);line-height:1.05;color:var(--bone);margin:.4em 0 1em}
+  .cta{display:inline-block;font-family:var(--body);font-size:clamp(.68rem,.72vw,.8rem);letter-spacing:.24em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid rgba(238,230,212,.4);padding:18px 36px;transition:color .35s,border-color .35s,background .35s}
+  .cta:hover{color:var(--ink);background:var(--gold);border-color:var(--gold)}
+
+  /* footer */
+  .ft{border-top:1px solid rgba(238,230,212,.14);padding:12vh var(--pad) 3vh;overflow:hidden}
+  .ft-top{display:grid;grid-template-columns:1.3fr 1fr 1.2fr 1fr;gap:clamp(28px,3.5vw,64px);align-items:start}
+  .ft-logo{width:clamp(88px,8vw,132px);height:auto;filter:brightness(0) invert(1);opacity:.9;display:block;margin-bottom:30px}
+  .ft-anchor{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2.1vw,2.5rem);line-height:1.16;color:var(--bone);margin:0;max-width:16ch}
+  .ft-tag{display:block;margin-top:26px;font-family:var(--body);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+  .ft-label{font-family:var(--body);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+  .ft-col a,.ft-col p,.ft-col span.ln{display:block;font-family:var(--body);font-weight:300;font-size:clamp(.86rem,.92vw,1.02rem);line-height:1.5;color:rgba(238,230,212,.76);text-decoration:none;margin:0 0 12px;transition:color .3s}
+  .ft-col a:hover{color:var(--gold)}
+  .ft-mark{font-family:var(--title);font-weight:400;font-size:17.5vw;line-height:.9;letter-spacing:-.02em;text-align:center;white-space:nowrap;margin:clamp(40px,6vw,90px) 0 0;--mx:50%;--my:50%;background:radial-gradient(circle 26vw at var(--mx) var(--my), #edd49b 0%, var(--gold) 26%, #2c2114 62%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .ft-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:clamp(28px,3vw,44px);padding-top:24px;border-top:1px solid rgba(238,230,212,.1);font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+
+  @media(max-width:900px){
+    .meta{grid-template-columns:1fr 1fr;gap:26px}
+    .vision,.two,.two.rev .col-fig,.pj,.t2080{grid-template-columns:1fr}
+    .two{gap:6vh} .col-fig{order:0}
+    .pj-text{position:static;height:auto;padding:10vh 0 4vh}
+    .trip-row,.det-grid,.led-grid,.rel-grid{grid-template-columns:1fr 1fr}
+    .trip-row .t2,.trip-row .t3{margin-top:0}
+    .gal-wall{columns:2}
+    .t2080 .small{width:60%;margin-top:2vh}
+    .col-stack{grid-template-columns:1fr}
+    .col-stack .ph{grid-column:1!important;grid-row:auto!important;margin-top:0!important;margin-left:0!important;margin-bottom:4vh}
+    .col .cline{margin-bottom:4vh}
+    .hero-cap h1{white-space:normal;font-size:15vw}
+    .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal}
+  }
+  @media(prefers-reduced-motion:reduce){ .rv,.hw,.gi img,.col .ph img,.pj-imgs img{opacity:1!important;transform:none!important;filter:none!important;transition:none} .wipe img,.fb img,.col-fig img,.trip .ph img,.det .ph img,.t2080 .small img{clip-path:none!important} .hero>img,.climax img{animation:none;transform:none} }
+</style>
+</head>
+<body>
+  <header class="hd" id="hd">
+    <a href="Homepage.html" aria-label="Wed in Style - home"><img src="assets/wis_logo_mark.svg" alt="Wed in Style"></a>
+    <a href="#" data-wm-open>Menu</a>
+  </header>
+
+  <!-- B02 HERO OFF-CANVAS -->
+  <section class="hero" id="hero">
+    <img src="assets/cases/cj_hero.jpg" alt="">
+    <div class="veil"></div>
+    <div class="hero-margin"><span>A Glory Story - MMXXV</span></div>
+    <div class="hero-cap">
+      <span class="eyebrow tag hw">Love Flavor</span>
+      <h1><span class="hw">Catherine</span> <span class="hw">&amp;</span> <span class="hw">Johnny</span></h1>
+      <span class="loc hw">Destination Wedding, Ninh Binh, Vietnam, 2025</span>
+    </div>
+  </section>
+
+  <!-- META STRIP -->
+  <section class="meta">
+    <div><div class="k">Wedding Planner</div><div class="v">Wed in Style</div></div>
+    <div><div class="k">Photography</div><div class="v">Mirror Wedding</div></div>
+    <div><div class="k">Film</div><div class="v">Cheese Media</div></div>
+    <div><div class="k">Venue</div><div class="v">Aravinda Resort</div></div>
+    <div><div class="k">Location</div><div class="v">Ninh Binh</div></div>
+  </section>
+
+  <!-- B03 BREATH -->
+  <section class="breath" data-rv><p class="rv">Some love stories begin with a spark. Theirs began with a cup of milk tea.</p></section>
+
+  <!-- VISION -->
+  <section class="vision" data-rv>
+    <div><span class="eyebrow rv">The Vision</span><p class="lead rv d1">Not a ceremony, but an experience.</p></div>
+    <div>
+      <p class="body rv d1">Catherine and Johnny wanted a day that could hold as much colour and joy as their story. We built the celebration around a single idea: a living palette, where every guest arrived as a bloom in a garden of love.</p>
+      <p class="body rv d2">Even the way guests reached the vows became part of the design, a slow journey across the water into a landscape that felt untouched. Nothing decorative for its own sake; every choice carried the feeling of the two of them. <span style="color:var(--dim)">[WIS duyet: bo sung yeu cau cu the cua cap doi]</span></p>
+    </div>
+  </section>
+
+  <!-- CHAPTER ONE -->
+  <section class="mask" data-rv>
+    <div><span class="eyebrow cl rv">Chapter One - The First Order</span><div class="w rv d1" style="background-image:url('assets/cases/cj_s1.jpg')">Origin</div></div>
+  </section>
+
+  <!-- B05 DIPTYCH (FIG.01) -->
+  <section class="two" data-rv>
+    <div class="col-fig"><img src="assets/cases/cj_s4.jpg" alt=""></div>
+    <div class="col-txt">
+      <span class="fig rv">FIG. 01 - The first order</span>
+      <p class="p-lead rv d1">It started with the same order, every visit.</p>
+      <p class="p-body rv d2">They first met through mutual friends, when Johnny became a regular at the milk tea shop where Catherine worked. Over time, Catherine began to recognise not just his usual order, but the quiet warmth in his smile, the way he lingered a little longer each visit. From knowing each other's favourite flavours to discovering the taste of love itself, their journey has been one of joy, connection, and sweet surprises.</p>
+    </div>
+  </section>
+
+  <!-- B14 MASK CHAPTER -->
+  <section class="mask" data-rv>
+    <div><span class="eyebrow cl rv">Chapter Two - A Living Palette</span><div class="w rv d1" style="background-image:url('assets/cases/cj_g1.jpg')">Colour</div></div>
+  </section>
+
+  <!-- B06 TEXT 20/80 -->
+  <section class="t2080" data-rv>
+    <div class="t-main">
+      <h2 class="rv">They chose Ninh Binh, where limestone cliffs fall into quiet water.</h2>
+      <p class="note rv d1">A region of towering cliffs, winding rivers and endless green, the perfect backdrop for a love story as vivid as theirs.</p>
+    </div>
+    <div class="small"><img src="assets/cases/cj_s2.jpg" alt=""></div>
+  </section>
+
+  <!-- B07 TRIPTYCH -->
+  <section class="trip" data-rv>
+    <p class="lead rv">Colour became the language of the day.</p>
+    <div class="trip-row">
+      <figure class="t1"><div class="ph"><img src="assets/cases/cj_g2.jpg" alt=""></div><figcaption class="fig">FIG. 02a - The flowers</figcaption></figure>
+      <figure class="t2"><div class="ph"><img src="assets/cases/cj_x2.jpg" alt=""></div><figcaption class="fig">FIG. 02b - The guests</figcaption></figure>
+      <figure class="t3"><div class="ph"><img src="assets/cases/cj_g4.jpg" alt=""></div><figcaption class="fig">FIG. 02c - The palette</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- DETAIL CLUSTER -->
+  <section class="det" data-rv>
+    <span class="eyebrow lab rv" style="color:var(--dim)">The details</span>
+    <div class="det-grid">
+      <div class="ph"><img src="assets/cases/cj_s1.jpg" alt=""></div>
+      <div class="ph"><img src="assets/cases/cj_x3.jpg" alt=""></div>
+      <div class="ph"><img src="assets/cases/cj_x4.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- IMAGE SET: overlap (grid) -->
+  <section class="col" data-rv>
+    <p class="cline rv">Everyone became a flower, coming together to make a radiant garden of love.</p>
+    <div class="col-stack">
+      <div class="ph"><img src="assets/cases/cj_g5.jpg" alt=""></div>
+      <div class="ph"><img src="assets/cases/cj_x5.jpg" alt=""></div>
+      <div class="ph"><img src="assets/cases/cj_g3.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- CHAPTER THREE -->
+  <section class="mask" data-rv>
+    <div><span class="eyebrow cl rv">Chapter Three - The Journey</span><div class="w rv d1" style="background-image:url('assets/cases/cj_s3.jpg')">River</div></div>
+  </section>
+
+  <!-- B03 BREATH -->
+  <section class="breath c2" data-rv><p class="rv">The venue could only be reached by boat.</p></section>
+
+  <!-- B09 PINNED JOURNEY -->
+  <section class="pj">
+    <div class="pj-text">
+      <h2>The journey became part of the day.</h2>
+      <p>Guests boarded small wooden boats that glided through Ninh Binh's riverways, surrounded by towering cliffs and the tranquil sounds of nature. Laughter echoed across the water, excitement sparkled in every eye, a prelude to something unforgettable.</p>
+    </div>
+    <div class="pj-imgs">
+      <div class="ph" data-rv><img src="assets/cases/cj_s3.jpg" alt=""></div>
+      <div class="ph" data-rv><img src="assets/cases/cj_x6.jpg" alt=""></div>
+      <div class="ph" data-rv><img src="assets/cases/cj_g7.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- CHAPTER FOUR -->
+  <section class="mask" data-rv>
+    <div><span class="eyebrow cl rv">Chapter Four - The Ceremony</span><div class="w rv d1" style="background-image:url('assets/cases/cj_x6.jpg')">Vow</div></div>
+  </section>
+
+  <!-- B13 CLIMAX HERO -->
+  <section class="climax" data-rv>
+    <img src="assets/cases/cj_x7.jpg" alt="">
+    <div class="veil"></div>
+    <div class="cap">
+      <p class="rv d1">Then, slowly, Catherine appeared, ethereal, like a queen butterfly emerging into her garden.</p>
+    </div>
+  </section>
+
+  <!-- B12 PULL-QUOTE -->
+  <section class="pq" data-rv>
+    <p class="rv">Their hands met, hearts full, and they exchanged vows under open skies.</p>
+    <span class="by rv d1">Ninh Binh, 2025 - [WIS: co the thay bang loi cap doi]</span>
+  </section>
+
+  <!-- B10 CONTACT SHEET -->
+  <section class="cs">
+    <span class="eyebrow lab" style="color:var(--dim)">The day, in fragments</span>
+    <div class="cs-strip">
+      <figure><img src="assets/cases/cj_g6.jpg" alt=""></figure>
+      <figure><img src="assets/cases/cj_x8.jpg" alt=""></figure>
+      <figure><img src="assets/cases/cj_x1.jpg" alt=""></figure>
+      <figure><img src="assets/cases/cj_g4.jpg" alt=""></figure>
+      <figure><img src="assets/cases/cj_s2.jpg" alt=""></figure>
+      <figure><img src="assets/cases/cj_x3.jpg" alt=""></figure>
+      <figure><img src="assets/cases/cj_g2.jpg" alt=""></figure>
+    </div>
+  </section>
+
+  <!-- B15 GALLERY -->
+  <section class="gal">
+    <span class="eyebrow lab" style="color:var(--dim)">Selected frames</span>
+    <div class="gal-wall">
+      <div class="gi" data-rv><img src="assets/cases/cj_g1.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_x2.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_s1.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_g3.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_x4.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_s4.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_x5.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_g5.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_s3.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_x6.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_g7.jpg" alt=""></div>
+      <div class="gi" data-rv><img src="assets/cases/cj_x7.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- LEDGER (full credits) -->
+  <section class="led">
+    <span class="eyebrow lab" style="color:var(--dim)">Credits</span>
+    <div class="led-grid">
+      <div class="led-item"><div class="k">Wedding Planner</div><div class="v">Wed in Style</div></div>
+      <div class="led-item"><div class="k">Photography</div><div class="v">Mirror Wedding Photographer</div></div>
+      <div class="led-item"><div class="k">Film</div><div class="v">Cheese Media</div></div>
+      <div class="led-item"><div class="k">Venue</div><div class="v">Aravinda Resort, Ninh Binh</div></div>
+      <div class="led-item"><div class="k">Master of Ceremony</div><div class="v">Chu Thu Thao</div></div>
+      <div class="led-item"><div class="k">Styling & Decor</div><div class="v tba">To be supplied</div></div>
+      <div class="led-item"><div class="k">Florals</div><div class="v tba">To be supplied</div></div>
+      <div class="led-item"><div class="k">Bride's attire</div><div class="v tba">To be supplied</div></div>
+      <div class="led-item"><div class="k">Make up & Hair</div><div class="v tba">To be supplied</div></div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="rel">
+    <span class="eyebrow lab" style="color:var(--dim)">Explore other stories</span>
+    <div class="rel-grid">
+      <a class="rel-card" href="#"><div class="ph"><img src="assets/works/km1.jpg" alt=""></div><div class="nm">Kaido &amp; Mai</div><div class="tg">Ace of Heart, Hanoi</div></a>
+      <a class="rel-card" href="#"><div class="ph"><img src="assets/works/pl1.jpg" alt=""></div><div class="nm">Phong &amp; Linh</div><div class="tg">Electric Heart, Phu Quoc</div></a>
+      <a class="rel-card" href="#"><div class="ph"><img src="assets/works/cp2.jpg" alt=""></div><div class="nm">Ha &amp; Hung</div><div class="tg">At 1,600 Meters, Sapa</div></a>
+    </div>
+  </section>
+
+  <!-- NEXT + CTA -->
+  <section class="nx" data-rv>
+    <span class="eyebrow rv">Your story</span>
+    <h2 class="rv d1">Every wedding begins with one small truth.</h2>
+    <a class="cta rv d2" href="#">Begin the conversation</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="ft">
+    <div class="ft-top">
+      <div>
+        <img class="ft-logo" src="assets/wis_logo_mark.svg" alt="Wed in Style">
+        <p class="ft-anchor">What comes from the heart, goes to the heart.</p>
+        <span class="ft-tag">Weddings in Vietnam, since 2009</span>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Menu</div>
+        <a href="#">Home</a><a href="#">About</a><a href="#">Services</a><a href="#">Our Works</a><a href="#">Contact</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Studios</div>
+        <p>23 Hang Bun Street, Ba Dinh District, Hanoi</p>
+        <p>491/7 Nguyen Dinh Chieu Street, Ward 2, District 3, HCMC</p>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Connect</div>
+        <a href="https://www.instagram.com/wis.vn/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/wis.weddingplanners" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.pinterest.com/wedinstyle/" target="_blank" rel="noopener">Pinterest</a>
+        <a href="mailto:admin@wedinstyle.net">admin@wedinstyle.net</a>
+        <span class="ln">+84 90 623 81 58</span>
+      </div>
+    </div>
+    <div class="ft-mark" id="ftmark">Let's talk.</div>
+    <div class="ft-bottom"><span>2026 Wed in Style</span><span>Premium Wedding Planner in Vietnam</span></div>
+  </footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hw=[].slice.call(document.querySelectorAll('.hero .hw'));
+  function heroIn(){ hw.forEach(function(w,i){ setTimeout(function(){w.classList.add('in');}, 300+i*180); }); }
+  window.addEventListener('load',heroIn); heroIn();
+
+  var hd=document.getElementById('hd');
+  function onScroll(){ hd.style.background = window.scrollY>60 ? 'rgba(22,15,8,.86)' : 'transparent'; }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.18});
+  document.querySelectorAll('[data-rv],.gi,.pj-imgs .ph').forEach(function(el){ io.observe(el); });
+
+  var mark=document.getElementById('ftmark');
+  if(mark && !(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)){
+    var tx=.5,ty=.5,mx=.5,my=.5,run=false;
+    function loop(){ mx+=(tx-mx)*.14; my+=(ty-my)*.14; mark.style.setProperty('--mx',(mx*100).toFixed(2)+'%'); mark.style.setProperty('--my',(my*100).toFixed(2)+'%'); if(Math.abs(tx-mx)>.0008||Math.abs(ty-my)>.0008){requestAnimationFrame(loop);}else{run=false;} }
+    function kick(){ if(!run){run=true;requestAnimationFrame(loop);} }
+    mark.addEventListener('mousemove',function(e){ var r=mark.getBoundingClientRect(); tx=(e.clientX-r.left)/r.width; ty=(e.clientY-r.top)/r.height; kick(); });
+    mark.addEventListener('mouseleave',function(){ tx=.5;ty=.5;kick(); });
+  }
+})();
+</script>
+<!-- ===== WIS SHARED MENU ===== -->
+<style>
+.wm-rl{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.02}
+.wm-rl>span{display:block;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+.wm-rl>span:nth-child(2){position:absolute;top:100%;left:0}
+.wm-trigger:hover .wm-rl>span,.wm-close:hover .wm-rl>span,.wm-link:hover .wm-rl>span,.wm-mlink:hover .wm-rl>span{transform:translateY(-100%)}
+.wm-trigger{position:fixed;top:20px;right:clamp(16px,3vw,44px);z-index:1900;background:none;border:0;cursor:pointer;padding:8px 2px;
+  font-family:var(--body);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);text-shadow:0 1px 14px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .5s ease,transform .5s ease}
+.wm-trigger.show{opacity:1;transform:none;pointer-events:auto}
+.wm{position:fixed;inset:0;z-index:2000;visibility:hidden;pointer-events:none}
+.wm.open{visibility:visible;pointer-events:auto}
+.wm-bg{position:absolute;inset:0;background:radial-gradient(130% 100% at 82% 0%,#22170c 0%,#160F08 58%);transform:scaleY(0);transform-origin:top;transition:transform .72s cubic-bezier(.76,0,.24,1)}
+.wm.open .wm-bg{transform:scaleY(1)}
+.wm-in{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:22px clamp(16px,3vw,44px) clamp(26px,5vh,58px)}
+.wm-head{display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(-12px);transition:opacity .5s ease,transform .6s ease}
+.wm.open .wm-head{opacity:1;transform:none;transition-delay:.32s}
+.wm-brand img{width:clamp(58px,5.5vw,84px);height:auto;filter:brightness(0) invert(1);opacity:.95}
+.wm-close{background:none;border:0;cursor:pointer;padding:8px 2px;font-family:var(--body);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone)}
+.wm-body{flex:1;display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(30px,5vw,80px);align-items:center;padding-top:3vh;overflow:auto}
+.wm-nav{display:flex;flex-direction:column;gap:clamp(6px,1.5vh,20px)}
+.wm-link{display:flex;flex-direction:column;gap:5px;text-decoration:none;
+  opacity:0;transform:translateY(42px);transition:opacity .7s ease,transform .85s cubic-bezier(.16,1,.3,1)}
+.wm-row{display:flex;align-items:baseline;gap:clamp(12px,1.6vw,26px)}
+.wm-word{font-family:var(--title);font-weight:400;font-size:clamp(1.8rem,4.4vw,3.4rem);line-height:1;letter-spacing:-.01em;color:var(--bone);white-space:nowrap;transition:color .3s ease}
+.wm-link:hover .wm-word{color:var(--gold)}
+.wm.open .wm-link{opacity:1;transform:none}
+.wm.open .wm-link:nth-child(1){transition-delay:.34s}
+.wm.open .wm-link:nth-child(2){transition-delay:.40s}
+.wm.open .wm-link:nth-child(3){transition-delay:.46s}
+.wm.open .wm-link:nth-child(4){transition-delay:.52s}
+.wm.open .wm-link:nth-child(5){transition-delay:.58s}
+.wm.open .wm-link:nth-child(6){transition-delay:.64s}
+.wm.open .wm-link:nth-child(7){transition-delay:.70s}
+.wm.open .wm-link:nth-child(8){transition-delay:.76s}
+.wm-idx{font-family:var(--body);font-size:.58rem;letter-spacing:.22em;color:var(--gold)}
+.wm-soon{font-family:var(--body);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);border:1px solid rgba(238,230,212,.22);padding:3px 8px;border-radius:20px;align-self:center}
+.wm-sub{font-family:var(--body);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-left:calc(clamp(12px,1.6vw,26px) + 2.4ch)}
+.wm-aside{display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,3vh,40px);
+  border-left:1px solid rgba(238,230,212,.14);padding-left:clamp(22px,3vw,54px);opacity:0;transition:opacity .8s ease}
+.wm.open .wm-aside{opacity:1;transition-delay:.6s}
+.wm-feat{display:block;text-decoration:none;color:var(--bone)}
+.wm-feat-img{display:block;width:100%;aspect-ratio:4/3;overflow:hidden;margin-bottom:18px}
+.wm-feat-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.wm-feat:hover .wm-feat-img img{transform:scale(1.06)}
+.wm-feat-k{display:block;font-family:var(--body);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.wm-feat-t{display:block;font-family:var(--title);font-size:clamp(1.5rem,2.4vw,2.2rem);line-height:1.1;margin-bottom:6px}
+.wm-feat-s{display:block;font-family:var(--body);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.wm-meta{display:flex;flex-direction:column;gap:14px}
+.wm-mlink{color:rgba(238,230,212,.9);text-decoration:none;width:max-content;font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase}
+.wm-note{color:var(--dim);font-family:var(--body);font-size:.72rem;letter-spacing:.02em}
+.wm-cta{margin-top:8px;align-self:flex-start;font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+  background:var(--gold);text-decoration:none;padding:14px 26px;transition:opacity .3s}
+.wm-cta:hover{opacity:.85}
+@media(max-width:860px){
+  .wm-body{grid-template-columns:1fr;gap:5vh;align-items:start;padding-top:2vh;overflow:auto}
+  .wm-aside{border-left:0;padding-left:0;border-top:1px solid rgba(238,230,212,.14);padding-top:5vh}
+  .wm-feat-img{aspect-ratio:16/9}
+}
+@media(prefers-reduced-motion:reduce){
+  .wm-bg,.wm-in,.wm-head,.wm-link,.wm-aside,.wm-rl>span,.wm-trigger{transition:none!important}
+}
+</style>
+<button class="wm-trigger" type="button" data-wm-open aria-label="Open menu"><span class="wm-rl"><span>Menu</span><span>Menu</span></span></button>
+<div class="wm" id="wm" aria-hidden="true">
+  <div class="wm-bg"></div>
+  <div class="wm-in">
+    <div class="wm-head">
+      <a class="wm-brand" href="Homepage.html" aria-label="Wed in Style - home"><img src="assets/wis_logo_mark.svg" alt="Wed in Style"></a>
+      <button class="wm-close" type="button" data-wm-close aria-label="Close menu"><span class="wm-rl"><span>Close</span><span>Close</span></span></button>
+    </div>
+    <div class="wm-body">
+      <nav class="wm-nav">
+        <a class="wm-link" href="Homepage.html"><span class="wm-row"><span class="wm-idx">01</span><span class="wm-rl wm-word"><span>Home</span><span>Home</span></span></span></a>
+        <a class="wm-link" href="Case_CatherineJohnny.html"><span class="wm-row"><span class="wm-idx">02</span><span class="wm-rl wm-word"><span>Our Works</span><span>Our Works</span></span></span></a>
+        <a class="wm-link" href="#" data-soon><span class="wm-row"><span class="wm-idx">03</span><span class="wm-rl wm-word"><span>Approach</span><span>Approach</span></span><span class="wm-soon">Soon</span></span></a>
+        <a class="wm-link" href="#" data-soon><span class="wm-row"><span class="wm-idx">04</span><span class="wm-rl wm-word"><span>Destination Weddings</span><span>Destination Weddings</span></span><span class="wm-soon">Soon</span></span><span class="wm-sub">Venue - Vietnam destinations</span></a>
+        <a class="wm-link" href="#" data-soon><span class="wm-row"><span class="wm-idx">05</span><span class="wm-rl wm-word"><span>Services</span><span>Services</span></span><span class="wm-soon">Soon</span></span><span class="wm-sub">Standard, Elopement, Premium, Decoration</span></a>
+        <a class="wm-link" href="#" data-soon><span class="wm-row"><span class="wm-idx">06</span><span class="wm-rl wm-word"><span>About</span><span>About</span></span><span class="wm-soon">Soon</span></span></a>
+        <a class="wm-link" href="#" data-soon><span class="wm-row"><span class="wm-idx">07</span><span class="wm-rl wm-word"><span>Journal</span><span>Journal</span></span><span class="wm-soon">Soon</span></span></a>
+        <a class="wm-link" href="Homepage.html#cf"><span class="wm-row"><span class="wm-idx">08</span><span class="wm-rl wm-word"><span>Contact</span><span>Contact</span></span></span></a>
+      </nav>
+      <aside class="wm-aside">
+        <a class="wm-feat" href="Case_CatherineJohnny.html">
+          <span class="wm-feat-img"><img src="assets/cases/cj_g1.jpg" alt=""></span>
+          <span class="wm-feat-k">Featured story</span>
+          <span class="wm-feat-t">Catherine &amp; Johnny</span>
+          <span class="wm-feat-s">Love Flavor - Ninh Binh, 2025</span>
+        </a>
+        <div class="wm-meta">
+          <a class="wm-mlink" href="O2_Homepage.html" style="color:var(--gold);border-bottom:1px solid rgba(238,230,212,.16);padding-bottom:13px;margin-bottom:3px"><span class="wm-rl"><span>Now: Option 1 - switch to Option 2 (The Walk)</span><span>Now: Option 1 - switch to Option 2 (The Walk)</span></span></a>
+          <a class="wm-mlink" href="#"><span class="wm-rl"><span>Instagram</span><span>Instagram</span></span></a>
+          <a class="wm-mlink" href="#"><span class="wm-rl"><span>Facebook</span><span>Facebook</span></span></a>
+          <span class="wm-note">Weddings in Vietnam, since 2009</span>
+          <a class="wm-cta" href="Homepage.html#cf">Start your story</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var wm=document.getElementById('wm'); if(!wm) return;
+  var openers=document.querySelectorAll('[data-wm-open], .menu');
+  function openM(){wm.classList.add('open');wm.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';document.body.style.overflow='hidden';}
+  function closeM(){wm.classList.remove('open');wm.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';document.body.style.overflow='';}
+  openers.forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openM();});});
+  wm.querySelectorAll('[data-wm-close]').forEach(function(b){b.addEventListener('click',closeM);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM();});
+  wm.querySelectorAll('a[href]').forEach(function(a){a.addEventListener('click',function(e){if(a.hasAttribute('data-soon')){e.preventDefault();return;}setTimeout(closeM,20);});});
+  var trig=document.querySelector('.wm-trigger');
+  if(trig){
+    var hasHd=!!document.querySelector('.hd');
+    function upd(){
+      if(hasHd){trig.classList.remove('show');return;}
+      if(window.scrollY>window.innerHeight*0.7)trig.classList.add('show');else trig.classList.remove('show');
+    }
+    upd(); window.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd);
+  }
+})();
+</script>
+</body>
+</html>
