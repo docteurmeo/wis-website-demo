@@ -25,25 +25,32 @@
 
   .rv{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
   .in .rv{opacity:1;transform:none}
-  .in .d1{transition-delay:.12s} .in .d2{transition-delay:.24s} .in .d3{transition-delay:.36s}
+  .in .d1{transition-delay:.1s} .in .d2{transition-delay:.2s} .in .d3{transition-delay:.3s}
 
-  .page-hero{padding:28vh var(--pad) 12vh;border-bottom:1px solid rgba(238,230,212,.12)}
-  .page-hero .eyebrow{display:block;margin-bottom:26px}
-  .page-hero h1{font-family:var(--title);font-weight:400;font-size:clamp(2.8rem,8vw,7rem);line-height:.98;letter-spacing:-.01em;color:var(--bone);margin:0;max-width:16ch}
-  .page-hero .intro{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,2vw,2.1rem);line-height:1.34;color:var(--gold);margin:36px 0 0;max-width:34ch}
-  .svc-intro{padding:12vh var(--pad) 5vh;max-width:46ch}
-  .svc-intro p{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.6vw,2.6rem);line-height:1.28;color:var(--bone);margin:0}
-  .svc-list{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 var(--pad) 6vh}
-  .svc{padding:clamp(30px,4vw,60px);border:1px solid rgba(238,230,212,.1);background:rgba(238,230,212,.02);min-height:34vh;display:flex;flex-direction:column}
-  .svc .no{font-family:var(--body);font-size:.62rem;letter-spacing:.2em;color:var(--gold)}
-  .svc h3{font-family:var(--title);font-weight:400;font-size:clamp(1.9rem,3vw,3.2rem);color:var(--bone);margin:14px 0 14px}
-  .svc p{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.05vw,1.2rem);line-height:1.7;color:rgba(238,230,212,.82);margin:0 0 auto;max-width:42ch}
-  .svc a{font-family:var(--body);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-decoration:none;margin-top:24px}
-  .svc a.soon{color:var(--dim);pointer-events:none}
-  .svc-note{padding:9vh var(--pad);border-bottom:1px solid rgba(238,230,212,.12)}
-  .svc-note p{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.1vw,1.24rem);line-height:1.7;color:rgba(238,230,212,.8);max-width:56ch;margin:0}
-  .svc-note a{color:var(--gold);text-decoration:none}
-  .nx{padding:16vh var(--pad);text-align:center}
+  /* tight masthead - no oversized hero, the list is the star */
+  .mast{padding:26vh var(--pad) 4vh;display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,5vw,80px);align-items:end;border-bottom:1px solid rgba(238,230,212,.14)}
+  .mast .eyebrow{display:block;margin-bottom:20px}
+  .mast h1{font-family:var(--title);font-weight:400;font-size:clamp(2.2rem,5vw,4.4rem);line-height:1;letter-spacing:-.01em;color:var(--bone);margin:0}
+  .mast .note{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.05vw,1.2rem);line-height:1.7;color:rgba(238,230,212,.8);max-width:40ch;margin:0;justify-self:end}
+
+  /* the ledger: services as an index of numbered rows, not cards */
+  .ledger{padding:2vh var(--pad) 8vh}
+  .lrow{display:grid;grid-template-columns:clamp(46px,4vw,72px) minmax(0,1.05fr) minmax(0,1.15fr) auto;gap:clamp(16px,3vw,56px);align-items:baseline;padding:clamp(34px,5.5vh,66px) 0;border-bottom:1px solid rgba(238,230,212,.14);text-decoration:none;color:inherit;transition:padding-left .45s cubic-bezier(.16,1,.3,1)}
+  .lrow:hover{padding-left:16px}
+  .lrow .no{font-family:var(--title);font-weight:400;font-size:clamp(1.05rem,1.3vw,1.5rem);line-height:1;color:var(--gold)}
+  .lrow .nm{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4.2vw,4.2rem);line-height:.98;color:var(--bone);transition:color .35s ease}
+  .lrow:hover .nm{color:var(--gold)}
+  .lrow .nm span{display:block;font-family:var(--body);font-weight:400;font-size:clamp(.58rem,.62vw,.7rem);letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-top:14px}
+  .lrow .ds{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.06vw,1.22rem);line-height:1.62;color:rgba(238,230,212,.82)}
+  .lrow .go{font-family:var(--body);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);white-space:nowrap;align-self:center;transition:color .35s ease}
+  .lrow:hover .go{color:var(--bone)}
+
+  .bespoke{padding:11vh var(--pad);border-bottom:1px solid rgba(238,230,212,.12)}
+  .bespoke p{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2.4vw,2.4rem);line-height:1.3;color:var(--bone);max-width:26ch;margin:0}
+  .bespoke .sm{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.05vw,1.2rem);line-height:1.72;color:rgba(238,230,212,.8);max-width:54ch;margin:1.4em 0 0}
+  .bespoke .sm a{color:var(--gold);text-decoration:none}
+
+  .nx{padding:15vh var(--pad) 16vh;text-align:center}
   .nx h2{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4.4vw,4.6rem);line-height:1.05;color:var(--bone);margin:.4em auto 1em;max-width:18ch}
   .cta{display:inline-block;font-family:var(--body);font-size:clamp(.68rem,.72vw,.8rem);letter-spacing:.24em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid rgba(238,230,212,.4);padding:18px 36px;transition:color .35s,background .35s,border-color .35s}
   .cta:hover{color:var(--ink);background:var(--gold);border-color:var(--gold)}
@@ -59,7 +66,11 @@
   .ft-mark{font-family:var(--title);font-weight:400;font-size:17.5vw;line-height:.9;letter-spacing:-.02em;text-align:center;white-space:nowrap;margin:clamp(40px,6vw,90px) 0 0;--mx:50%;--my:50%;background:radial-gradient(circle 26vw at var(--mx) var(--my), #edd49b 0%, var(--gold) 26%, #2c2114 62%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
   .ft-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:clamp(28px,3vw,44px);padding-top:24px;border-top:1px solid rgba(238,230,212,.1);font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 
-  @media(max-width:860px){ .svc-list{grid-template-columns:1fr} .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal} }
+  @media(max-width:860px){
+    .mast{grid-template-columns:1fr;gap:24px} .mast .note{justify-self:start}
+    .lrow{grid-template-columns:auto 1fr;gap:10px 20px} .lrow .ds{grid-column:1/-1} .lrow .go{grid-column:1/-1;text-align:left}
+    .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal}
+  }
   @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} }
 </style>
 </head>
@@ -69,29 +80,48 @@
     <a href="#" data-wm-open>Menu</a>
   </header>
 
-  <section class="page-hero" data-rv>
-    <span class="eyebrow rv">Services</span>
-    <h1 class="rv d1">Four ways to work together.</h1>
-    <p class="intro rv d2">However much you want us to hold, the starting point is the same - your story, told with care.</p>
+  <section class="mast" data-rv>
+    <div>
+      <span class="eyebrow rv">Services</span>
+      <h1 class="rv d1">Four ways to<br>work together.</h1>
+    </div>
+    <p class="note rv d2">Every wedding is authored the same way. What changes is how much of it we hold - from a single quiet day to the whole thread, start to finish.</p>
   </section>
 
-  <section class="svc-intro" data-rv>
-    <p class="rv">We keep prices off the page on purpose. What matters first is not a package, but how much of the day you would like us to carry.</p>
-  </section>
-
-  <div class="svc-list">
-    <div class="svc" data-rv><div class="rv"><span class="no">01</span><h3>Standard</h3></div><p class="rv d1">The essentials, planned and run with care so the day feels effortless.</p><a class="soon rv d2" href="#">Details soon</a></div>
-    <div class="svc" data-rv><div class="rv"><span class="no">02</span><h3>Elopement</h3></div><p class="rv d1">Just the two of you and a place you love, shaped into one quiet, exact day.</p><a class="soon rv d2" href="#">Details soon</a></div>
-    <div class="svc" data-rv><div class="rv"><span class="no">03</span><h3>Premium</h3></div><p class="rv d1">Full authorship, from the first idea to the last candle - we hold every thread.</p><a class="soon rv d2" href="#">Details soon</a></div>
-    <div class="svc" data-rv><div class="rv"><span class="no">04</span><h3>Decoration</h3></div><p class="rv d1">Styling and decor that dress a room to feel unmistakably yours.</p><a class="soon rv d2" href="#">Details soon</a></div>
+  <div class="ledger">
+    <a class="lrow" href="#" data-soon data-rv>
+      <span class="no rv">01</span>
+      <span class="nm rv d1">Standard<span>Coordination and planning</span></span>
+      <span class="ds rv d1">The essentials, planned and run with care so the day feels effortless. We keep the moving parts, you keep the moments.</span>
+      <span class="go rv d2">Details soon</span>
+    </a>
+    <a class="lrow" href="#" data-soon data-rv>
+      <span class="no rv">02</span>
+      <span class="nm rv d1">Elopement<span>Just the two of you</span></span>
+      <span class="ds rv d1">Just the two of you and a place you love, shaped into one quiet, exact day. Small in size, never in feeling.</span>
+      <span class="go rv d2">Details soon</span>
+    </a>
+    <a class="lrow" href="#" data-soon data-rv>
+      <span class="no rv">03</span>
+      <span class="nm rv d1">Premium<span>Full authorship</span></span>
+      <span class="ds rv d1">Full authorship, from the first idea to the last candle. We find the glory story and hold every thread until the day could only be yours.</span>
+      <span class="go rv d2">Details soon</span>
+    </a>
+    <a class="lrow" href="#" data-soon data-rv>
+      <span class="no rv">04</span>
+      <span class="nm rv d1">Decoration<span>Styling and decor</span></span>
+      <span class="ds rv d1">Styling and decor that dress a room to feel unmistakably yours - built from real place and material, never a borrowed theme.</span>
+      <span class="go rv d2">Details soon</span>
+    </a>
   </div>
 
-  <section class="svc-note" data-rv>
-    <p class="rv">Marrying away from home is its own kind of story - light, landscape, and culture become part of the day. That lives on its own page, <a href="#">Destination Weddings</a> (coming soon). <span class="todo">[WIS: định nghĩa gọn từng gói khác nhau ở đâu, để dựng 4 trang con chi tiết.]</span></p>
+  <section class="bespoke" data-rv>
+    <p class="rv">Not sure which one? Most of our couples aren't, at first.</p>
+    <p class="sm rv d1">Tell us the day you imagine and we will tell you honestly which way of working fits. <span class="todo">[WIS: xac nhan mo ta 4 goi va bo sung pham vi/gia neu muon hien.]</span> Or just <a href="Contact.html">start the conversation</a> and we will find it together.</p>
   </section>
 
   <section class="nx" data-rv>
-    <span class="eyebrow rv">Not sure which fits?</span>
+    <span class="eyebrow rv">Your story</span>
     <h2 class="rv d1">Tell us the day you imagine.</h2>
     <a class="cta rv d2" href="Contact.html">Begin the conversation</a>
   </section>

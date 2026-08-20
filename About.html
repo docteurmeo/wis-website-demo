@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About | Wed in Style</title>
+<title>About - Cultural Authors | Wed in Style</title>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
   :root{
@@ -26,20 +26,54 @@
   .rv{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
   .in .rv{opacity:1;transform:none}
   .in .d1{transition-delay:.12s} .in .d2{transition-delay:.24s} .in .d3{transition-delay:.36s}
+  .wipe{overflow:hidden}
+  .wipe img{clip-path:inset(0 0 0 100%);transition:clip-path 1.05s cubic-bezier(.76,0,.2,1)}
+  .in .wipe img,.wipe.in img{clip-path:inset(0 0 0 0)}
 
-  .page-hero{padding:28vh var(--pad) 12vh;border-bottom:1px solid rgba(238,230,212,.12)}
-  .page-hero .eyebrow{display:block;margin-bottom:26px}
-  .page-hero h1{font-family:var(--title);font-weight:400;font-size:clamp(2.8rem,8vw,7rem);line-height:.98;letter-spacing:-.01em;color:var(--bone);margin:0;max-width:18ch}
-  .page-hero .intro{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,2vw,2.1rem);line-height:1.34;color:var(--gold);margin:36px 0 0;max-width:34ch}
-  .two{display:grid;grid-template-columns:.4fr .6fr;gap:clamp(30px,5vw,90px);padding:13vh var(--pad);border-bottom:1px solid rgba(238,230,212,.12)}
-  .two:last-of-type{border-bottom:0}
-  .lead{font-family:var(--title);font-weight:400;font-size:clamp(1.6rem,3vw,3.2rem);line-height:1.2;color:var(--bone);margin:.4em 0 0;max-width:20ch}
-  .body{font-family:var(--body);font-weight:300;font-size:clamp(1.02rem,1.1vw,1.28rem);line-height:1.78;color:rgba(238,230,212,.86);margin:0;max-width:54ch}
-  .body+.body{margin-top:1.3em}
-  .team{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2vw,36px);margin-top:3vh}
-  .team .ph{aspect-ratio:4/5;background:rgba(238,230,212,.05);border:1px solid rgba(238,230,212,.1);display:flex;align-items:flex-end;padding:18px}
-  .team .ph span{font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-  .nx{padding:16vh var(--pad);text-align:center}
+  /* full-bleed cover: the day, before a single word */
+  .cover{position:relative;height:94vh;min-height:560px;overflow:hidden}
+  .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+  .cover::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(22,15,8,.92),rgba(22,15,8,.1) 52%,rgba(22,15,8,.42))}
+  .cover .cap{position:absolute;left:var(--pad);right:var(--pad);bottom:9vh;z-index:2}
+  .cover .eyebrow{display:block;margin-bottom:22px}
+  .cover h1{font-family:var(--title);font-weight:400;font-size:clamp(2.6rem,7vw,6.6rem);line-height:.98;letter-spacing:-.01em;color:var(--bone);margin:0;max-width:16ch}
+  .cover h1 em{font-style:italic;color:var(--gold)}
+
+  /* essay as a spread: statements stagger left then right, not a single column */
+  .essay{padding:16vh var(--pad);display:grid;gap:clamp(46px,8vh,120px)}
+  .essay .blk{max-width:min(760px,88vw)}
+  .essay .blk.r{justify-self:end;text-align:right}
+  .essay .blk p.big{font-family:var(--title);font-weight:400;font-size:clamp(1.55rem,3vw,3rem);line-height:1.3;color:var(--bone);margin:0}
+  .essay .blk p.big em{font-style:italic;color:var(--gold)}
+  .essay .blk .sm{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.05vw,1.2rem);line-height:1.78;color:rgba(238,230,212,.82);margin:1.3em 0 0;max-width:50ch}
+  .essay .blk.r .sm{margin-left:auto}
+
+  /* the origin - one oversized year */
+  .year{display:grid;grid-template-columns:auto 1fr;gap:clamp(26px,5vw,84px);align-items:center;padding:13vh var(--pad);border-top:1px solid rgba(238,230,212,.12);border-bottom:1px solid rgba(238,230,212,.12)}
+  .year .big{font-family:var(--title);font-weight:400;font-size:clamp(5.5rem,19vw,19rem);line-height:.78;letter-spacing:-.02em;color:var(--gold)}
+  .year .txt h2{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.4vw,2.6rem);line-height:1.16;color:var(--bone);margin:0 0 .6em;max-width:20ch}
+  .year .txt p{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.05vw,1.2rem);line-height:1.78;color:rgba(238,230,212,.82);margin:0;max-width:46ch}
+
+  /* a spread of two frames */
+  .dip{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,26px);padding:14vh var(--pad) 0}
+  .dip .ph{aspect-ratio:4/5;overflow:hidden}
+  .dip img{width:100%;height:100%;object-fit:cover}
+
+  /* what we believe - three credos, full width, no boxes */
+  .creed{padding:15vh var(--pad)}
+  .creed .eyebrow{display:block;margin-bottom:8vh}
+  .creed .c{padding:5vh 0;border-top:1px solid rgba(238,230,212,.12);display:grid;grid-template-columns:clamp(90px,10vw,150px) 1fr;gap:clamp(20px,3vw,54px);align-items:baseline}
+  .creed .c:last-child{border-bottom:1px solid rgba(238,230,212,.12)}
+  .creed .c .k{font-family:var(--body);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  .creed .c p{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.9vw,2.9rem);line-height:1.22;color:var(--bone);margin:0;max-width:22ch}
+
+  /* studios */
+  .studios{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,90px);padding:13vh var(--pad);border-top:1px solid rgba(238,230,212,.12)}
+  .studios .eyebrow{grid-column:1/-1;margin-bottom:2vh}
+  .studios h3{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.4vw,2.4rem);color:var(--bone);margin:0 0 .5em}
+  .studios p{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.05vw,1.2rem);line-height:1.7;color:rgba(238,230,212,.82);margin:0}
+
+  .nx{padding:15vh var(--pad) 16vh;text-align:center}
   .nx h2{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4.4vw,4.6rem);line-height:1.05;color:var(--bone);margin:.4em auto 1em;max-width:18ch}
   .cta{display:inline-block;font-family:var(--body);font-size:clamp(.68rem,.72vw,.8rem);letter-spacing:.24em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid rgba(238,230,212,.4);padding:18px 36px;transition:color .35s,background .35s,border-color .35s}
   .cta:hover{color:var(--ink);background:var(--gold);border-color:var(--gold)}
@@ -55,8 +89,13 @@
   .ft-mark{font-family:var(--title);font-weight:400;font-size:17.5vw;line-height:.9;letter-spacing:-.02em;text-align:center;white-space:nowrap;margin:clamp(40px,6vw,90px) 0 0;--mx:50%;--my:50%;background:radial-gradient(circle 26vw at var(--mx) var(--my), #edd49b 0%, var(--gold) 26%, #2c2114 62%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
   .ft-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:clamp(28px,3vw,44px);padding-top:24px;border-top:1px solid rgba(238,230,212,.1);font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 
-  @media(max-width:860px){ .two{grid-template-columns:1fr} .team{grid-template-columns:1fr 1fr} .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal} }
-  @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} }
+  @media(max-width:860px){
+    .year{grid-template-columns:1fr;gap:24px} .year .big{font-size:28vw}
+    .dip{grid-template-columns:1fr} .creed .c{grid-template-columns:1fr;gap:14px}
+    .studios{grid-template-columns:1fr;gap:6vh} .essay .blk.r{text-align:left;justify-self:start}
+    .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal}
+  }
+  @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} .wipe img{clip-path:none!important} .cover img{transform:none} }
 </style>
 </head>
 <body>
@@ -65,43 +104,54 @@
     <a href="#" data-wm-open>Menu</a>
   </header>
 
-  <section class="page-hero" data-rv>
-    <span class="eyebrow rv">About</span>
-    <h1 class="rv d1">What comes from the heart, goes to the heart.</h1>
-    <p class="intro rv d2">Wed in Style has made weddings in Vietnam since 2009 - and somewhere along the way, stopped planning days and started authoring stories.</p>
-  </section>
-
-  <section class="two" data-rv>
-    <div><span class="eyebrow rv">The studio</span><p class="lead rv d1">Not a supplier. An author.</p></div>
-    <div>
-      <p class="body rv d1">Most planners sell reassurance - professional, dependable, able to do anything. We do all of that, but it is not what we are for. We are for finding the one true story a couple already carries, and telling it through contemporary Vietnamese culture.</p>
-      <p class="body rv d2">Culture here is not a backdrop or a symbol. It shows up in real detail - raw silk, the light over a bay at dusk, the way a family gathers - so a Vietnamese wedding feels present and personal, never like a postcard.</p>
+  <section class="cover">
+    <img src="assets/preload/hero_ninhbinh.jpg" alt="">
+    <div class="cap" data-rv>
+      <span class="eyebrow rv">About - Since 2009</span>
+      <h1 class="rv d1">We do not decorate weddings. We <em>author</em> them.</h1>
     </div>
   </section>
 
-  <section class="two" data-rv>
-    <div><span class="eyebrow rv">The people</span><p class="lead rv d1">The hands behind the day.</p></div>
-    <div>
-      <p class="body rv d1">A small team who live inside the culture they design with - not visiting it. <span class="todo">[WIS cung cấp: founder origin story (đang thiếu), giọng cá nhân thật của team, và ảnh chân dung team để thay các ô dưới.]</span></p>
-      <div class="team rv d2">
-        <div class="ph"><span>[Ảnh team]</span></div>
-        <div class="ph"><span>[Ảnh team]</span></div>
-        <div class="ph"><span>[Ảnh team]</span></div>
-      </div>
+  <section class="essay">
+    <div class="blk" data-rv>
+      <p class="big rv">Wed in Style began with a simple belief - that a wedding is not a template to be filled, but a story only one couple could tell.</p>
+      <p class="sm rv d1">For more than fifteen years we have planned and designed weddings across Vietnam, from private gardens in Hanoi to islands reached only by boat. We call ourselves Cultural Authors, because our work is to read a couple's life closely, then write the day around what we find.</p>
+    </div>
+    <div class="blk r" data-rv>
+      <p class="big rv">What comes from the heart, <em>goes to the heart.</em></p>
+      <p class="sm rv d1">It is the line we return to when a decision is hard. Not the grandest option, not the most photographed - the truest one. Vietnam appears in our work through real place, light and material, never through borrowed symbols.</p>
     </div>
   </section>
 
-  <section class="two" data-rv>
-    <div><span class="eyebrow rv">Since 2009</span><p class="lead rv d1">Years in the making.</p></div>
-    <div>
-      <p class="body rv d1">More than fifteen years of celebrations across Vietnam - from the coast to the highlands - and a limited number of weddings each year, so every story gets the attention it deserves.</p>
-      <p class="body rv d2"><span class="todo">[WIS: xác nhận mốc di sản thật để dựng timeline nhẹ - vd số dự án, giải thưởng, cột mốc.]</span></p>
+  <section class="year" data-rv>
+    <div class="big rv">2009</div>
+    <div class="txt">
+      <h2 class="rv d1">The year the first story was told.</h2>
+      <p class="rv d2">Since then we have grown into two studios and one way of working - slow at the start, certain by the end. <span class="todo">[WIS: bổ sung cột mốc thật - số đám cưới, giải thưởng, năm mở studio HCMC.]</span></p>
     </div>
+  </section>
+
+  <section class="dip">
+    <div class="ph wipe" data-rv><img src="assets/cases/cj_x2.jpg" alt=""></div>
+    <div class="ph wipe" data-rv><img src="assets/cases/cj_x5.jpg" alt=""></div>
+  </section>
+
+  <section class="creed">
+    <span class="eyebrow" data-rv><span class="rv">What we hold to</span></span>
+    <div class="c" data-rv><span class="k rv">Author</span><p class="rv d1">Every wedding starts from a life, not a look-book.</p></div>
+    <div class="c" data-rv><span class="k rv">Place</span><p class="rv d1">Vietnam shown in real detail, never in cliche.</p></div>
+    <div class="c" data-rv><span class="k rv">Care</span><p class="rv d1">The hard work stays with us, so the day feels effortless to you.</p></div>
+  </section>
+
+  <section class="studios">
+    <span class="eyebrow" data-rv><span class="rv">Two studios</span></span>
+    <div data-rv><h3 class="rv">Hanoi</h3><p class="rv d1">23 Hang Bun Street, Ba Dinh District</p></div>
+    <div data-rv><h3 class="rv">Ho Chi Minh City</h3><p class="rv d1">491/7 Nguyen Dinh Chieu Street, Ward 2, District 3</p></div>
   </section>
 
   <section class="nx" data-rv>
     <span class="eyebrow rv">Your story</span>
-    <h2 class="rv d1">We would love to hear yours.</h2>
+    <h2 class="rv d1">If it comes from the heart, we would like to hear it.</h2>
     <a class="cta rv d2" href="Contact.html">Begin the conversation</a>
   </section>
 
@@ -139,7 +189,7 @@
   var hd=document.getElementById('hd');
   function onScroll(){ hd.style.background = window.scrollY>60 ? 'rgba(22,15,8,.86)' : 'transparent'; }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
-  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.18});
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.16});
   document.querySelectorAll('[data-rv]').forEach(function(el){ io.observe(el); });
   var mark=document.getElementById('ftmark');
   if(mark && !(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)){
