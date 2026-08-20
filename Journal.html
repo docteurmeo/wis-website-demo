@@ -24,21 +24,41 @@
 
   .rv{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
   .in .rv{opacity:1;transform:none}
-  .in .d1{transition-delay:.1s} .in .d2{transition-delay:.2s} .in .d3{transition-delay:.3s}
+  .in .d1{transition-delay:.1s} .in .d2{transition-delay:.2s}
+  .wipe{overflow:hidden}
+  .wipe img{clip-path:inset(0 0 0 100%);transition:clip-path 1.05s cubic-bezier(.76,0,.2,1)}
+  .in .wipe img,.wipe.in img{clip-path:inset(0 0 0 0)}
 
-  .page-hero{padding:28vh var(--pad) 10vh;border-bottom:1px solid rgba(238,230,212,.12)}
-  .page-hero .eyebrow{display:block;margin-bottom:26px}
-  .page-hero h1{font-family:var(--title);font-weight:400;font-size:clamp(2.8rem,8vw,7rem);line-height:.98;letter-spacing:-.01em;color:var(--bone);margin:0;max-width:18ch}
-  .page-hero .intro{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,2vw,2.1rem);line-height:1.34;color:var(--gold);margin:36px 0 0;max-width:34ch}
-  .jgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,2.6vw,48px);padding:12vh var(--pad) 4vh}
-  .jcard{display:block;text-decoration:none;color:var(--bone)}
-  .jcard .ph{aspect-ratio:4/3;overflow:hidden;margin-bottom:18px;background:rgba(238,230,212,.05)}
-  .jcard img{width:100%;height:100%;object-fit:cover;filter:saturate(.9) brightness(.92);transition:transform 1.2s cubic-bezier(.16,1,.3,1),filter .6s}
-  .jcard:hover img{transform:scale(1.05);filter:none}
-  .jcard .k{font-family:var(--body);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
-  .jcard h3{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,1.8vw,2rem);color:var(--bone);margin:8px 0 0;line-height:1.12;max-width:22ch}
-  .jcard .dt{font-family:var(--body);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:10px;display:block}
-  .jnote{padding:2vh var(--pad) 14vh}
+  /* masthead (small, not a big hero) */
+  .jbar{padding:24vh var(--pad) 3vh;display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .jbar .eyebrow{font-size:clamp(.7rem,.9vw,.9rem)}
+  .jbar-s{font-family:var(--body);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+
+  /* featured post = the lead (content-first) */
+  .jfeat{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,4.5vw,80px);align-items:center;padding:4vh var(--pad) 9vh;text-decoration:none;color:var(--bone);border-bottom:1px solid rgba(238,230,212,.14)}
+  .jfeat .ph{overflow:hidden;aspect-ratio:16/11}
+  .jfeat img{width:100%;height:100%;object-fit:cover;filter:brightness(.88) saturate(.95);transition:transform 1.3s cubic-bezier(.16,1,.3,1),filter .6s}
+  .jfeat:hover img{transform:scale(1.04);filter:none}
+  .jfeat .k{font-family:var(--body);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  .jfeat h2{font-family:var(--title);font-weight:400;font-size:clamp(2.2rem,4vw,4rem);line-height:1.02;color:var(--bone);margin:14px 0 18px;max-width:15ch}
+  .jfeat .ex{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.1vw,1.2rem);line-height:1.7;color:rgba(238,230,212,.82);margin:0 0 22px;max-width:44ch}
+  .jfeat .dt{font-family:var(--body);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+  .jfeat .dt b{color:var(--gold);font-weight:400}
+
+  /* index = text-forward rows (opposite of Our Works' image grid) */
+  .jx{padding:7vh var(--pad) 4vh}
+  .jx-lab{display:block;margin-bottom:2vh}
+  .jx-row{display:grid;grid-template-columns:clamp(150px,16vw,230px) 1fr auto;gap:clamp(20px,3vw,54px);align-items:baseline;
+    padding:clamp(24px,3.2vh,42px) 0;border-top:1px solid rgba(238,230,212,.12);text-decoration:none;color:var(--bone);transition:padding-left .4s cubic-bezier(.16,1,.3,1)}
+  .jx-row:last-of-type{border-bottom:1px solid rgba(238,230,212,.12)}
+  .jx-row:hover{padding-left:16px}
+  .jx-meta{font-family:var(--body);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);line-height:1.9}
+  .jx-meta .c{color:var(--gold);display:block}
+  .jx-title{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.7vw,2.8rem);line-height:1.05;color:var(--bone);transition:color .3s;max-width:26ch}
+  .jx-row:hover .jx-title{color:var(--gold)}
+  .jx-go{font-family:var(--body);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);opacity:0;transform:translateX(-8px);transition:opacity .3s,transform .3s;white-space:nowrap}
+  .jx-row:hover .jx-go{opacity:1;transform:none}
+  .jnote{padding:6vh var(--pad) 14vh}
   .jnote p{font-family:var(--body);font-weight:300;color:var(--dim);font-style:italic;font-size:.9rem;max-width:64ch;margin:0}
 
   .ft{border-top:1px solid rgba(238,230,212,.14);padding:12vh var(--pad) 3vh;overflow:hidden}
@@ -52,9 +72,8 @@
   .ft-mark{font-family:var(--title);font-weight:400;font-size:17.5vw;line-height:.9;letter-spacing:-.02em;text-align:center;white-space:nowrap;margin:clamp(40px,6vw,90px) 0 0;--mx:50%;--my:50%;background:radial-gradient(circle 26vw at var(--mx) var(--my), #edd49b 0%, var(--gold) 26%, #2c2114 62%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
   .ft-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:clamp(28px,3vw,44px);padding-top:24px;border-top:1px solid rgba(238,230,212,.1);font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 
-  @media(max-width:860px){ .jgrid{grid-template-columns:1fr 1fr} .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal} }
-  @media(max-width:560px){ .jgrid{grid-template-columns:1fr} }
-  @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} }
+  @media(max-width:860px){ .jfeat{grid-template-columns:1fr} .jx-row{grid-template-columns:1fr;gap:6px;padding:26px 0} .jx-go{display:none} .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal} }
+  @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} .wipe img{clip-path:none!important} }
 </style>
 </head>
 <body>
@@ -63,23 +82,32 @@
     <a href="#" data-wm-open>Menu</a>
   </header>
 
-  <section class="page-hero" data-rv>
+  <section class="jbar" data-rv>
     <span class="eyebrow rv">Journal</span>
-    <h1 class="rv d1">Notes on weddings, culture, and craft.</h1>
-    <p class="intro rv d2">Slow reading on how we think, what we love, and the culture we design with.</p>
+    <span class="jbar-s rv d1">Notes on weddings, culture, and craft</span>
   </section>
 
-  <div class="jgrid">
-    <a class="jcard" href="#" data-rv><div class="ph"><img src="assets/works/cj1.jpg" alt=""></div><span class="k">Approach</span><h3>Starting from a story, not a theme</h3><span class="dt">Sample - WIS to publish</span></a>
-    <a class="jcard" href="#" data-rv><div class="ph"><img src="assets/works/pl1.jpg" alt=""></div><span class="k">Culture</span><h3>Vietnam, in the present tense</h3><span class="dt">Sample - WIS to publish</span></a>
-    <a class="jcard" href="#" data-rv><div class="ph"><img src="assets/works/km1.jpg" alt=""></div><span class="k">Craft</span><h3>Why we keep a limited season</h3><span class="dt">Sample - WIS to publish</span></a>
-    <a class="jcard" href="#" data-rv><div class="ph"><img src="assets/works/cp2.jpg" alt=""></div><span class="k">Destination</span><h3>Choosing a place that means something</h3><span class="dt">Sample - WIS to publish</span></a>
-    <a class="jcard" href="#" data-rv><div class="ph"><img src="assets/works/km3.jpg" alt=""></div><span class="k">Detail</span><h3>The small things guests remember</h3><span class="dt">Sample - WIS to publish</span></a>
-    <a class="jcard" href="#" data-rv><div class="ph"><img src="assets/works/pl3.jpg" alt=""></div><span class="k">Planning</span><h3>A first conversation, and what we ask</h3><span class="dt">Sample - WIS to publish</span></a>
+  <a class="jfeat" href="#" data-rv>
+    <div class="ph wipe"><img src="assets/works/cp2.jpg" alt=""></div>
+    <div>
+      <span class="k rv">Culture - Featured</span>
+      <h2 class="rv d1">Vietnam, in the present tense.</h2>
+      <p class="ex rv d1">Why we show a wedding through place, light, and material - raw silk, dusk over a bay, the way a family gathers - and never through the postcard symbols.</p>
+      <span class="dt rv d2"><b>Read</b> - Sample, WIS to publish</span>
+    </div>
+  </a>
+
+  <div class="jx" data-rv>
+    <span class="eyebrow jx-lab rv" style="color:var(--dim)">More reading</span>
+    <a class="jx-row" href="#"><span class="jx-meta">2026<span class="c">Approach</span></span><span class="jx-title">Starting from a story, not a theme</span><span class="jx-go">Read -&gt;</span></a>
+    <a class="jx-row" href="#"><span class="jx-meta">2026<span class="c">Craft</span></span><span class="jx-title">Why we keep a limited season</span><span class="jx-go">Read -&gt;</span></a>
+    <a class="jx-row" href="#"><span class="jx-meta">2026<span class="c">Destination</span></span><span class="jx-title">Choosing a place that means something</span><span class="jx-go">Read -&gt;</span></a>
+    <a class="jx-row" href="#"><span class="jx-meta">2025<span class="c">Detail</span></span><span class="jx-title">The small things guests remember</span><span class="jx-go">Read -&gt;</span></a>
+    <a class="jx-row" href="#"><span class="jx-meta">2025<span class="c">Planning</span></span><span class="jx-title">A first conversation, and what we ask</span><span class="jx-go">Read -&gt;</span></a>
   </div>
 
   <section class="jnote" data-rv>
-    <p class="rv">These are placeholder entries showing the layout. The Journal is built for the WIS team to publish 2-3 posts a month - <span style="color:var(--dim)">[WIS: cấp nội dung bài viết + tiêu đề + ảnh thật; cần trang dễ đăng + training.]</span></p>
+    <p class="rv">Placeholder entries showing the index layout. Built for the WIS team to publish 2-3 posts a month - <span style="color:var(--dim)">[WIS: cấp tiêu đề + nội dung + ảnh thật; cần trang dễ đăng + training.]</span></p>
   </section>
 
   <footer class="ft">
