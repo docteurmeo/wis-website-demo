@@ -25,23 +25,41 @@
 
   .rv{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
   .in .rv{opacity:1;transform:none}
-  .in .d1{transition-delay:.12s} .in .d2{transition-delay:.24s} .in .d3{transition-delay:.36s} .in .d4{transition-delay:.48s}
+  .in .d1{transition-delay:.12s} .in .d2{transition-delay:.24s}
 
-  /* the letter: the form is a fill-in invitation, not a boxed field list */
-  .letter{padding:26vh var(--pad) 8vh;max-width:min(1180px,93vw);margin:0 auto}
-  .letter .eyebrow{display:block;margin-bottom:6vh}
-  .letter form{font-family:var(--title);font-weight:400;font-size:clamp(1.7rem,3.7vw,3.5rem);line-height:1.55;color:var(--bone);letter-spacing:-.005em}
-  .letter .fin{font-family:var(--title);font-weight:400;font-size:inherit;color:var(--gold);background:none;border:0;border-bottom:1px solid rgba(198,161,91,.5);padding:0 .18em .04em;margin:0 .05em;line-height:1.1;outline:none;transition:border-color .3s ease;max-width:100%}
-  .letter .fin::placeholder{color:rgba(198,161,91,.42)}
-  .letter .fin:focus{border-color:var(--gold)}
-  .letter textarea.fin{vertical-align:bottom;resize:none;width:min(560px,80vw);border-bottom:1px solid rgba(198,161,91,.5)}
-  .letter .send{margin-top:9vh;display:flex;align-items:center;gap:clamp(20px,3vw,44px);flex-wrap:wrap}
-  .letter .ct-send{font-family:var(--body);font-size:clamp(.68rem,.74vw,.82rem);letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:var(--gold);border:0;cursor:pointer;padding:20px 42px;transition:opacity .3s ease}
-  .letter .ct-send:hover{opacity:.86}
-  .letter .ct-note{font-family:var(--body);font-weight:300;font-size:clamp(.9rem,.95vw,1.08rem);line-height:1.5;color:var(--dim);margin:0;max-width:32ch}
-  .letter .thanks{font-family:var(--title);font-size:clamp(1.5rem,2.6vw,2.6rem);color:var(--gold);margin-top:9vh;display:none}
+  /* multi-step questionnaire (mirrors the real WIS contact flow) */
+  .wiz{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:18vh var(--pad) 12vh;max-width:min(1040px,93vw);margin:0 auto}
+  .wiz-head{margin-bottom:6vh}
+  .wiz-head .eyebrow{display:block;margin-bottom:20px}
+  .wiz-intro{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,2vw,2rem);line-height:1.3;color:var(--gold);margin:0;max-width:30ch}
+  .wiz-top{display:flex;align-items:center;gap:20px;margin-bottom:6vh}
+  .wiz-step{font-family:var(--body);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+  .wiz-bar{flex:1;height:1px;background:rgba(238,230,212,.16);position:relative}
+  .wiz-bar i{position:absolute;left:0;top:0;height:1px;background:var(--gold);width:0;transition:width .5s cubic-bezier(.16,1,.3,1)}
+  .wiz-body{transition:opacity .32s ease,transform .32s ease}
+  .wiz-body.out{opacity:0;transform:translateY(14px)}
+  .wiz-q{font-family:var(--title);font-weight:400;font-size:clamp(1.9rem,4.4vw,4rem);line-height:1.06;letter-spacing:-.01em;color:var(--bone);margin:0 0 6vh;max-width:20ch}
+  .wiz-opts{display:flex;flex-wrap:wrap;gap:13px}
+  .opt{font-family:var(--title);font-weight:400;font-size:clamp(1.05rem,1.5vw,1.55rem);color:var(--bone);background:none;border:1px solid rgba(238,230,212,.3);padding:15px 30px;cursor:pointer;transition:color .3s,background .3s,border-color .3s;border-radius:2px}
+  .opt:hover{border-color:var(--gold);color:var(--gold)}
+  .opt.sel{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+  .wiz-field input{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.6vw,2.4rem);color:var(--gold);background:none;border:0;border-bottom:1px solid rgba(198,161,91,.5);padding:6px 2px 8px;outline:none;width:min(560px,92%);transition:border-color .3s}
+  .wiz-field input::placeholder{color:rgba(198,161,91,.4)}
+  .wiz-field input:focus{border-color:var(--gold)}
+  .wiz-fields{display:flex;flex-direction:column;gap:clamp(28px,4vh,44px);max-width:560px}
+  .wiz-fields .fl label{display:block;font-family:var(--body);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+  .wiz-fields .fl input{width:100%;font-size:clamp(1.2rem,1.8vw,1.7rem)}
+  .wiz-nav{display:flex;align-items:center;gap:30px;margin-top:8vh}
+  .wiz-next{font-family:var(--body);font-size:clamp(.68rem,.72vw,.8rem);letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:var(--gold);border:0;cursor:pointer;padding:18px 40px;transition:opacity .3s}
+  .wiz-next:hover{opacity:.86}
+  .wiz-next[disabled]{opacity:.32;cursor:not-allowed}
+  .wiz-back{font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);background:none;border:0;cursor:pointer;padding:8px 2px;transition:color .3s}
+  .wiz-back:hover{color:var(--bone)}
+  .wiz-back[hidden]{display:none}
+  .wiz-done{text-align:center;padding:6vh 0}
+  .wiz-done h2{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4vw,3.6rem);line-height:1.1;color:var(--bone);margin:0 0 .6em}
+  .wiz-done p{font-family:var(--body);font-weight:300;font-size:clamp(1rem,1.1vw,1.24rem);line-height:1.7;color:rgba(238,230,212,.82);margin:0 auto;max-width:44ch}
 
-  /* quiet contact strip below the letter */
   .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,70px);padding:12vh var(--pad);border-top:1px solid rgba(238,230,212,.12)}
   .strip .k{display:block;font-family:var(--body);font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
   .strip p,.strip a{display:block;font-family:var(--body);font-weight:300;font-size:clamp(.95rem,1vw,1.14rem);line-height:1.6;color:rgba(238,230,212,.82);text-decoration:none;margin:0 0 8px;transition:color .3s}
@@ -59,11 +77,10 @@
   .ft-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:clamp(28px,3vw,44px);padding-top:24px;border-top:1px solid rgba(238,230,212,.1);font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 
   @media(max-width:860px){
-    .letter form{line-height:1.7} .letter textarea.fin{width:100%}
     .strip{grid-template-columns:1fr;gap:6vh}
     .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal}
   }
-  @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} }
+  @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} .wiz-body{transition:none} }
 </style>
 </head>
 <body>
@@ -72,16 +89,20 @@
     <a href="#" data-wm-open>Menu</a>
   </header>
 
-  <section class="letter" data-rv>
-    <span class="eyebrow rv">Contact - Start your story</span>
-    <form id="ctform" onsubmit="return false">
-      <span class="rv">We are </span><input class="fin rv" style="width:8.5em" type="text" aria-label="Your names" placeholder="your two names"><span class="rv">, and we are imagining a wedding somewhere in </span><input class="fin rv d1" style="width:8em" type="text" aria-label="Place" placeholder="a place, or a feeling"><span class="rv d1">, sometime around </span><input class="fin rv d1" style="width:7em" type="text" aria-label="When" placeholder="a season, a year"><span class="rv d2">. What matters most to us is </span><textarea class="fin rv d2" rows="1" aria-label="What matters most" placeholder="the one thing that counts"></textarea><span class="rv d2">. You can write back to us at </span><input class="fin rv d3" style="width:9.5em" type="email" aria-label="Email" placeholder="your email"><span class="rv d3">.</span>
-      <div class="send rv d4">
-        <button type="submit" class="ct-send" id="ctsend">Send your note</button>
-        <p class="ct-note">We take on a limited number of celebrations each year, so we read every note ourselves.</p>
-      </div>
-      <p class="thanks" id="ctthanks">Thank you - we will write back soon.</p>
-    </form>
+  <section class="wiz" data-rv>
+    <div class="wiz-head rv">
+      <span class="eyebrow">Contact - Start your story</span>
+      <p class="wiz-intro">Tell us about you and your love story, and find out how we can help.</p>
+    </div>
+    <div class="wiz-top rv d1">
+      <span class="wiz-step" id="wstep">01 / 07</span>
+      <span class="wiz-bar"><i id="wbar"></i></span>
+    </div>
+    <div class="wiz-body rv d1" id="wbody"><!-- rendered by JS --></div>
+    <div class="wiz-nav rv d1" id="wnav">
+      <button class="wiz-next" id="wnext" type="button">Next to continue</button>
+      <button class="wiz-back" type="button" id="wback" hidden>Back</button>
+    </div>
   </section>
 
   <section class="strip">
@@ -130,14 +151,100 @@
   var hd=document.getElementById('hd');
   function onScroll(){ hd.style.background = window.scrollY>60 ? 'rgba(22,15,8,.86)' : 'transparent'; }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
-  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.16});
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.14});
   document.querySelectorAll('[data-rv]').forEach(function(el){ io.observe(el); });
-  // auto-grow the one textarea inline
-  var ta=document.querySelector('textarea.fin');
-  if(ta){ function grow(){ ta.style.height='auto'; ta.style.height=(ta.scrollHeight)+'px'; } ta.addEventListener('input',grow); }
-  // demo submit - no backend, gentle confirmation
-  var f=document.getElementById('ctform'), send=document.getElementById('ctsend'), thanks=document.getElementById('ctthanks');
-  if(f){ f.addEventListener('submit',function(){ if(send){send.parentElement.style.display='none';} if(thanks){thanks.style.display='block';} }); }
+
+  /* ----- questionnaire ----- */
+  var STEPS = [
+    {key:'service', q:'Which service do you need?', type:'choice', options:['Wedding planning','Decoration']},
+    {key:'type', q:'What kind of wedding are you planning?', type:'choice', options:['City wedding','Outskirt wedding','Destination wedding','Elopement wedding']},
+    {key:'date', q:'When is the wedding expected to take place?', type:'date'},
+    {key:'location', q:'', type:'choice', options:[]},
+    {key:'guests', q:'How many guests are you inviting?', type:'choice', options:['20 - 70','70 - 150','150 - 300','More than 300']},
+    {key:'budget', q:'What budget do you have in mind?', type:'text', placeholder:'A rough figure is enough'},
+    {key:'contact', q:'Last - where can we reach you?', type:'contact'}
+  ];
+  function locationCfg(){
+    var t = answers.type;
+    if(t==='Destination wedding') return {q:'Which destination do you have in mind?', options:['Ha Long','Ninh Binh','Sa Pa','Da Nang','Nha Trang','Quy Nhon','Phan Thiet','Phu Quoc','Other destination']};
+    if(t==='Elopement wedding') return {q:'What kind of place do you dream of?', options:['Mountain view','Sea view','Waterfall','River or lake view','Other special requirements']};
+    return {q:'Which location are you interested in?', options:['Ha Noi','Ho Chi Minh City']};
+  }
+  var answers = {};
+  var cur = 0;
+  var total = STEPS.length;
+  var body=document.getElementById('wbody'), stepEl=document.getElementById('wstep'), bar=document.getElementById('wbar');
+  var nav=document.getElementById('wnav'), nextBtn=document.getElementById('wnext'), backBtn=document.getElementById('wback');
+  function pad(n){ return (n<10?'0':'')+n; }
+  function cfgAt(i){ var s=STEPS[i]; if(s.key==='location'){ var L=locationCfg(); return {key:s.key,q:L.q,type:'choice',options:L.options}; } return s; }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function render(){
+    var cfg=cfgAt(cur);
+    stepEl.textContent = pad(cur+1)+' / '+pad(total);
+    bar.style.width = ((cur+1)/total*100).toFixed(1)+'%';
+    backBtn.hidden = cur===0;
+    nextBtn.textContent = cur===total-1 ? 'Send' : 'Next to continue';
+    var html='<h2 class="wiz-q">'+esc(cfg.q)+'</h2>';
+    if(cfg.type==='choice'){
+      html+='<div class="wiz-opts">';
+      cfg.options.forEach(function(o){ var sel = answers[cfg.key]===o ? ' sel':''; html+='<button type="button" class="opt'+sel+'" data-val="'+esc(o)+'">'+esc(o)+'</button>'; });
+      html+='</div>';
+    } else if(cfg.type==='date'){
+      html+='<div class="wiz-field"><input type="date" id="wf" value="'+esc(answers[cfg.key]||'')+'"></div>';
+    } else if(cfg.type==='text'){
+      html+='<div class="wiz-field"><input type="text" id="wf" placeholder="'+esc(cfg.placeholder||'')+'" value="'+esc(answers[cfg.key]||'')+'"></div>';
+    } else if(cfg.type==='contact'){
+      html+='<div class="wiz-fields">'
+        +'<div class="fl"><label>Your name</label><input type="text" id="wf_name" placeholder="Two names, ideally" value="'+esc(answers.name||'')+'"></div>'
+        +'<div class="fl"><label>Email</label><input type="email" id="wf_email" placeholder="Where we can reach you" value="'+esc(answers.email||'')+'"></div>'
+        +'<div class="fl"><label>Phone</label><input type="tel" id="wf_phone" placeholder="Optional" value="'+esc(answers.phone||'')+'"></div>'
+      +'</div>';
+    }
+    body.innerHTML=html;
+    // wire choice buttons
+    body.querySelectorAll('.opt').forEach(function(b){ b.addEventListener('click',function(){
+      answers[cfg.key]=b.getAttribute('data-val');
+      body.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel');});
+      b.classList.add('sel');
+      syncNext();
+    }); });
+    var f=document.getElementById('wf'); if(f){ f.addEventListener('input',function(){ answers[cfg.key]=f.value; syncNext(); }); }
+    ['wf_name','wf_email','wf_phone'].forEach(function(id){ var el=document.getElementById(id); if(el){ el.addEventListener('input',function(){ answers[id.replace('wf_','')]=el.value; syncNext(); }); } });
+    syncNext();
+  }
+  function valid(){
+    var cfg=cfgAt(cur);
+    if(cfg.type==='choice') return !!answers[cfg.key];
+    if(cfg.type==='date'||cfg.type==='text') return true; // optional, may proceed
+    if(cfg.type==='contact') return !!(answers.name && answers.email);
+    return true;
+  }
+  function syncNext(){ nextBtn.disabled = !valid(); }
+  function step(dir){
+    body.classList.add('out');
+    setTimeout(function(){
+      cur = Math.max(0, Math.min(total-1, cur+dir));
+      render();
+      body.classList.remove('out');
+      var top=document.querySelector('.wiz'); if(top){ window.scrollTo({top:0,behavior:'smooth'}); }
+    },320);
+  }
+  function finish(){
+    body.classList.add('out');
+    setTimeout(function(){
+      stepEl.textContent='Sent';
+      bar.style.width='100%';
+      nav.style.display='none';
+      backBtn.hidden=true;
+      body.innerHTML='<div class="wiz-done"><h2>Thank you - we have your note.</h2><p>We read every one ourselves and will write back soon. What comes from the heart, goes to the heart.</p></div>';
+      body.classList.remove('out');
+    },320);
+  }
+  nextBtn.addEventListener('click',function(){ if(!valid()) return; if(cur===total-1){ finish(); } else { step(1); } });
+  backBtn.addEventListener('click',function(){ step(-1); });
+  render();
+
   var mark=document.getElementById('ftmark');
   if(mark && !(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)){
     var tx=.5,ty=.5,mx=.5,my=.5,run=false;
@@ -209,7 +316,7 @@
         <a class="wm-link" href="OurWorks.html"><span class="wm-row"><span class="wm-idx">02</span><span class="wm-rl wm-word"><span>Our Works</span><span>Our Works</span></span></span></a>
         <a class="wm-link" href="Approach.html"><span class="wm-row"><span class="wm-idx">03</span><span class="wm-rl wm-word"><span>Approach</span><span>Approach</span></span></span></a>
         <a class="wm-link" href="#" data-soon><span class="wm-row"><span class="wm-idx">04</span><span class="wm-rl wm-word"><span>Destination Weddings</span><span>Destination Weddings</span></span><span class="wm-soon">Soon</span></span><span class="wm-sub">Venue - Vietnam destinations</span></a>
-        <a class="wm-link" href="Services.html"><span class="wm-row"><span class="wm-idx">05</span><span class="wm-rl wm-word"><span>Services</span><span>Services</span></span></span><span class="wm-sub">Standard, Elopement, Premium, Decoration</span></a>
+        <a class="wm-link" href="Services.html"><span class="wm-row"><span class="wm-idx">05</span><span class="wm-rl wm-word"><span>Services</span><span>Services</span></span></span><span class="wm-sub">Standard, Premium, Elopement, Destination, Decoration</span></a>
         <a class="wm-link" href="About.html"><span class="wm-row"><span class="wm-idx">06</span><span class="wm-rl wm-word"><span>About</span><span>About</span></span></span></a>
         <a class="wm-link" href="Journal.html"><span class="wm-row"><span class="wm-idx">07</span><span class="wm-rl wm-word"><span>Journal</span><span>Journal</span></span></span></a>
         <a class="wm-link" href="Contact.html"><span class="wm-row"><span class="wm-idx">08</span><span class="wm-rl wm-word"><span>Contact</span><span>Contact</span></span></span></a>
