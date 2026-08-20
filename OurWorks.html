@@ -55,9 +55,17 @@
   .wallhead{padding:14vh var(--pad) 0;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .wallhead p{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2.4vw,2.4rem);line-height:1.2;color:var(--bone);margin:10px 0 0;max-width:24ch;flex:1 1 320px}
   .wallhead .cnt{font-family:var(--body);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
-  .wall{padding:5vh var(--pad) 4vh;columns:3 300px;column-gap:clamp(10px,1.2vw,18px)}
-  .tile{break-inside:avoid;position:relative;display:block;overflow:hidden;margin-bottom:clamp(10px,1.2vw,18px);text-decoration:none;color:var(--bone)}
-  .tile img{width:100%;display:block;filter:saturate(.96) brightness(.9);transition:transform 1.2s cubic-bezier(.16,1,.3,1),filter .6s}
+  .gal{padding:5vh var(--pad) 4vh;display:flex;flex-direction:column;gap:clamp(22px,4vh,60px)}
+  .gr{display:grid;gap:clamp(10px,1.4vw,22px)}
+  .gr.duoL{grid-template-columns:1.55fr 1fr;align-items:end}
+  .gr.duoR{grid-template-columns:1fr 1.55fr;align-items:start}
+  .gr.trio{grid-template-columns:1fr 1fr 1fr;align-items:start}
+  .gr.full{grid-template-columns:1fr}
+  .gr.duoR>.tile:first-child{margin-top:clamp(30px,6vw,96px)}
+  .gr.trio>.tile:nth-child(2){margin-top:clamp(24px,5vw,80px)}
+  .tile{position:relative;display:block;overflow:hidden;text-decoration:none;color:var(--bone)}
+  .tile.ar45{aspect-ratio:4/5} .tile.ar34{aspect-ratio:3/4} .tile.ar43{aspect-ratio:4/3} .tile.ar11{aspect-ratio:1/1} .tile.ar219{aspect-ratio:21/9} .tile.ar169{aspect-ratio:16/9}
+  .tile img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.96) brightness(.9);transition:transform 1.2s cubic-bezier(.16,1,.3,1),filter .6s}
   .tile:hover img{transform:scale(1.05);filter:none}
   .tile .ov{position:absolute;inset:0;display:flex;align-items:flex-end;padding:20px;background:linear-gradient(to top,rgba(22,15,8,.8),transparent 55%);opacity:0;transition:opacity .4s ease}
   .tile:hover .ov{opacity:1}
@@ -86,7 +94,7 @@
 
   @media(max-width:860px){
     .feat{height:70vh}
-    .wall{columns:2 180px}
+    .gr.duoL,.gr.duoR,.gr.trio{grid-template-columns:1fr} .gr>.tile{margin-top:0!important} .tile.ar219{aspect-ratio:16/10}
     .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal}
   }
   @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} .tile img{transition:none} }
@@ -123,23 +131,40 @@
     <span class="cnt rv d2">Weddings across Vietnam, since 2009</span>
   </section>
 
-  <div class="wall">
-    <a class="tile" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_g2.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/km1.jpg" alt=""><span class="ov"><span class="nm">Kaido &amp; Mai<span>Hanoi</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/pl1.jpg" alt=""><span class="ov"><span class="nm">Phong &amp; Linh<span>Phu Quoc</span></span></span></a>
-    <a class="tile" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_g4.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/cp1.jpg" alt=""><span class="ov"><span class="nm">Ha &amp; Hung<span>Sapa</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/km2.jpg" alt=""><span class="ov"><span class="nm">Kaido &amp; Mai<span>Hanoi</span></span></span></a>
-    <a class="tile" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_s3.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/pl2.jpg" alt=""><span class="ov"><span class="nm">Phong &amp; Linh<span>Phu Quoc</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/cp2.jpg" alt=""><span class="ov"><span class="nm">Ha &amp; Hung<span>Sapa</span></span></span></a>
-    <a class="tile" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_x2.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/km3.jpg" alt=""><span class="ov"><span class="nm">Kaido &amp; Mai<span>Hanoi</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/pl3.jpg" alt=""><span class="ov"><span class="nm">Phong &amp; Linh<span>Phu Quoc</span></span></span></a>
-    <a class="tile" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_x5.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
-    <a class="tile" href="#" data-soon><img src="assets/works/cp3.jpg" alt=""><span class="ov"><span class="nm">Ha &amp; Hung<span>Sapa</span></span></span></a>
-    <a class="tile" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_g6.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
-    <a class="tile" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_x7.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+  <div class="gal">
+    <div class="gr duoL">
+      <a class="tile ar45" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_g2.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+      <a class="tile ar34" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_x2.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+    </div>
+    <div class="gr trio">
+      <a class="tile ar34" href="#" data-soon><img src="assets/works/km1.jpg" alt=""><span class="ov"><span class="nm">Kaido &amp; Mai<span>Hanoi</span></span></span></a>
+      <a class="tile ar45" href="#" data-soon><img src="assets/works/pl1.jpg" alt=""><span class="ov"><span class="nm">Phong &amp; Linh<span>Phu Quoc</span></span></span></a>
+      <a class="tile ar34" href="#" data-soon><img src="assets/works/cp1.jpg" alt=""><span class="ov"><span class="nm">Ha &amp; Hung<span>Sapa</span></span></span></a>
+    </div>
+    <div class="gr full">
+      <a class="tile ar219" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_g5.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+    </div>
+    <div class="gr duoR">
+      <a class="tile ar34" href="#" data-soon><img src="assets/works/km2.jpg" alt=""><span class="ov"><span class="nm">Kaido &amp; Mai<span>Hanoi</span></span></span></a>
+      <a class="tile ar43" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_s3.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+    </div>
+    <div class="gr trio">
+      <a class="tile ar45" href="#" data-soon><img src="assets/works/pl2.jpg" alt=""><span class="ov"><span class="nm">Phong &amp; Linh<span>Phu Quoc</span></span></span></a>
+      <a class="tile ar34" href="#" data-soon><img src="assets/works/cp2.jpg" alt=""><span class="ov"><span class="nm">Ha &amp; Hung<span>Sapa</span></span></span></a>
+      <a class="tile ar45" href="#" data-soon><img src="assets/works/km3.jpg" alt=""><span class="ov"><span class="nm">Kaido &amp; Mai<span>Hanoi</span></span></span></a>
+    </div>
+    <div class="gr full">
+      <a class="tile ar219" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_x5.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+    </div>
+    <div class="gr duoL">
+      <a class="tile ar45" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_g4.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+      <a class="tile ar34" href="#" data-soon><img src="assets/works/pl3.jpg" alt=""><span class="ov"><span class="nm">Phong &amp; Linh<span>Phu Quoc</span></span></span></a>
+    </div>
+    <div class="gr trio">
+      <a class="tile ar34" href="#" data-soon><img src="assets/works/cp3.jpg" alt=""><span class="ov"><span class="nm">Ha &amp; Hung<span>Sapa</span></span></span></a>
+      <a class="tile ar45" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_g6.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+      <a class="tile ar34" href="Case_CatherineJohnny.html"><img src="assets/cases/cj_x7.jpg" alt=""><span class="ov"><span class="nm">Catherine &amp; Johnny<span>Ninh Binh, 2025</span></span></span></a>
+    </div>
   </div>
 
   <section class="wnote" data-rv>
