@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About | Wed in Style</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+  :root{
+    --ink:#160F08; --bone:#EEE6D4; --dim:#9A8E76; --gold:#C6A15B;
+    --title:'Mirage','Palatino Linotype',Georgia,serif;
+    --body:'SweetSans','Helvetica Neue',Arial,sans-serif;
+    --pad:clamp(22px,4vw,56px);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body);overflow-x:hidden}
+  .eyebrow{font-family:var(--body);font-weight:500;font-size:clamp(.62rem,.66vw,.78rem);letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+  .todo{color:var(--dim);font-style:italic;font-size:.85em}
+
+  .hd{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:24px var(--pad);transition:background .4s ease}
+  .hd img{width:clamp(64px,6vw,92px);height:auto;filter:brightness(0) invert(1);opacity:.95}
+  .hd a{font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,230,212,.9);text-decoration:none;transition:opacity .3s}
+  .hd a:hover{opacity:.55}
+
+  .rv{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .in .rv{opacity:1;transform:none}
+  .in .d1{transition-delay:.12s} .in .d2{transition-delay:.24s} .in .d3{transition-delay:.36s}
+
+  .page-hero{padding:28vh var(--pad) 12vh;border-bottom:1px solid rgba(238,230,212,.12)}
+  .page-hero .eyebrow{display:block;margin-bottom:26px}
+  .page-hero h1{font-family:var(--title);font-weight:400;font-size:clamp(2.8rem,8vw,7rem);line-height:.98;letter-spacing:-.01em;color:var(--bone);margin:0;max-width:18ch}
+  .page-hero .intro{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,2vw,2.1rem);line-height:1.34;color:var(--gold);margin:36px 0 0;max-width:34ch}
+  .two{display:grid;grid-template-columns:.4fr .6fr;gap:clamp(30px,5vw,90px);padding:13vh var(--pad);border-bottom:1px solid rgba(238,230,212,.12)}
+  .two:last-of-type{border-bottom:0}
+  .lead{font-family:var(--title);font-weight:400;font-size:clamp(1.6rem,3vw,3.2rem);line-height:1.2;color:var(--bone);margin:.4em 0 0;max-width:20ch}
+  .body{font-family:var(--body);font-weight:300;font-size:clamp(1.02rem,1.1vw,1.28rem);line-height:1.78;color:rgba(238,230,212,.86);margin:0;max-width:54ch}
+  .body+.body{margin-top:1.3em}
+  .team{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2vw,36px);margin-top:3vh}
+  .team .ph{aspect-ratio:4/5;background:rgba(238,230,212,.05);border:1px solid rgba(238,230,212,.1);display:flex;align-items:flex-end;padding:18px}
+  .team .ph span{font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .nx{padding:16vh var(--pad);text-align:center}
+  .nx h2{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4.4vw,4.6rem);line-height:1.05;color:var(--bone);margin:.4em auto 1em;max-width:18ch}
+  .cta{display:inline-block;font-family:var(--body);font-size:clamp(.68rem,.72vw,.8rem);letter-spacing:.24em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid rgba(238,230,212,.4);padding:18px 36px;transition:color .35s,background .35s,border-color .35s}
+  .cta:hover{color:var(--ink);background:var(--gold);border-color:var(--gold)}
+
+  .ft{border-top:1px solid rgba(238,230,212,.14);padding:12vh var(--pad) 3vh;overflow:hidden}
+  .ft-top{display:grid;grid-template-columns:1.3fr 1fr 1.2fr 1fr;gap:clamp(28px,3.5vw,64px);align-items:start}
+  .ft-logo{width:clamp(88px,8vw,132px);height:auto;filter:brightness(0) invert(1);opacity:.9;display:block;margin-bottom:30px}
+  .ft-anchor{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2.1vw,2.5rem);line-height:1.16;color:var(--bone);margin:0;max-width:16ch}
+  .ft-tag{display:block;margin-top:26px;font-family:var(--body);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+  .ft-label{font-family:var(--body);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+  .ft-col a,.ft-col p,.ft-col span.ln{display:block;font-family:var(--body);font-weight:300;font-size:clamp(.86rem,.92vw,1.02rem);line-height:1.5;color:rgba(238,230,212,.76);text-decoration:none;margin:0 0 12px;transition:color .3s}
+  .ft-col a:hover{color:var(--gold)}
+  .ft-mark{font-family:var(--title);font-weight:400;font-size:17.5vw;line-height:.9;letter-spacing:-.02em;text-align:center;white-space:nowrap;margin:clamp(40px,6vw,90px) 0 0;--mx:50%;--my:50%;background:radial-gradient(circle 26vw at var(--mx) var(--my), #edd49b 0%, var(--gold) 26%, #2c2114 62%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .ft-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:clamp(28px,3vw,44px);padding-top:24px;border-top:1px solid rgba(238,230,212,.1);font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+
+  @media(max-width:860px){ .two{grid-template-columns:1fr} .team{grid-template-columns:1fr 1fr} .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal} }
+  @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} }
+</style>
+</head>
+<body>
+  <header class="hd" id="hd">
+    <a href="Homepage.html" aria-label="Wed in Style - home"><img src="assets/wis_logo_mark.svg" alt="Wed in Style"></a>
+    <a href="#" data-wm-open>Menu</a>
+  </header>
+
+  <section class="page-hero" data-rv>
+    <span class="eyebrow rv">About</span>
+    <h1 class="rv d1">What comes from the heart, goes to the heart.</h1>
+    <p class="intro rv d2">Wed in Style has made weddings in Vietnam since 2009 - and somewhere along the way, stopped planning days and started authoring stories.</p>
+  </section>
+
+  <section class="two" data-rv>
+    <div><span class="eyebrow rv">The studio</span><p class="lead rv d1">Not a supplier. An author.</p></div>
+    <div>
+      <p class="body rv d1">Most planners sell reassurance - professional, dependable, able to do anything. We do all of that, but it is not what we are for. We are for finding the one true story a couple already carries, and telling it through contemporary Vietnamese culture.</p>
+      <p class="body rv d2">Culture here is not a backdrop or a symbol. It shows up in real detail - raw silk, the light over a bay at dusk, the way a family gathers - so a Vietnamese wedding feels present and personal, never like a postcard.</p>
+    </div>
+  </section>
+
+  <section class="two" data-rv>
+    <div><span class="eyebrow rv">The people</span><p class="lead rv d1">The hands behind the day.</p></div>
+    <div>
+      <p class="body rv d1">A small team who live inside the culture they design with - not visiting it. <span class="todo">[WIS cung cấp: founder origin story (đang thiếu), giọng cá nhân thật của team, và ảnh chân dung team để thay các ô dưới.]</span></p>
+      <div class="team rv d2">
+        <div class="ph"><span>[Ảnh team]</span></div>
+        <div class="ph"><span>[Ảnh team]</span></div>
+        <div class="ph"><span>[Ảnh team]</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="two" data-rv>
+    <div><span class="eyebrow rv">Since 2009</span><p class="lead rv d1">Years in the making.</p></div>
+    <div>
+      <p class="body rv d1">More than fifteen years of celebrations across Vietnam - from the coast to the highlands - and a limited number of weddings each year, so every story gets the attention it deserves.</p>
+      <p class="body rv d2"><span class="todo">[WIS: xác nhận mốc di sản thật để dựng timeline nhẹ - vd số dự án, giải thưởng, cột mốc.]</span></p>
+    </div>
+  </section>
+
+  <section class="nx" data-rv>
+    <span class="eyebrow rv">Your story</span>
+    <h2 class="rv d1">We would love to hear yours.</h2>
+    <a class="cta rv d2" href="Contact.html">Begin the conversation</a>
+  </section>
+
+  <footer class="ft">
+    <div class="ft-top">
+      <div>
+        <img class="ft-logo" src="assets/wis_logo_mark.svg" alt="Wed in Style">
+        <p class="ft-anchor">What comes from the heart, goes to the heart.</p>
+        <span class="ft-tag">Weddings in Vietnam, since 2009</span>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Menu</div>
+        <a href="Homepage.html">Home</a><a href="Case_CatherineJohnny.html">Our Works</a><a href="Approach.html">Approach</a><a href="Services.html">Services</a><a href="About.html">About</a><a href="Journal.html">Journal</a><a href="Contact.html">Contact</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Studios</div>
+        <p>23 Hang Bun Street, Ba Dinh District, Hanoi</p>
+        <p>491/7 Nguyen Dinh Chieu Street, Ward 2, District 3, HCMC</p>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Connect</div>
+        <a href="https://www.instagram.com/wis.vn/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/wis.weddingplanners" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.pinterest.com/wedinstyle/" target="_blank" rel="noopener">Pinterest</a>
+        <a href="mailto:admin@wedinstyle.net">admin@wedinstyle.net</a>
+        <span class="ln">+84 90 623 81 58</span>
+      </div>
+    </div>
+    <div class="ft-mark" id="ftmark">Let's talk.</div>
+    <div class="ft-bottom"><span>2026 Wed in Style</span><span>Premium Wedding Planner in Vietnam</span></div>
+  </footer>
+
+<script>
+(function(){
+  var hd=document.getElementById('hd');
+  function onScroll(){ hd.style.background = window.scrollY>60 ? 'rgba(22,15,8,.86)' : 'transparent'; }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.18});
+  document.querySelectorAll('[data-rv]').forEach(function(el){ io.observe(el); });
+  var mark=document.getElementById('ftmark');
+  if(mark && !(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)){
+    var tx=.5,ty=.5,mx=.5,my=.5,run=false;
+    function loop(){ mx+=(tx-mx)*.14; my+=(ty-my)*.14; mark.style.setProperty('--mx',(mx*100).toFixed(2)+'%'); mark.style.setProperty('--my',(my*100).toFixed(2)+'%'); if(Math.abs(tx-mx)>.0008||Math.abs(ty-my)>.0008){requestAnimationFrame(loop);}else{run=false;} }
+    function kick(){ if(!run){run=true;requestAnimationFrame(loop);} }
+    mark.addEventListener('mousemove',function(e){ var r=mark.getBoundingClientRect(); tx=(e.clientX-r.left)/r.width; ty=(e.clientY-r.top)/r.height; kick(); });
+    mark.addEventListener('mouseleave',function(){ tx=.5;ty=.5;kick(); });
+  }
+})();
+</script>
+<!-- ===== WIS SHARED MENU ===== -->
+<style>
+.wm-rl{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.02}
+.wm-rl>span{display:block;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+.wm-rl>span:nth-child(2){position:absolute;top:100%;left:0}
+.wm-trigger:hover .wm-rl>span,.wm-close:hover .wm-rl>span,.wm-link:hover .wm-rl>span,.wm-mlink:hover .wm-rl>span{transform:translateY(-100%)}
+.wm-trigger{position:fixed;top:20px;right:clamp(16px,3vw,44px);z-index:1900;background:none;border:0;cursor:pointer;padding:8px 2px;
+  font-family:var(--body);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);text-shadow:0 1px 14px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .5s ease,transform .5s ease}
+.wm-trigger.show{opacity:1;transform:none;pointer-events:auto}
+.wm{position:fixed;inset:0;z-index:2000;visibility:hidden;pointer-events:none}
+.wm.open{visibility:visible;pointer-events:auto}
+.wm-bg{position:absolute;inset:0;background:radial-gradient(130% 100% at 82% 0%,#22170c 0%,#160F08 58%);transform:scaleY(0);transform-origin:top;transition:transform .72s cubic-bezier(.76,0,.24,1)}
+.wm.open .wm-bg{transform:scaleY(1)}
+.wm-in{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:22px clamp(16px,3vw,44px) clamp(26px,5vh,58px)}
+.wm-head{display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(-12px);transition:opacity .5s ease,transform .6s ease}
+.wm.open .wm-head{opacity:1;transform:none;transition-delay:.32s}
+.wm-brand img{width:clamp(58px,5.5vw,84px);height:auto;filter:brightness(0) invert(1);opacity:.95}
+.wm-close{background:none;border:0;cursor:pointer;padding:8px 2px;font-family:var(--body);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone)}
+.wm-body{flex:1;display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(30px,5vw,80px);align-items:center;padding-top:3vh;overflow:auto}
+.wm-nav{display:flex;flex-direction:column;gap:clamp(6px,1.5vh,20px)}
+.wm-link{display:flex;flex-direction:column;gap:5px;text-decoration:none;opacity:0;transform:translateY(42px);transition:opacity .7s ease,transform .85s cubic-bezier(.16,1,.3,1)}
+.wm-row{display:flex;align-items:baseline;gap:clamp(12px,1.6vw,26px)}
+.wm-word{font-family:var(--title);font-weight:400;font-size:clamp(1.8rem,4.4vw,3.4rem);line-height:1;letter-spacing:-.01em;color:var(--bone);white-space:nowrap;transition:color .3s ease}
+.wm-link:hover .wm-word{color:var(--gold)}
+.wm.open .wm-link{opacity:1;transform:none}
+.wm.open .wm-link:nth-child(1){transition-delay:.34s}.wm.open .wm-link:nth-child(2){transition-delay:.40s}.wm.open .wm-link:nth-child(3){transition-delay:.46s}.wm.open .wm-link:nth-child(4){transition-delay:.52s}.wm.open .wm-link:nth-child(5){transition-delay:.58s}.wm.open .wm-link:nth-child(6){transition-delay:.64s}.wm.open .wm-link:nth-child(7){transition-delay:.70s}.wm.open .wm-link:nth-child(8){transition-delay:.76s}
+.wm-idx{font-family:var(--body);font-size:.58rem;letter-spacing:.22em;color:var(--gold)}
+.wm-soon{font-family:var(--body);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);border:1px solid rgba(238,230,212,.22);padding:3px 8px;border-radius:20px;align-self:center}
+.wm-sub{font-family:var(--body);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-left:calc(clamp(12px,1.6vw,26px) + 2.4ch)}
+.wm-aside{display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,3vh,40px);border-left:1px solid rgba(238,230,212,.14);padding-left:clamp(22px,3vw,54px);opacity:0;transition:opacity .8s ease}
+.wm.open .wm-aside{opacity:1;transition-delay:.6s}
+.wm-feat{display:block;text-decoration:none;color:var(--bone)}
+.wm-feat-img{display:block;width:100%;aspect-ratio:4/3;overflow:hidden;margin-bottom:18px}
+.wm-feat-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.wm-feat:hover .wm-feat-img img{transform:scale(1.06)}
+.wm-feat-k{display:block;font-family:var(--body);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.wm-feat-t{display:block;font-family:var(--title);font-size:clamp(1.5rem,2.4vw,2.2rem);line-height:1.1;margin-bottom:6px}
+.wm-feat-s{display:block;font-family:var(--body);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.wm-meta{display:flex;flex-direction:column;gap:14px}
+.wm-mlink{color:rgba(238,230,212,.9);text-decoration:none;width:max-content;font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase}
+.wm-note{color:var(--dim);font-family:var(--body);font-size:.72rem;letter-spacing:.02em}
+.wm-cta{margin-top:8px;align-self:flex-start;font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:var(--gold);text-decoration:none;padding:14px 26px;transition:opacity .3s}
+.wm-cta:hover{opacity:.85}
+@media(max-width:860px){ .wm-body{grid-template-columns:1fr;gap:5vh;align-items:start;padding-top:2vh;overflow:auto} .wm-aside{border-left:0;padding-left:0;border-top:1px solid rgba(238,230,212,.14);padding-top:5vh} .wm-feat-img{aspect-ratio:16/9} }
+@media(prefers-reduced-motion:reduce){ .wm-bg,.wm-in,.wm-head,.wm-link,.wm-aside,.wm-rl>span,.wm-trigger{transition:none!important} }
+</style>
+<button class="wm-trigger" type="button" data-wm-open aria-label="Open menu"><span class="wm-rl"><span>Menu</span><span>Menu</span></span></button>
+<div class="wm" id="wm" aria-hidden="true">
+  <div class="wm-bg"></div>
+  <div class="wm-in">
+    <div class="wm-head">
+      <a class="wm-brand" href="Homepage.html" aria-label="Wed in Style - home"><img src="assets/wis_logo_mark.svg" alt="Wed in Style"></a>
+      <button class="wm-close" type="button" data-wm-close aria-label="Close menu"><span class="wm-rl"><span>Close</span><span>Close</span></span></button>
+    </div>
+    <div class="wm-body">
+      <nav class="wm-nav">
+        <a class="wm-link" href="Homepage.html"><span class="wm-row"><span class="wm-idx">01</span><span class="wm-rl wm-word"><span>Home</span><span>Home</span></span></span></a>
+        <a class="wm-link" href="Case_CatherineJohnny.html"><span class="wm-row"><span class="wm-idx">02</span><span class="wm-rl wm-word"><span>Our Works</span><span>Our Works</span></span></span></a>
+        <a class="wm-link" href="Approach.html"><span class="wm-row"><span class="wm-idx">03</span><span class="wm-rl wm-word"><span>Approach</span><span>Approach</span></span></span></a>
+        <a class="wm-link" href="#" data-soon><span class="wm-row"><span class="wm-idx">04</span><span class="wm-rl wm-word"><span>Destination Weddings</span><span>Destination Weddings</span></span><span class="wm-soon">Soon</span></span><span class="wm-sub">Venue - Vietnam destinations</span></a>
+        <a class="wm-link" href="Services.html"><span class="wm-row"><span class="wm-idx">05</span><span class="wm-rl wm-word"><span>Services</span><span>Services</span></span></span><span class="wm-sub">Standard, Elopement, Premium, Decoration</span></a>
+        <a class="wm-link" href="About.html"><span class="wm-row"><span class="wm-idx">06</span><span class="wm-rl wm-word"><span>About</span><span>About</span></span></span></a>
+        <a class="wm-link" href="Journal.html"><span class="wm-row"><span class="wm-idx">07</span><span class="wm-rl wm-word"><span>Journal</span><span>Journal</span></span></span></a>
+        <a class="wm-link" href="Contact.html"><span class="wm-row"><span class="wm-idx">08</span><span class="wm-rl wm-word"><span>Contact</span><span>Contact</span></span></span></a>
+      </nav>
+      <aside class="wm-aside">
+        <a class="wm-feat" href="Case_CatherineJohnny.html">
+          <span class="wm-feat-img"><img src="assets/cases/cj_g1.jpg" alt=""></span>
+          <span class="wm-feat-k">Featured story</span>
+          <span class="wm-feat-t">Catherine &amp; Johnny</span>
+          <span class="wm-feat-s">Love Flavor - Ninh Binh, 2025</span>
+        </a>
+        <div class="wm-meta">
+          <a class="wm-mlink" href="O2_Homepage.html" style="color:var(--gold);border-bottom:1px solid rgba(238,230,212,.16);padding-bottom:13px;margin-bottom:3px"><span class="wm-rl"><span>Now: Option 1 - switch to Option 2 (The Walk)</span><span>Now: Option 1 - switch to Option 2 (The Walk)</span></span></a>
+          <a class="wm-mlink" href="https://www.instagram.com/wis.vn/" target="_blank" rel="noopener"><span class="wm-rl"><span>Instagram</span><span>Instagram</span></span></a>
+          <a class="wm-mlink" href="https://www.facebook.com/wis.weddingplanners" target="_blank" rel="noopener"><span class="wm-rl"><span>Facebook</span><span>Facebook</span></span></a>
+          <span class="wm-note">Weddings in Vietnam, since 2009</span>
+          <a class="wm-cta" href="Contact.html">Start your story</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var wm=document.getElementById('wm'); if(!wm) return;
+  var openers=document.querySelectorAll('[data-wm-open], .menu');
+  function openM(){wm.classList.add('open');wm.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';document.body.style.overflow='hidden';}
+  function closeM(){wm.classList.remove('open');wm.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';document.body.style.overflow='';}
+  openers.forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openM();});});
+  wm.querySelectorAll('[data-wm-close]').forEach(function(b){b.addEventListener('click',closeM);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM();});
+  wm.querySelectorAll('a[href]').forEach(function(a){a.addEventListener('click',function(e){if(a.hasAttribute('data-soon')){e.preventDefault();return;}setTimeout(closeM,20);});});
+})();
+</script>
+</body>
+</html>
