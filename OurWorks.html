@@ -35,26 +35,49 @@
   .wipe img{clip-path:inset(0 0 0 100%);transition:clip-path 1.05s cubic-bezier(.76,0,.2,1)}
   .in .wipe img,.wipe.in img{clip-path:inset(0 0 0 0)}
 
-  .page-hero{padding:28vh var(--pad) 10vh}
-  .page-hero .eyebrow{display:block;margin-bottom:26px}
-  .page-hero h1{font-family:var(--title);font-weight:400;font-size:clamp(2.8rem,9vw,8rem);line-height:.94;letter-spacing:-.01em;color:var(--bone);margin:0}
-  .page-hero .intro{font-family:var(--title);font-weight:400;font-style:italic;font-size:clamp(1.3rem,2vw,2.1rem);line-height:1.34;color:var(--gold);margin:34px 0 0;max-width:34ch}
+  /* featured reel - one cinematic full-viewport story */
+  .reel{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end}
+  .reel-bg{position:absolute;left:0;right:0;top:-10%;bottom:-10%;will-change:transform}
+  .reel-bg img{width:100%;height:100%;object-fit:cover}
+  .reel::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(22,15,8,.94),rgba(22,15,8,.18) 55%,rgba(22,15,8,.5));z-index:1}
+  .reel .cap{position:relative;z-index:2;width:100%;padding:0 var(--pad) 11vh}
+  .reel .eyebrow{display:block;margin-bottom:22px}
+  .reel h2{font-family:var(--title);font-weight:400;font-size:clamp(3rem,9vw,8.4rem);line-height:.9;letter-spacing:-.015em;color:var(--bone);margin:0}
+  .reel .ln{font-family:var(--title);font-style:italic;font-size:clamp(1.2rem,2vw,2.1rem);line-height:1.34;color:var(--gold);margin:26px 0 0;max-width:34ch}
+  .reel .meta{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:30px}
+  .reel .loc{font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,230,212,.75)}
+  .reel .go{font-family:var(--body);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);background:var(--gold);text-decoration:none;padding:15px 30px;transition:opacity .3s}
+  .reel .go:hover{opacity:.86}
+  .reel-cue{position:absolute;left:50%;bottom:3.5vh;transform:translateX(-50%);z-index:2;font-family:var(--body);font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(238,230,212,.6);display:flex;flex-direction:column;align-items:center;gap:10px}
+  .reel-cue::after{content:'';width:1px;height:38px;background:linear-gradient(var(--gold),transparent);animation:cue 2.2s ease-in-out infinite}
+  @keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
 
-  .works{padding:2vh var(--pad) 6vh}
-  .wgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,64px)}
-  .wcard{display:block;text-decoration:none;color:var(--bone)}
-  .wcard.feat{grid-column:1 / -1}
-  .wcard .ph{overflow:hidden;aspect-ratio:4/5;margin-bottom:22px}
-  .wcard.feat .ph{aspect-ratio:16/9}
-  .wcard.off{margin-top:12vh}
-  .wcard img{width:100%;height:100%;object-fit:cover;filter:saturate(.95) brightness(.88);transition:transform 1.3s cubic-bezier(.16,1,.3,1),filter .7s}
-  .wcard:hover img{transform:scale(1.04);filter:none}
-  .wcard .k{font-family:var(--body);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
-  .wcard h3{font-family:var(--title);font-weight:400;font-size:clamp(1.9rem,3.2vw,3.4rem);color:var(--bone);margin:12px 0 10px;line-height:1}
-  .wcard.feat h3{font-size:clamp(2.6rem,5vw,5rem)}
-  .wcard .ln{font-family:var(--title);font-style:italic;font-size:clamp(1.05rem,1.35vw,1.5rem);line-height:1.36;color:rgba(238,230,212,.82);margin:0;max-width:36ch}
-  .wcard .loc{font-family:var(--body);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-top:14px;display:block}
-  .wnote{padding:6vh var(--pad) 4vh}
+  /* the roll - oversized name index, image blooms on hover */
+  .rollhead{padding:16vh var(--pad) 2vh}
+  .rollhead .eyebrow{display:block;margin-bottom:20px}
+  .rollhead p{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.6vw,2.6rem);line-height:1.24;color:var(--bone);margin:0;max-width:24ch}
+  .roll{position:relative;padding:2vh var(--pad) 4vh}
+  .roll-item{display:grid;grid-template-columns:clamp(40px,4vw,72px) 1fr auto;gap:clamp(14px,3vw,50px);align-items:baseline;padding:clamp(28px,4.2vh,56px) 0;border-top:1px solid rgba(238,230,212,.14);text-decoration:none;color:inherit;transition:padding-left .45s cubic-bezier(.16,1,.3,1)}
+  .roll-item:last-child{border-bottom:1px solid rgba(238,230,212,.14)}
+  .roll-item:hover{padding-left:18px}
+  .roll-num{font-family:var(--title);color:var(--gold);font-size:clamp(1rem,1.2vw,1.4rem)}
+  .roll-nm{min-width:0}
+  .roll-name{display:block;font-family:var(--title);font-weight:400;font-size:clamp(2.2rem,6.4vw,6.4rem);line-height:.98;letter-spacing:-.01em;color:var(--bone);transition:color .35s ease}
+  .roll-item:hover .roll-name{color:var(--gold)}
+  .roll-story{display:block;font-family:var(--title);font-style:italic;font-size:clamp(1rem,1.4vw,1.5rem);line-height:1.35;color:rgba(238,230,212,.8);max-width:40ch;max-height:0;opacity:0;overflow:hidden;transition:max-height .5s ease,opacity .4s ease,margin-top .4s ease}
+  .roll-item:hover .roll-story{max-height:4em;opacity:1;margin-top:16px}
+  .roll-loc{align-self:center;font-family:var(--body);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+  .roll-thumb{display:none}
+  .roll-preview{position:fixed;top:0;left:0;width:clamp(230px,22vw,340px);aspect-ratio:4/5;overflow:hidden;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.96);transition:opacity .35s ease,transform .5s cubic-bezier(.16,1,.3,1);z-index:6;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+  .roll-preview.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  .roll-preview img{width:100%;height:100%;object-fit:cover}
+  body.touch .roll-thumb{display:block;grid-column:1/-1;margin-top:18px;aspect-ratio:16/9;overflow:hidden;max-width:560px}
+  body.touch .roll-thumb img{width:100%;height:100%;object-fit:cover}
+  body.touch .roll-story{max-height:none;opacity:1;margin-top:14px}
+  body.touch .roll-item:hover{padding-left:0}
+  body.touch .roll-preview{display:none}
+
+  .wnote{padding:8vh var(--pad) 2vh}
   .wnote p{font-family:var(--body);font-weight:300;color:var(--dim);font-style:italic;font-size:.9rem;max-width:66ch;margin:0}
 
   .nx{padding:14vh var(--pad) 16vh;text-align:center}
@@ -73,7 +96,12 @@
   .ft-mark{font-family:var(--title);font-weight:400;font-size:17.5vw;line-height:.9;letter-spacing:-.02em;text-align:center;white-space:nowrap;margin:clamp(40px,6vw,90px) 0 0;--mx:50%;--my:50%;background:radial-gradient(circle 26vw at var(--mx) var(--my), #edd49b 0%, var(--gold) 26%, #2c2114 62%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
   .ft-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:clamp(28px,3vw,44px);padding-top:24px;border-top:1px solid rgba(238,230,212,.1);font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
 
-  @media(max-width:860px){ .wgrid{grid-template-columns:1fr} .wcard.off{margin-top:0} .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal} }
+  @media(max-width:860px){
+    .reel{height:86vh}
+    .roll-item{grid-template-columns:auto 1fr;gap:8px 16px} .roll-loc{grid-column:2;justify-self:start;white-space:normal;margin-top:2px} .roll-item:hover{padding-left:0}
+    .roll-story{max-height:none;opacity:1;margin-top:12px} .roll-thumb{display:block;grid-column:1/-1;margin-top:16px;aspect-ratio:16/10;overflow:hidden} .roll-thumb img{width:100%;height:100%;object-fit:cover} .roll-preview{display:none}
+    .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal}
+  }
   @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} .wipe img{clip-path:none!important} }
 </style>
 </head>
@@ -83,50 +111,49 @@
     <a href="#" data-wm-open>Menu</a>
   </header>
 
-  <section class="page-hero" data-rv>
-    <span class="eyebrow rv">Our Works</span>
-    <h1 class="rv d1">Glory stories.</h1>
-    <p class="intro rv d2">Every celebration starts with a life in view - here are a few we have found, and told.</p>
+  <section class="reel" data-rv>
+    <div class="reel-bg" id="reelbg"><img src="assets/cases/cj_hero.jpg" alt="Catherine and Johnny on a boat in Ninh Binh"></div>
+    <div class="cap">
+      <span class="eyebrow rv">Our Works - Featured story</span>
+      <h2 class="rv d1">Catherine<br>&amp; Johnny</h2>
+      <p class="ln rv d1">It began with a cup of milk tea, and became a garden of love reached only by boat.</p>
+      <div class="meta rv d2">
+        <span class="loc">Love Flavor - Ninh Binh, 2025</span>
+        <a class="go" href="Case_CatherineJohnny.html">View the story</a>
+      </div>
+    </div>
+    <span class="reel-cue">Scroll</span>
   </section>
 
-  <div class="works">
-    <div class="wgrid">
-      <a class="wcard feat" href="Case_CatherineJohnny.html" data-rv>
-        <div class="ph wipe"><img src="assets/cases/cj_hero.jpg" alt=""></div>
-        <span class="k rv">A glory story</span>
-        <h3 class="rv d1">Catherine &amp; Johnny</h3>
-        <p class="ln rv d1">It began with a cup of milk tea, and became a garden of love reached only by boat.</p>
-        <span class="loc rv d2">Love Flavor - Ninh Binh, 2025</span>
-      </a>
+  <section class="rollhead" data-rv>
+    <span class="eyebrow rv">More glory stories</span>
+    <p class="rv d1">Every name here is a life we found, and told.</p>
+  </section>
 
-      <a class="wcard" href="#" data-rv>
-        <div class="ph wipe"><img src="assets/works/km1.jpg" alt=""></div>
-        <span class="k rv">A glory story</span>
-        <h3 class="rv d1">Kaido &amp; Mai</h3>
-        <p class="ln rv d1">A city wedding built around a single winning hand.</p>
-        <span class="loc rv d2">Ace of Heart - Hanoi</span>
-      </a>
-
-      <a class="wcard off" href="#" data-rv>
-        <div class="ph wipe"><img src="assets/works/pl1.jpg" alt=""></div>
-        <span class="k rv">A glory story</span>
-        <h3 class="rv d1">Phong &amp; Linh</h3>
-        <p class="ln rv d1">An island night that ran on light and salt air.</p>
-        <span class="loc rv d2">Electric Heart - Phu Quoc</span>
-      </a>
-
-      <a class="wcard feat" href="#" data-rv>
-        <div class="ph wipe"><img src="assets/works/cp2.jpg" alt=""></div>
-        <span class="k rv">A glory story</span>
-        <h3 class="rv d1">Ha &amp; Hung</h3>
-        <p class="ln rv d1">Vows in the clouds, above a sea of terraces.</p>
-        <span class="loc rv d2">At 1,600 Meters - Sapa</span>
-      </a>
-    </div>
+  <div class="roll" id="roll">
+    <a class="roll-item" href="#" data-soon data-img="assets/works/km1.jpg" data-rv>
+      <span class="roll-num rv">02</span>
+      <span class="roll-nm"><span class="roll-name rv d1">Kaido &amp; Mai</span><span class="roll-story">A city wedding built around a single winning hand.</span></span>
+      <span class="roll-loc rv d2">Ace of Heart - Hanoi</span>
+      <span class="roll-thumb"><img src="assets/works/km1.jpg" alt=""></span>
+    </a>
+    <a class="roll-item" href="#" data-soon data-img="assets/works/pl1.jpg" data-rv>
+      <span class="roll-num rv">03</span>
+      <span class="roll-nm"><span class="roll-name rv d1">Phong &amp; Linh</span><span class="roll-story">An island night that ran on light and salt air.</span></span>
+      <span class="roll-loc rv d2">Electric Heart - Phu Quoc</span>
+      <span class="roll-thumb"><img src="assets/works/pl1.jpg" alt=""></span>
+    </a>
+    <a class="roll-item" href="#" data-soon data-img="assets/works/cp2.jpg" data-rv>
+      <span class="roll-num rv">04</span>
+      <span class="roll-nm"><span class="roll-name rv d1">Ha &amp; Hung</span><span class="roll-story">Vows in the clouds, above a sea of terraces.</span></span>
+      <span class="roll-loc rv d2">At 1,600 Meters - Sapa</span>
+      <span class="roll-thumb"><img src="assets/works/cp2.jpg" alt=""></span>
+    </a>
   </div>
+  <div class="roll-preview" id="rollprev" aria-hidden="true"><img src="" alt=""></div>
 
   <section class="wnote" data-rv>
-    <p class="rv">Catherine &amp; Johnny opens as a full story. The others are placeholders showing the grid - <span style="color:var(--dim)">[WIS cung cấp: danh sách dự án thật, mỗi dự án 1 tên concept + 1 dòng glory story + 1 điểm khởi đầu thật + 2-3 chi tiết thật để dựng trang chi tiết (dùng chung template Catherine &amp; Johnny).]</span></p>
+    <p class="rv">Catherine &amp; Johnny opens as a full story; the three above are placeholders showing the index - <span style="color:var(--dim)">[WIS cung cấp: danh sách dự án thật, mỗi dự án 1 tên concept + 1 dòng glory story + 1 điểm khởi đầu thật + 2-3 chi tiết thật để dựng trang chi tiết (dùng chung template Catherine &amp; Johnny).]</span></p>
   </section>
 
   <section class="nx" data-rv>
@@ -171,6 +198,24 @@
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.14});
   document.querySelectorAll('[data-rv]').forEach(function(el){ io.observe(el); });
+  var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  if(coarse) document.body.classList.add('touch');
+  var reelBg=document.getElementById('reelbg');
+  if(reelBg){
+    var ry=0,rt=0,rrun=false;
+    function rloop(){ ry+=(rt-ry)*.12; reelBg.style.transform='translateY('+ry.toFixed(1)+'px)'; if(Math.abs(rt-ry)>.4){requestAnimationFrame(rloop);}else{rrun=false;} }
+    window.addEventListener('scroll',function(){ rt=window.scrollY*0.14; if(!rrun){rrun=true;requestAnimationFrame(rloop);} },{passive:true});
+  }
+  var roll=document.getElementById('roll'), prev=document.getElementById('rollprev'), prevImg=prev?prev.querySelector('img'):null;
+  if(roll && prev && prevImg && !coarse){
+    roll.addEventListener('mousemove',function(e){ prev.style.left=e.clientX+'px'; prev.style.top=e.clientY+'px'; });
+    roll.querySelectorAll('.roll-item').forEach(function(it){
+      it.addEventListener('mouseenter',function(){ var src=it.getAttribute('data-img'); if(src){ prevImg.setAttribute('src',src); prev.classList.add('show'); } });
+      it.addEventListener('mouseleave',function(){ prev.classList.remove('show'); });
+    });
+    roll.addEventListener('mouseleave',function(){ prev.classList.remove('show'); });
+  }
+  document.querySelectorAll('.roll-item[data-soon]').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); }); });
   var mark=document.getElementById('ftmark');
   if(mark && !(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)){
     var tx=.5,ty=.5,mx=.5,my=.5,run=false;
