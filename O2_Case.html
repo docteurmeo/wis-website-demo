@@ -16,6 +16,12 @@
     --pad:clamp(22px,4vw,56px);
   }
   *{box-sizing:border-box}
+  html{scrollbar-width:thin;scrollbar-color:rgba(169,99,59,.45) transparent}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(169,99,59,.4);border-radius:10px;border:3px solid transparent;background-clip:content-box}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(169,99,59,.66);background-clip:content-box}
+  ::-webkit-scrollbar-corner{background:transparent}
   html,body{margin:0}
   body{background:var(--paper);color:var(--ink);font-family:var(--serif);overflow-x:hidden}
   img{display:block}
