@@ -55,6 +55,13 @@
   .pract h3{font-family:var(--title);font-weight:400;font-size:clamp(1.7rem,3vw,3rem);line-height:1.14;color:var(--bone);margin:0 0 .6em;max-width:20ch}
   .pract p{font-family:var(--body);font-weight:300;font-size:clamp(1.05rem,1.2vw,1.35rem);line-height:1.74;color:rgba(238,230,212,.85);margin:0;max-width:46ch}
   .pract p+p{margin-top:1.2em}
+  .pract .pq{font-family:var(--title);font-style:italic;font-size:clamp(1.25rem,1.8vw,1.85rem);line-height:1.3;color:var(--gold);margin:0 0 4vh;max-width:24ch}
+  .pract .rows{margin-top:1vh}
+  .pract .r{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,1.8vw,32px);padding:clamp(16px,2.3vh,26px) 0;border-top:1px solid rgba(238,230,212,.12);align-items:baseline}
+  .pract .r .rn{font-family:var(--title);color:var(--gold);font-size:clamp(.9rem,1vw,1.15rem)}
+  .pract .r .rt{font-family:var(--title);font-weight:400;font-size:clamp(1.2rem,1.8vw,1.85rem);line-height:1.1;color:var(--bone);display:block}
+  .pract .r .rd{font-family:var(--body);font-weight:300;font-size:clamp(.94rem,1vw,1.14rem);line-height:1.58;color:rgba(238,230,212,.74);display:block;margin-top:8px;max-width:44ch}
+  .pract .note{font-family:var(--body);font-weight:300;font-size:clamp(.95rem,1vw,1.14rem);line-height:1.62;color:rgba(238,230,212,.72);margin:3.4vh 0 0;max-width:46ch}
 
   /* best-for - full-bleed image band with an overlaid line */
   .band{position:relative;min-height:72vh;display:flex;align-items:center;overflow:hidden}
@@ -131,11 +138,15 @@
 
   <section class="pract">
     <div class="visual wipe" data-rv><img src="assets/cases/cj_g5.jpg" alt=""></div>
-    <div class="txt">
-      <span class="lab" data-rv><span class="rv">In practice</span></span>
-      <h3 class="rv" data-rv>The whole day speaks in a single voice.</h3>
-      <p class="rv d1" data-rv>Nothing is left to assemble at the end. Concept, design, planning and production move as one, so every part of the day - the invitation, the room, the last dance - belongs to the same story.</p>
-      <p class="todo rv d2" data-rv>[WIS: bang pham vi chinh thuc cua goi Premium se bo sung khi co - khong liet ke scope tu che.]</p>
+    <div class="txt" data-rv>
+      <span class="lab"><span class="rv">Where the care goes</span></span>
+      <p class="pq rv d1">The bride is the star of the show. She shines brighter than any diamond.</p>
+      <div class="rows rv d1">
+        <div class="r"><span class="rn">01</span><span><span class="rt">Bridal styling</span><span class="rd">Wedding dress, bridesmaid attire, make-up and accessories - insider tips and expert guidance to bring your vision to life.</span></span></div>
+        <div class="r"><span class="rn">02</span><span><span class="rt">Aesthetic design</span><span class="rd">A unique aesthetic built for each wedding, so the day reflects both your personal style and the story it tells.</span></span></div>
+        <div class="r"><span class="rn">03</span><span><span class="rt">One integral work</span><span class="rd">Every part of the celebration planned and produced as a single, carefully considered whole - atmosphere first.</span></span></div>
+      </div>
+      <p class="note rv d2"><span class="todo">[WIS: doi chieu lai pham vi chinh thuc goi Premium tren wedinstyle.vn.]</span></p>
     </div>
   </section>
 

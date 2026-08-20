@@ -55,6 +55,13 @@
   .pract h3{font-family:var(--title);font-weight:400;font-size:clamp(1.7rem,3vw,3rem);line-height:1.14;color:var(--bone);margin:0 0 .6em;max-width:20ch}
   .pract p{font-family:var(--body);font-weight:300;font-size:clamp(1.05rem,1.2vw,1.35rem);line-height:1.74;color:rgba(238,230,212,.85);margin:0;max-width:46ch}
   .pract p+p{margin-top:1.2em}
+  .pract .pq{font-family:var(--title);font-style:italic;font-size:clamp(1.25rem,1.8vw,1.85rem);line-height:1.3;color:var(--gold);margin:0 0 4vh;max-width:24ch}
+  .pract .rows{margin-top:1vh}
+  .pract .r{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,1.8vw,32px);padding:clamp(16px,2.3vh,26px) 0;border-top:1px solid rgba(238,230,212,.12);align-items:baseline}
+  .pract .r .rn{font-family:var(--title);color:var(--gold);font-size:clamp(.9rem,1vw,1.15rem)}
+  .pract .r .rt{font-family:var(--title);font-weight:400;font-size:clamp(1.2rem,1.8vw,1.85rem);line-height:1.1;color:var(--bone);display:block}
+  .pract .r .rd{font-family:var(--body);font-weight:300;font-size:clamp(.94rem,1vw,1.14rem);line-height:1.58;color:rgba(238,230,212,.74);display:block;margin-top:8px;max-width:44ch}
+  .pract .note{font-family:var(--body);font-weight:300;font-size:clamp(.95rem,1vw,1.14rem);line-height:1.62;color:rgba(238,230,212,.72);margin:3.4vh 0 0;max-width:46ch}
 
   /* best-for - full-bleed image band with an overlaid line */
   .band{position:relative;min-height:72vh;display:flex;align-items:center;overflow:hidden}
@@ -131,11 +138,20 @@
 
   <section class="pract">
     <div class="visual wipe" data-rv><img src="assets/cases/cj_g6.jpg" alt=""></div>
-    <div class="txt">
-      <span class="lab" data-rv><span class="rv">In practice</span></span>
-      <h3 class="rv" data-rv>You should feel like a guest at your own wedding.</h3>
-      <p class="rv d1" data-rv>We hold the schedule, the suppliers and the hundred small decisions, so the hours belong to you and the people in the room. Nothing is left for you to carry on the day itself.</p>
-      <p class="todo rv d2" data-rv>[WIS: bang pham vi chinh thuc cua goi Standard se bo sung khi co - khong liet ke scope tu che.]</p>
+    <div class="txt" data-rv>
+      <span class="lab"><span class="rv">What is included</span></span>
+      <h3 class="rv d1">Everything a city wedding needs, held by one team.</h3>
+      <div class="rows rv d1">
+        <div class="r"><span class="rn">01</span><span><span class="rt">Budget management</span></span></div>
+        <div class="r"><span class="rn">02</span><span><span class="rt">Consulting to build the overall concept</span></span></div>
+        <div class="r"><span class="rn">03</span><span><span class="rt">Orientation and advice</span></span></div>
+        <div class="r"><span class="rn">04</span><span><span class="rt">Venue search and coordination</span></span></div>
+        <div class="r"><span class="rn">05</span><span><span class="rt">Vendor selection and management</span></span></div>
+        <div class="r"><span class="rn">06</span><span><span class="rt">Styling</span></span></div>
+        <div class="r"><span class="rn">07</span><span><span class="rt">On-the-day coordination</span></span></div>
+        <div class="r"><span class="rn">08</span><span><span class="rt">Vietnamese traditional ceremony</span></span></div>
+      </div>
+      <p class="note rv d2">We also build bespoke packages for couples who have started planning on their own and need a hand with certain parts. <span class="todo">[WIS: doi chieu lai danh muc chinh thuc tren wedinstyle.vn.]</span></p>
     </div>
   </section>
 
