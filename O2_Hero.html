@@ -10,7 +10,7 @@
 <style>
 :root{ --ink:#161310; --accent:#A9633B; --serif:'Instrument Serif',Georgia,serif; --hand:'Pinyon Script',cursive; }
 *{margin:0;padding:0;box-sizing:border-box}
-  html{scrollbar-width:thin;scrollbar-color:rgba(169,99,59,.45) transparent}
+  @supports (-moz-appearance:none){html{scrollbar-width:thin;scrollbar-color:rgba(169,99,59,.45) transparent}}
   ::-webkit-scrollbar{width:10px;height:10px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:rgba(169,99,59,.4);border-radius:10px;border:3px solid transparent;background-clip:content-box}
