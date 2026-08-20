@@ -37,6 +37,7 @@
   .ledger{padding:2vh var(--pad) 8vh}
   .lrow{display:grid;grid-template-columns:clamp(46px,4vw,72px) minmax(0,1.05fr) minmax(0,1.15fr) auto;gap:clamp(16px,3vw,56px);align-items:baseline;padding:clamp(34px,5.5vh,66px) 0;border-bottom:1px solid rgba(238,230,212,.14);text-decoration:none;color:inherit;transition:padding-left .45s cubic-bezier(.16,1,.3,1)}
   .lrow:hover{padding-left:16px}
+  .lrow.soon{opacity:.5;cursor:default} .lrow.soon:hover{padding-left:0} .lrow.soon:hover .nm{color:var(--bone)} .lrow.soon:hover .go{color:var(--dim)}
   .lrow .no{font-family:var(--title);font-weight:400;font-size:clamp(1.05rem,1.3vw,1.5rem);line-height:1;color:var(--gold)}
   .lrow .nm{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4.2vw,4.2rem);line-height:.98;color:var(--bone);transition:color .35s ease}
   .lrow:hover .nm{color:var(--gold)}
@@ -82,42 +83,48 @@
 
   <section class="mast" data-rv>
     <div>
-      <span class="eyebrow rv">Services</span>
-      <h1 class="rv d1">Four ways to<br>work together.</h1>
+      <span class="eyebrow rv">Ways of working</span>
+      <h1 class="rv d1">Every story calls for a different kind of care.</h1>
     </div>
-    <p class="note rv d2">Every wedding is authored the same way. What changes is how much of it we hold - from a single quiet day to the whole thread, start to finish.</p>
+    <p class="note rv d2">The work may begin in a city, a faraway place, or a single room. Each asks for its own kind of attention.</p>
   </section>
 
   <div class="ledger">
     <a class="lrow" href="Service_Standard.html" data-rv>
       <span class="no rv">01</span>
-      <span class="nm rv d1">Standard<span>Coordination and planning</span></span>
-      <span class="ds rv d1">The essentials, planned and run with care so the day feels effortless. We keep the moving parts, you keep the moments.</span>
-      <span class="go rv d2">See details</span>
-    </a>
-    <a class="lrow" href="Service_Elopement.html" data-rv>
-      <span class="no rv">02</span>
-      <span class="nm rv d1">Elopement<span>Just the two of you</span></span>
-      <span class="ds rv d1">Just the two of you and a place you love, shaped into one quiet, exact day. Small in size, never in feeling.</span>
+      <span class="nm rv d1">Standard Wedding</span>
+      <span class="ds rv d1">A city celebration, held with a clear hand from first plan to final toast.</span>
       <span class="go rv d2">See details</span>
     </a>
     <a class="lrow" href="Service_Premium.html" data-rv>
-      <span class="no rv">03</span>
-      <span class="nm rv d1">Premium<span>Full authorship</span></span>
-      <span class="ds rv d1">Full authorship, from the first idea to the last candle. We find the glory story and hold every thread until the day could only be yours.</span>
+      <span class="no rv">02</span>
+      <span class="nm rv d1">Premium Wedding</span>
+      <span class="ds rv d1">A complete expression of atmosphere, style and the people at its centre.</span>
       <span class="go rv d2">See details</span>
     </a>
-    <a class="lrow" href="Service_Decoration.html" data-rv>
+    <a class="lrow" href="Service_Elopement.html" data-rv>
+      <span class="no rv">03</span>
+      <span class="nm rv d1">Elopement Wedding</span>
+      <span class="ds rv d1">A smaller ceremony, with the place allowed to speak.</span>
+      <span class="go rv d2">See details</span>
+    </a>
+    <span class="lrow soon" data-rv>
       <span class="no rv">04</span>
-      <span class="nm rv d1">Decoration<span>Styling and decor</span></span>
-      <span class="ds rv d1">Styling and decor that dress a room to feel unmistakably yours - built from real place and material, never a borrowed theme.</span>
+      <span class="nm rv d1">Destination Wedding</span>
+      <span class="ds rv d1">A wedding in Vietnam, shaped around a place worth gathering in.</span>
+      <span class="go rv d2">Coming soon</span>
+    </span>
+    <a class="lrow" href="Service_Decoration.html" data-rv>
+      <span class="no rv">05</span>
+      <span class="nm rv d1">Decoration</span>
+      <span class="ds rv d1">A room given its own atmosphere through colour, texture and light.</span>
       <span class="go rv d2">See details</span>
     </a>
   </div>
 
   <section class="bespoke" data-rv>
     <p class="rv">Not sure which one? Most of our couples aren't, at first.</p>
-    <p class="sm rv d1">Tell us the day you imagine and we will tell you honestly which way of working fits. <span class="todo">[WIS: xac nhan mo ta 4 goi va bo sung pham vi/gia neu muon hien.]</span> Or just <a href="Contact.html">start the conversation</a> and we will find it together.</p>
+    <p class="sm rv d1">Tell us the day you imagine and we will tell you honestly which way of working fits - most often it is the fuller, Premium hand. <span class="todo">[WIS: bo sung dinh nghia/pham vi chinh thuc tung goi khi co.]</span> Or just <a href="Contact.html">start the conversation</a> and we will find it together.</p>
   </section>
 
   <section class="nx" data-rv>
