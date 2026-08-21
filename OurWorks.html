@@ -48,8 +48,8 @@
   .tile{display:block;text-decoration:none;color:inherit}
   .tile .ph{overflow:hidden}
   .tile.ar45 .ph{aspect-ratio:4/5} .tile.ar34 .ph{aspect-ratio:3/4} .tile.ar43 .ph{aspect-ratio:4/3} .tile.ar11 .ph{aspect-ratio:1/1}
-  .tile img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.97) brightness(.92);transition:transform 1.3s cubic-bezier(.16,1,.3,1),filter .7s}
-  .tile:hover img{transform:scale(1.03);filter:none}
+  .tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.3s cubic-bezier(.16,1,.3,1)}
+  .tile:hover img{transform:scale(1.03)}
   .tile .cap{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:16px}
   .tile .cap .nm{font-family:var(--title);font-weight:400;font-size:clamp(1.05rem,1.4vw,1.5rem);color:var(--bone);transition:color .3s}
   .tile:hover .cap .nm{color:var(--gold)}
