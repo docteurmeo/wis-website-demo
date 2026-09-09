@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[DRAFT] Catherine & Johnny - Love Flavor | Wed in Style</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+<style>
+  /*
+    BẢN NHÁP NỘI BỘ — dựng riêng, KHÔNG ghi đè Case_CatherineJohnny.html (bản đang push/deploy).
+    Theo định hướng: Research/38_CaseDetail_Redesign_Direction.md
+    - Font/màu/spacing/motion lấy nguyên từ ../assets/tokens.css + Homepage_codex_alt.html (không tạo token mới).
+    - Cấu trúc: bỏ 4 chapter-word mask + climax-scale + pinned-journey + collage,
+      thay bằng 4 chương có tên, mỗi chương mở bằng đoạn văn thật TRƯỚC ảnh.
+    - Nội dung narrative dùng ĐÚNG nguyên văn/diễn giải sát bản case thật đang
+      sống trên wedinstyle.vn/our_work/cj-love-flavor/ (không bịa backstory mới).
+    - 2 slot craft còn thiếu, đánh dấu rõ để KHÔNG bị hiểu nhầm là đã hoàn thiện:
+      (1) minh hoạ tay vẽ riêng cho case này — chưa vẽ, để placeholder có nhãn;
+      (2) 1 chú thích viết tay — đã dựng thật bằng font Imperfetto Three (không phải placeholder).
+  */
+  *{box-sizing:border-box}
+  @supports (-moz-appearance:none){html{scrollbar-width:thin;scrollbar-color:rgb(var(--c-accent) / .42) transparent}}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgb(var(--c-accent) / .38);border-radius:10px;border:3px solid transparent;background-clip:content-box}
+  ::-webkit-scrollbar-thumb:hover{background:rgb(var(--c-accent) / .62);background-clip:content-box}
+  ::-webkit-scrollbar-corner{background:transparent}
+  html,body{margin:0}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body);overflow-x:hidden}
+  :root{--pad:clamp(22px,4vw,56px)}
+  .eyebrow{font-family:var(--body);font-weight:500;font-size:clamp(.62rem,.66vw,.78rem);letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+  .cl{display:block;margin-bottom:20px}
+
+  /* draft banner — xoá khi ghép vào bản chính thức */
+  .draftbar{position:fixed;top:0;left:0;right:0;z-index:40;background:rgb(var(--c-accent) / .92);color:var(--ink);
+    font-family:var(--body);font-weight:500;font-size:.68rem;letter-spacing:.08em;text-align:center;padding:8px 12px}
+  .draftbar a{color:var(--ink);text-decoration:underline}
+
+  /* header */
+  .hd{position:fixed;top:30px;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:24px var(--pad);transition:background .4s ease}
+  .hd img{width:clamp(64px,6vw,92px);height:auto;filter:brightness(0) invert(1);opacity:.95}
+  .hd a{font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,230,212,.9);text-decoration:none;transition:opacity .3s}
+  .hd a:hover{opacity:.55}
+
+  /* reveal signatures (giữ nguyên đúng vocabulary trang chủ — 1 kiểu fade/wipe, bắn 1 lần) */
+  .rv{opacity:0;transform:translateY(30px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.16,1,.3,1)}
+  .in .rv{opacity:1;transform:none}
+  .in .d1{transition-delay:.12s} .in .d2{transition-delay:.24s} .in .d3{transition-delay:.36s}
+  .hw{display:inline-block;opacity:0;filter:blur(10px);transform:translateY(12px);transition:opacity 1.2s ease,filter 1.3s ease,transform 1.3s cubic-bezier(.16,1,.3,1)}
+  .hw.in{opacity:1;filter:blur(0);transform:none}
+
+  /* hand-drawn mark — tái dùng nguyên từ Homepage_codex_alt.html (.mk).
+     Trang chủ tắt hiệu ứng này trên desktop (nhiều mục khác đang cạnh tranh);
+     ở đây CHỦ Ý giữ hiện, vì trang case chỉ dùng đúng 1 lần — đúng tinh thần
+     "accent chọn lọc, ít nhưng đúng chỗ" mà khách yêu cầu (xem doc 38, mục 3B). */
+  .mk{overflow:visible;pointer-events:none;color:var(--accent)}
+  .mk path{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+  .mk .mk-a{stroke-width:2.1}
+  .mk .mk-b{stroke-width:1.5;opacity:.5}
+  .mk-anchor{position:relative;display:inline-block}
+  .mk-anchor .mk-underline{position:absolute;left:-2%;bottom:-.14em;width:104%;height:.5em}
+
+  /* B02 hero off-canvas — giữ nguyên, không phải chỗ có vấn đề */
+  .hero{position:relative;height:100vh;overflow:hidden}
+  .hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:kb 16s ease-out forwards}
+  @keyframes kb{to{transform:scale(1)}}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,8,3,.5),rgba(12,8,3,.1) 30%,rgba(12,8,3,.18) 58%,rgba(12,8,3,.78))}
+  .hero-margin{position:absolute;left:clamp(14px,2vw,30px);top:0;bottom:0;display:flex;align-items:center;z-index:3}
+  .hero-margin span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--body);font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(238,230,212,.7)}
+  .hero-cap{position:absolute;left:var(--pad);right:var(--pad);bottom:10vh;z-index:2}
+  .hero-cap .tag{display:block;margin-bottom:22px}
+  .hero-cap h1{font-family:var(--title);font-weight:400;font-size:clamp(2.8rem,11vw,12rem);line-height:.9;letter-spacing:-.01em;color:var(--bone);margin:0;text-shadow:0 4px 50px rgba(0,0,0,.4);white-space:nowrap}
+  .hero-cap .loc{display:block;margin-top:26px;font-family:var(--body);font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(238,230,212,.85)}
+
+  /* meta strip — 6 field đúng dữ liệu thật trên wedinstyle.vn, không có field nào bỏ trống */
+  .meta{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(16px,2vw,32px);padding:8vh var(--pad);border-bottom:1px solid rgba(238,230,212,.12)}
+  .meta .k{font-family:var(--body);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+  .meta .v{font-family:var(--title);font-weight:400;font-size:clamp(.9rem,1vw,1.1rem);color:var(--bone)}
+
+  /* breath — 1 dòng mở, đúng tinh thần "glory story" (chi tiết đời thực, không mô tả sự kiện) */
+  .breath{min-height:52vh;display:flex;align-items:center;padding:12vh var(--pad)}
+  .breath p{font-family:var(--title);font-weight:400;font-size:clamp(1.8rem,3.6vw,4rem);line-height:1.24;color:var(--bone);margin:0;max-width:20ch}
+
+  /* vision / glory-story opening */
+  .vision{padding:10vh var(--pad) 14vh;display:grid;grid-template-columns:.4fr .6fr;gap:clamp(30px,5vw,90px)}
+  .vision .lead{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2vw,2.3rem);line-height:1.3;color:var(--gold);margin:.6em 0 0}
+  .vision .body{font-family:var(--body);font-weight:300;font-size:clamp(1.02rem,1.1vw,1.28rem);line-height:1.78;color:rgba(238,230,212,.86);margin:0;max-width:52ch}
+  .vision .body+.body{margin-top:1.3em}
+  .illus-slot{margin-top:36px;width:min(230px,72%);aspect-ratio:1/1;border:1px dashed rgba(238,230,212,.3);
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+  .illus-slot span{font-family:var(--hand);font-size:clamp(1.05rem,1.5vw,1.4rem);color:var(--dim);line-height:1.35}
+
+  /* chapter — 1 khuôn dùng chung cho cả 4 chương: eyebrow + lead + body(1-2) + cụm ảnh + pull-quote */
+  .chapter{padding:14vh var(--pad)}
+  .chapter .head{max-width:58ch}
+  .chapter .lead{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2vw,2.3rem);line-height:1.35;color:var(--gold);margin:0 0 .7em;max-width:24ch}
+  .chapter .body{font-family:var(--body);font-weight:300;font-size:clamp(1.02rem,1.1vw,1.28rem);line-height:1.78;color:rgba(238,230,212,.86);margin:0;max-width:58ch}
+  .chapter .body+.body{margin-top:1.2em}
+  .chapter-imgs{margin-top:clamp(50px,7vw,96px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,40px);position:relative}
+  .chapter-imgs .ph{overflow:hidden;aspect-ratio:3/4}
+  .chapter-imgs .ph.t2{margin-top:9vh}
+  .chapter-imgs .ph.t3{margin-top:4vh}
+  .chapter-imgs img{width:100%;height:100%;object-fit:cover;display:block;clip-path:inset(0 0 0 100%);transition:clip-path 1.05s cubic-bezier(.76,0,.2,1)}
+  .chapter.in .chapter-imgs img{clip-path:inset(0 0 0 0)}
+  .hand-note{position:absolute;right:6%;top:-6%;font-family:var(--hand);font-size:clamp(1.3rem,2vw,1.8rem);color:var(--bone);
+    line-height:1.15;transform:rotate(-4deg);max-width:11ch;text-align:left;pointer-events:none;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+
+  /* B04 full-bleed — dùng cho ảnh cao trào chương 3, KHÔNG scale/zoom (bỏ hẳn hiệu ứng "climax") */
+  .fb{position:relative;height:88vh;overflow:hidden}
+  .fb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 0 0 100%);transition:clip-path 1.1s cubic-bezier(.76,0,.2,1)}
+  .fb.in img{clip-path:inset(0 0 0 0)}
+  .fb .veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,8,3,.62),rgba(12,8,3,.05) 45%,rgba(12,8,3,.16))}
+  .fb .cap{position:absolute;left:var(--pad);right:var(--pad);bottom:9vh;z-index:2;text-align:center}
+  .fb .cap p{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2.4vw,2.7rem);line-height:1.32;color:var(--bone);margin:0 auto;max-width:26ch;text-shadow:0 3px 40px rgba(0,0,0,.4)}
+
+  /* pull-quote — 1 quote/chương, dùng làm điểm dừng thiết kế thay cho hiệu ứng */
+  .pq{padding:9vh var(--pad) 3vh;text-align:center}
+  .pq p{font-family:var(--title);font-weight:400;font-size:clamp(1.5rem,2.8vw,3rem);line-height:1.28;color:var(--bone);margin:0 auto;max-width:22ch}
+
+  /* full gallery — module riêng "xem thêm ảnh", tách khỏi mạch kể, KHÔNG hiệu ứng riêng từng ảnh (đúng bản live thật) */
+  .gal{padding:14vh var(--pad);border-top:1px solid rgba(238,230,212,.12)}
+  .gal .lab{margin-bottom:clamp(30px,4vw,56px)}
+  .gal .note{display:block;margin-top:8px;font-family:var(--body);font-size:.8rem;color:var(--dim);font-weight:300}
+  .gal-wall{columns:3;column-gap:clamp(14px,1.4vw,26px)}
+  .gal-wall .gi{break-inside:avoid;margin:0 0 clamp(14px,1.4vw,26px);overflow:hidden}
+  .gal-wall .gi img{width:100%;display:block}
+
+  /* ledger credits — chỉ giữ field đã xác nhận thật (đúng 6 field trên wedinstyle.vn), không bịa thêm field trống */
+  .led{padding:14vh var(--pad);border-top:1px solid rgba(238,230,212,.14)}
+  .led .lab{margin-bottom:clamp(40px,5vw,72px)}
+  .led-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(30px,4vw,56px) clamp(30px,5vw,90px);max-width:1200px}
+  .led-item .k{font-family:var(--body);font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+  .led-item .v{font-family:var(--title);font-weight:400;font-size:clamp(1.1rem,1.4vw,1.6rem);color:var(--bone)}
+
+  /* related works */
+  .rel{padding:12vh var(--pad)}
+  .rel .lab{margin-bottom:clamp(36px,4vw,64px)}
+  .rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.4vw,44px)}
+  .rel-card{text-decoration:none;display:block}
+  .rel-card .ph{overflow:hidden;aspect-ratio:4/5;margin-bottom:20px}
+  .rel-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+  .rel-card:hover img{transform:scale(1.05)}
+  .rel-card .nm{font-family:var(--title);font-weight:400;font-size:clamp(1.3rem,1.7vw,2rem);color:var(--bone)}
+  .rel-card .tg{font-family:var(--body);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:8px}
+
+  /* next / cta */
+  .nx{padding:16vh var(--pad);text-align:center}
+  .nx .eyebrow{color:var(--dim)}
+  .nx h2{font-family:var(--title);font-weight:400;font-size:clamp(2rem,4.4vw,4.6rem);line-height:1.05;color:var(--bone);margin:.4em 0 1em}
+  .cta{display:inline-block;font-family:var(--body);font-size:clamp(.68rem,.72vw,.8rem);letter-spacing:.24em;text-transform:uppercase;color:var(--bone);text-decoration:none;border:1px solid rgba(238,230,212,.4);padding:18px 36px;transition:color .35s,border-color .35s,background .35s}
+  .cta:hover{color:var(--ink);background:var(--gold);border-color:var(--gold)}
+
+  /* footer */
+  .ft{border-top:1px solid rgba(238,230,212,.14);padding:12vh var(--pad) 3vh;overflow:hidden}
+  .ft-top{display:grid;grid-template-columns:1.3fr 1fr 1.2fr 1fr;gap:clamp(28px,3.5vw,64px);align-items:start}
+  .ft-logo{width:clamp(88px,8vw,132px);height:auto;filter:brightness(0) invert(1);opacity:.9;display:block;margin-bottom:30px}
+  .ft-anchor{font-family:var(--title);font-weight:400;font-size:clamp(1.4rem,2.1vw,2.5rem);line-height:1.16;color:var(--bone);margin:0;max-width:16ch}
+  .ft-tag{display:block;margin-top:26px;font-family:var(--body);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+  .ft-label{font-family:var(--body);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+  .ft-col a,.ft-col p,.ft-col span.ln{display:block;font-family:var(--body);font-weight:300;font-size:clamp(.86rem,.92vw,1.02rem);line-height:1.5;color:rgba(238,230,212,.76);text-decoration:none;margin:0 0 12px;transition:color .3s}
+  .ft-col a:hover{color:var(--gold)}
+  .ft-mark{font-family:var(--title);font-weight:400;font-size:17.5vw;line-height:.9;letter-spacing:-.02em;text-align:center;white-space:nowrap;margin:clamp(40px,6vw,90px) 0 0;--mx:50%;--my:50%;background:radial-gradient(circle 26vw at var(--mx) var(--my), #edd49b 0%, var(--gold) 26%, #2c2114 62%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .ft-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:clamp(28px,3vw,44px);padding-top:24px;border-top:1px solid rgba(238,230,212,.1);font-family:var(--body);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+
+  @media(max-width:900px){
+    .meta{grid-template-columns:1fr 1fr 1fr;gap:22px 16px}
+    .vision{grid-template-columns:1fr}
+    .chapter-imgs{grid-template-columns:1fr 1fr}
+    .chapter-imgs .ph.t2,.chapter-imgs .ph.t3{margin-top:0}
+    .chapter-imgs .ph:nth-child(3){grid-column:1 / span 2}
+    .hand-note{position:static;transform:none;margin-top:14px;max-width:none}
+    .led-grid,.rel-grid{grid-template-columns:1fr 1fr}
+    .gal-wall{columns:2}
+    .hero-cap h1{white-space:normal;font-size:15vw}
+    .ft-top{grid-template-columns:1fr 1fr} .ft-mark{font-size:24vw;white-space:normal}
+  }
+  @media(prefers-reduced-motion:reduce){ .rv,.hw,.chapter-imgs img,.fb img{opacity:1!important;transform:none!important;filter:none!important;transition:none;clip-path:none!important} .hero>img{animation:none;transform:none} }
+</style>
+</head>
+<body>
+  <div class="draftbar">BẢN NHÁP — theo <a href="../../Research/38_CaseDetail_Redesign_Direction.md">Research/38</a> — chưa deploy, không thay bản chính <a href="Case_CatherineJohnny.html">Case_CatherineJohnny.html</a></div>
+
+  <header class="hd" id="hd">
+    <a href="Homepage.html" aria-label="Wed in Style - home"><img src="../assets/wis_logo_mark.svg" alt="Wed in Style"></a>
+    <a href="#" data-wm-open>Menu</a>
+  </header>
+
+  <!-- HERO — giữ nguyên, không phải chỗ có vấn đề -->
+  <section class="hero" id="hero">
+    <img src="../assets/cases/cj_hero.jpg" alt="">
+    <div class="veil"></div>
+    <div class="hero-margin"><span>A Glory Story - MMXXV</span></div>
+    <div class="hero-cap">
+      <span class="eyebrow tag hw">Love Flavor</span>
+      <h1><span class="hw">Catherine</span> <span class="hw">&amp;</span> <span class="hw">Johnny</span></h1>
+      <span class="loc hw">Destination Wedding, Ninh Binh, Vietnam, 2025</span>
+    </div>
+  </section>
+
+  <!-- META — 6 field, đúng dữ liệu thật đang public trên wedinstyle.vn, không field nào bỏ trống -->
+  <section class="meta">
+    <div><div class="k">Time</div><div class="v">2025</div></div>
+    <div><div class="k">Wedding Planner</div><div class="v">Wed in Style</div></div>
+    <div><div class="k">Photography</div><div class="v">Mirror Wedding</div></div>
+    <div><div class="k">Film</div><div class="v">Cheese Media</div></div>
+    <div><div class="k">Venue</div><div class="v">Aravinda Resort</div></div>
+    <div><div class="k">MC</div><div class="v">Chu Thu Thao</div></div>
+  </section>
+
+  <!-- BREATH — 1 dòng mở, chi tiết đời thực thật (đúng mô hình Glory Story) -->
+  <section class="breath" data-rv><p class="rv">Some love stories begin with a spark. Theirs began with a cup of milk tea.</p></section>
+
+  <!-- VISION / GLORY STORY OPENING -->
+  <section class="vision" data-rv>
+    <div>
+      <span class="eyebrow rv">A Glory Story</span>
+      <p class="lead rv d1"><span class="mk-anchor">A story<svg class="mk mk-underline" viewBox="0 0 130 22" aria-hidden="true">
+        <path class="mk-a" d="M3,15 C18,9 34,17 50,10 C66,4 82,15 98,9 C110,5 120,11 127,8"/>
+        <path class="mk-b" d="M4,17 C20,12 36,18 52,13 C68,7 84,17 100,12 C112,8 121,13 128,10"/>
+      </svg></span> that began with one small, familiar taste.</p>
+      <div class="illus-slot"><span>[ minh hoạ tay vẽ riêng cho case này — ly trà sữa — chưa dựng, cần theo ILLUSTRATION_DNA.md ]</span></div>
+    </div>
+    <div>
+      <p class="body rv d1">Catherine and Johnny came to us with one true starting point: a shared order at a milk tea shop in Hanoi, long before either of them imagined a wedding day. From there, the celebration found its shape &mdash; a destination wedding in Ninh B&igrave;nh, reached only by boat, with bright florals and a dress code that let every guest feel part of the garden.</p>
+    </div>
+  </section>
+
+  <!-- CHAPTER ONE — Khởi nguồn -->
+  <section class="chapter" data-rv>
+    <div class="head">
+      <span class="eyebrow cl rv">Chapter One &mdash; The First Order</span>
+      <p class="lead rv d1">It started with the same order, every visit.</p>
+      <p class="body rv d2">They first met through mutual friends, when Johnny became a regular at the milk tea shop where Catherine worked. Over time, Catherine began to recognise not just his usual order, but the quiet warmth in his smile, the way he lingered a little longer each visit. From knowing each other&rsquo;s favourite flavours to discovering the taste of love itself, their journey has been one of joy, connection, and sweet surprises.</p>
+    </div>
+    <div class="chapter-imgs">
+      <div class="ph"><img src="../assets/cases/cj_s4.jpg" alt=""></div>
+      <div class="ph t2"><img src="../assets/cases/cj_x1.jpg" alt=""></div>
+      <div class="ph t3"><img src="../assets/cases/cj_g6.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- PULL-QUOTE — đóng chương 1, dùng câu tiêu đề thật đã public trên wedinstyle.vn -->
+  <section class="pq" data-rv><p class="rv">With you, love found its place to bloom.</p></section>
+
+  <!-- CHAPTER TWO — Lựa chọn nơi chốn -->
+  <section class="chapter" data-rv>
+    <div class="head">
+      <span class="eyebrow cl rv">Chapter Two &mdash; An Enchanted Arrival</span>
+      <p class="lead rv d1">A place reached only by water.</p>
+      <p class="body rv d2">To celebrate their union, Catherine and Johnny chose to host a destination wedding in Ninh B&igrave;nh &mdash; a region in northern Vietnam known for towering limestone cliffs and quiet water, with bright floral decorations and a guest dress code that turned every arrival into part of the scene.</p>
+      <p class="body rv d3">The venue was nestled deep in lush, untouched nature, reachable only by boat. Guests boarded small wooden boats that glided through Ninh B&igrave;nh&rsquo;s riverways, surrounded by towering cliffs and the quiet sounds of the water &mdash; laughter echoing across the surface, a prelude to something unforgettable.</p>
+    </div>
+    <div class="chapter-imgs">
+      <div class="ph"><img src="../assets/cases/cj_s2.jpg" alt=""></div>
+      <div class="ph t2"><img src="../assets/cases/cj_s3.jpg" alt=""></div>
+      <div class="ph t3"><img src="../assets/cases/cj_g7.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- PULL-QUOTE — đóng chương 2 -->
+  <section class="pq" data-rv><p class="rv">No matter where we go, love leads the way.</p></section>
+
+  <!-- CHAPTER THREE — Cao trào (full-bleed TĨNH, không scale/zoom) -->
+  <section class="fb" data-rv>
+    <img src="../assets/cases/cj_x7.jpg" alt="">
+    <div class="veil"></div>
+    <div class="cap">
+      <span class="eyebrow cl rv">Chapter Three &mdash; The Ceremony</span>
+      <p class="rv d1">As guests settled into their seats, the sound of the river faded into quiet anticipation. Then, slowly, Catherine appeared &mdash; like a queen butterfly emerging into her garden.</p>
+    </div>
+  </section>
+
+  <!-- CHAPTER FOUR — Dấu ấn riêng -->
+  <section class="chapter" data-rv>
+    <div class="head">
+      <span class="eyebrow cl rv">Chapter Four &mdash; Personal Touches</span>
+      <p class="lead rv d1">Two details only the two of them would think to add.</p>
+      <p class="body rv d2">This wasn&rsquo;t just a wedding filled with pretty decorations &mdash; it was a deeply personal celebration, full of the couple&rsquo;s own signatures. One of their shared loves is tattoo art: for them, tattoos are more than ink on skin, they&rsquo;re expressions of memory and meaning, so a temporary tattoo station let every guest carry home a small mark of the day.</p>
+      <p class="body rv d3">Another trait they share is a love for spicy food. Wherever they travel, Catherine and Johnny make it a point to try the local heat &mdash; so chilli peppers found their way into the wedding decor, a small, spirited signature only they would think to add.</p>
+    </div>
+    <div class="chapter-imgs">
+      <span class="hand-note">even the river went quiet</span>
+      <div class="ph"><img src="../assets/cases/cj_x3.jpg" alt=""></div>
+      <div class="ph t2"><img src="../assets/cases/cj_x4.jpg" alt=""></div>
+      <div class="ph t3"><img src="../assets/cases/cj_x5.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- PULL-QUOTE — đóng câu chuyện -->
+  <section class="pq" data-rv><p class="rv">By the end of the celebration, there was no doubt in anyone&rsquo;s heart &mdash; this was, wonderfully, entirely them.</p></section>
+
+  <!-- FULL GALLERY — module riêng "xem thêm ảnh", tách khỏi mạch kể, không hiệu ứng riêng lẻ -->
+  <section class="gal">
+    <span class="eyebrow lab" style="color:var(--dim)">Selected frames<span class="note">More from the day &mdash; not part of the story above.</span></span>
+    <div class="gal-wall">
+      <div class="gi"><img src="../assets/cases/cj_g1.jpg" alt=""></div>
+      <div class="gi"><img src="../assets/cases/cj_g2.jpg" alt=""></div>
+      <div class="gi"><img src="../assets/cases/cj_s1.jpg" alt=""></div>
+      <div class="gi"><img src="../assets/cases/cj_g3.jpg" alt=""></div>
+      <div class="gi"><img src="../assets/cases/cj_x2.jpg" alt=""></div>
+      <div class="gi"><img src="../assets/cases/cj_g4.jpg" alt=""></div>
+      <div class="gi"><img src="../assets/cases/cj_x8.jpg" alt=""></div>
+      <div class="gi"><img src="../assets/cases/cj_g5.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <!-- LEDGER — chỉ 6 field đã xác nhận thật, không bịa thêm field "To be supplied" -->
+  <section class="led">
+    <span class="eyebrow lab" style="color:var(--dim)">Credits</span>
+    <div class="led-grid">
+      <div class="led-item"><div class="k">Wedding Planner</div><div class="v">Wed in Style</div></div>
+      <div class="led-item"><div class="k">Photography</div><div class="v">Mirror Wedding Photographer</div></div>
+      <div class="led-item"><div class="k">Film</div><div class="v">Cheese Media</div></div>
+      <div class="led-item"><div class="k">Venue</div><div class="v">Aravinda Resort, Ninh Binh</div></div>
+      <div class="led-item"><div class="k">Master of Ceremony</div><div class="v">Chu Thu Thao</div></div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="rel">
+    <span class="eyebrow lab" style="color:var(--dim)">Explore other stories</span>
+    <div class="rel-grid">
+      <a class="rel-card" href="#"><div class="ph"><img src="../assets/works/km1.jpg" alt=""></div><div class="nm">Kaido &amp; Mai</div><div class="tg">Ace of Heart, Hanoi</div></a>
+      <a class="rel-card" href="#"><div class="ph"><img src="../assets/works/pl1.jpg" alt=""></div><div class="nm">Phong &amp; Linh</div><div class="tg">Electric Heart, Phu Quoc</div></a>
+      <a class="rel-card" href="#"><div class="ph"><img src="../assets/works/cp2.jpg" alt=""></div><div class="nm">Ha &amp; Hung</div><div class="tg">At 1,600 Meters, Sapa</div></a>
+    </div>
+  </section>
+
+  <!-- NEXT + CTA -->
+  <section class="nx" data-rv>
+    <span class="eyebrow rv">Your story</span>
+    <h2 class="rv d1">Every wedding begins with one small truth.</h2>
+    <a class="cta rv d2" href="Contact.html">Begin the conversation</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="ft">
+    <div class="ft-top">
+      <div>
+        <img class="ft-logo" src="../assets/wis_logo_mark.svg" alt="Wed in Style">
+        <p class="ft-anchor">What comes from the heart, goes to the heart.</p>
+        <span class="ft-tag">Weddings in Vietnam, since 2009</span>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Menu</div>
+        <a href="Homepage.html">Home</a><a href="OurWorks.html">Our Works</a><a href="Approach.html">Approach</a><a href="Services.html">Services</a><a href="About.html">About</a><a href="Journal.html">Journal</a><a href="Contact.html">Contact</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Studios</div>
+        <p>23 Hang Bun Street, Ba Dinh District, Hanoi</p>
+        <p>491/7 Nguyen Dinh Chieu Street, Ward 2, District 3, HCMC</p>
+      </div>
+      <div class="ft-col">
+        <div class="ft-label">Connect</div>
+        <a href="https://www.instagram.com/wis.vn/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/wis.weddingplanners" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.pinterest.com/wedinstyle/" target="_blank" rel="noopener">Pinterest</a>
+        <a href="mailto:admin@wedinstyle.net">admin@wedinstyle.net</a>
+        <span class="ln">+84 90 623 81 58</span>
+      </div>
+    </div>
+    <div class="ft-mark" id="ftmark">Let's talk.</div>
+    <div class="ft-bottom"><span>2026 Wed in Style</span><span>Premium Wedding Planner in Vietnam</span></div>
+  </footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hw=[].slice.call(document.querySelectorAll('.hero .hw'));
+  function heroIn(){ hw.forEach(function(w,i){ setTimeout(function(){w.classList.add('in');}, 300+i*180); }); }
+  window.addEventListener('load',heroIn); heroIn();
+
+  var hd=document.getElementById('hd');
+  function onScroll(){ hd.style.background = window.scrollY>60 ? 'rgba(22,15,8,.86)' : 'transparent'; }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  /* MỘT observer duy nhất cho toàn trang, mỗi section bắn 1 lần rồi disconnect —
+     đúng ngân sách hiệu ứng ở doc 38 (không còn quan sát riêng từng ảnh trong gallery). */
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.18});
+  document.querySelectorAll('[data-rv]').forEach(function(el){ io.observe(el); });
+
+  /* hand-drawn mark draw-in — copy nguyên cơ chế từ Homepage_codex_alt.html */
+  (function(){
+    var marks=[].slice.call(document.querySelectorAll('.mk'));
+    if(!marks.length) return;
+    marks.forEach(function(svg){
+      [].slice.call(svg.querySelectorAll('path')).forEach(function(p){
+        var len=p.getTotalLength();
+        p.style.strokeDasharray=len;
+        p.style.strokeDashoffset=reduce?0:len;
+      });
+    });
+    if(reduce) return;
+    var mio=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var paths=[].slice.call(e.target.querySelectorAll('path'));
+        paths.forEach(function(p,idx){
+          p.style.transition='stroke-dashoffset .9s cubic-bezier(.3,.7,.2,1) '+(idx*140)+'ms';
+          p.style.strokeDashoffset='0';
+        });
+        mio.unobserve(e.target);
+      });
+    },{threshold:.6});
+    marks.forEach(function(svg){ mio.observe(svg); });
+  })();
+
+  var mark=document.getElementById('ftmark');
+  if(mark && !(window.matchMedia&&window.matchMedia('(pointer: coarse)').matches)){
+    var tx=.5,ty=.5,mx=.5,my=.5,run=false;
+    function loop(){ mx+=(tx-mx)*.14; my+=(ty-my)*.14; mark.style.setProperty('--mx',(mx*100).toFixed(2)+'%'); mark.style.setProperty('--my',(my*100).toFixed(2)+'%'); if(Math.abs(tx-mx)>.0008||Math.abs(ty-my)>.0008){requestAnimationFrame(loop);}else{run=false;} }
+    function kick(){ if(!run){run=true;requestAnimationFrame(loop);} }
+    mark.addEventListener('mousemove',function(e){ var r=mark.getBoundingClientRect(); tx=(e.clientX-r.left)/r.width; ty=(e.clientY-r.top)/r.height; kick(); });
+    mark.addEventListener('mouseleave',function(){ tx=.5;ty=.5;kick(); });
+  }
+})();
+</script>
+<!-- ===== WIS SHARED MENU ===== -->
+<style>
+.wm-rl{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.02}
+.wm-rl>span{display:block;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+.wm-rl>span:nth-child(2){position:absolute;top:100%;left:0}
+.wm-trigger:hover .wm-rl>span,.wm-close:hover .wm-rl>span{transform:translateY(-100%)}
+.wm-trigger{position:fixed;top:20px;right:clamp(16px,3vw,44px);z-index:1900;background:none;border:0;cursor:pointer;padding:8px 2px;
+  font-family:'Fahkwang',var(--title);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);text-shadow:0 1px 14px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .5s ease,transform .5s ease}
+.wm-trigger.show{opacity:1;transform:none;pointer-events:auto}
+.wm{position:fixed;inset:0;z-index:2000;visibility:hidden;pointer-events:none}
+.wm.open{visibility:visible;pointer-events:auto}
+.wm-bg{position:absolute;inset:0;background:radial-gradient(130% 100% at 82% 0%,#22170c 0%,#160F08 58%);transform:scaleY(0);transform-origin:top;transition:transform .72s cubic-bezier(.76,0,.24,1)}
+.wm.open .wm-bg{transform:scaleY(1)}
+.wm-in{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:22px clamp(16px,3vw,44px) clamp(26px,5vh,58px)}
+.wm-head{display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(-12px);transition:opacity .5s ease,transform .6s ease}
+.wm.open .wm-head{opacity:1;transform:none;transition-delay:.32s}
+.wm-brand img{width:clamp(58px,5.5vw,84px);height:auto;filter:brightness(0) invert(1);opacity:.95}
+.wm-close{background:none;border:0;cursor:pointer;padding:8px 2px;font-family:'Fahkwang',var(--title);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone)}
+.wm-body{flex:1;display:flex;align-items:center;justify-content:center;padding-top:3vh;overflow:auto}
+.wm-nav{display:flex;flex-direction:column;gap:clamp(6px,1.5vh,20px)}
+.wm-link{display:flex;flex-direction:column;gap:5px;text-decoration:none;
+  opacity:0;transition:opacity .6s ease}
+
+.wm-word{font-family:'Fahkwang',var(--title);font-weight:400;font-size:clamp(1.15rem,2.4vw,2rem);line-height:1;letter-spacing:-.01em;color:var(--bone);white-space:nowrap;transition:color .3s ease}
+/* MENU — PHƯƠNG ÁN A: danh sách canh giữa, lột sạch phụ kiện.
+   Đã bỏ: số thứ tự (chỉ có nghĩa trong danh sách căn trái), nhãn "Soon" bo tròn
+   (ngôn ngữ SaaS), mũi tên caret (quy ước UI-kit), và hover cuộn chữ trên từng
+   mục (khi mọi mục cùng làm thì nó thành tiếng ồn).
+   Còn đúng sáu dòng chữ và MỘT cử chỉ hover duy nhất. */
+.wm-nav{align-items:center;text-align:center;gap:48px}
+.wm-link{display:block;align-items:center;transform:none}
+.wm-word{display:block;font-family:'Fahkwang',var(--title);font-weight:300;
+  font-size:clamp(1.4rem,2.6vw,40px);line-height:1;letter-spacing:.01em;
+  color:var(--bone);text-decoration:none;transition:color .35s ease}
+/* Hover = TIÊU ĐIỂM, không phải đổi màu: mục được trỏ đứng yên, năm mục còn lại
+   lùi xuống 25%. Một cử chỉ thay cho bốn hiệu ứng cũ. */
+.wm.open .wm-nav:hover .wm-link{opacity:.25}
+.wm.open .wm-nav .wm-link:hover,.wm.open .wm-nav .wm-link:focus-within{opacity:1}
+/* Bốn dịch vụ con HIỆN SẴN — menu chỉ có sáu mục, không có gì phải giấu; giấu
+   đi rồi bắt bấm mới là thứ làm nó trông như một cái widget. Không accordion,
+   không trạng thái, không JS. */
+.wm-svc{display:block}
+.wm-subs{display:block;margin-top:10px}
+.wm-subs a{font-family:'Fahkwang',var(--title);font-weight:300;font-size:15px;
+  line-height:24px;color:rgb(var(--c-bone) / .55);text-decoration:none;transition:color .3s ease}
+.wm-subs a+a::before{content:"·";margin:0 10px;color:rgb(var(--c-bone) / .3)}
+.wm-subs a:hover{color:var(--bone)}
+
+.wm.open .wm-link{opacity:1;transform:none}
+.wm.open .wm-link:nth-child(1){transition-delay:.30s}
+.wm.open .wm-link:nth-child(2){transition-delay:.34s}
+.wm.open .wm-link:nth-child(3){transition-delay:.38s}
+.wm.open .wm-link:nth-child(4){transition-delay:.42s}
+.wm.open .wm-link:nth-child(5){transition-delay:.46s}
+.wm.open .wm-link:nth-child(6){transition-delay:.50s}
+.wm.open .wm-link:nth-child(7){transition-delay:.54s}
+.wm.open .wm-link:nth-child(8){transition-delay:.58s}
+
+
+
+.wm.open 
+
+
+
+
+
+@media(max-width:860px){ .wm-body{align-items:flex-start;padding-top:2vh} }
+@media(prefers-reduced-motion:reduce){
+  .wm-bg,.wm-in,.wm-head,.wm-link,.wm-aside,.wm-rl>span,.wm-trigger{transition:none!important}
+}
+</style>
+<button class="wm-trigger" type="button" data-wm-open aria-label="Open menu"><span class="wm-rl"><span>Menu</span><span>Menu</span></span></button>
+<div class="wm" id="wm" aria-hidden="true">
+  <div class="wm-bg"></div>
+  <div class="wm-in">
+    <div class="wm-head">
+      <a class="wm-brand" href="Homepage.html" aria-label="Wed in Style - home"><img src="../assets/wis_logo_mark.svg" alt="Wed in Style"></a>
+      <button class="wm-close" type="button" data-wm-close aria-label="Close menu"><span class="wm-rl"><span>Close</span><span>Close</span></span></button>
+    </div>
+    <div class="wm-body">
+      <nav class="wm-nav">
+        <a class="wm-link" href="OurWorks.html"><span class="wm-word">Our Works</span></a>
+        <a class="wm-link" href="#" data-soon><span class="wm-word">Destination Weddings</span></a>
+        <a class="wm-link" href="Approach.html"><span class="wm-word">Approach</span></a>
+        <div class="wm-link wm-svc">
+          <a class="wm-word" href="Services.html">Services</a>
+          <span class="wm-subs"><a href="Service_Standard.html">Standard</a><a href="Service_Premium.html">Premium</a><a href="Service_Elopement.html">Elopement</a><a href="#" data-soon>Destination</a><a href="Service_Decoration.html">Decoration</a></span>
+        </div>
+        <a class="wm-link" href="Journal.html"><span class="wm-word">Journal</span></a>
+        <a class="wm-link" href="Contact.html"><span class="wm-word">Contact</span></a>
+      </nav>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var wm=document.getElementById('wm'); if(!wm) return;
+  var openers=document.querySelectorAll('[data-wm-open], .menu');
+  function openM(){wm.classList.add('open');wm.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';document.body.style.overflow='hidden';}
+  function closeM(){wm.classList.remove('open');wm.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';document.body.style.overflow='';}
+  openers.forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openM();});});
+  wm.querySelectorAll('[data-wm-close]').forEach(function(b){b.addEventListener('click',closeM);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM();});
+  wm.querySelectorAll('a[href]').forEach(function(a){a.addEventListener('click',function(e){if(a.hasAttribute('data-soon')){e.preventDefault();return;}setTimeout(closeM,20);});});
+  var trig=document.querySelector('.wm-trigger');
+  if(trig){
+    var hasHd=!!document.querySelector('.hd');
+    function upd(){
+      if(hasHd){trig.classList.remove('show');return;}
+      if(window.scrollY>window.innerHeight*0.7)trig.classList.add('show');else trig.classList.remove('show');
+    }
+    upd(); window.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd);
+  }
+})();
+</script>
+</body>
+</html>

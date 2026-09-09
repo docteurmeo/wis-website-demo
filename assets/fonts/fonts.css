@@ -9,3 +9,13 @@
 @font-face{font-family:'SweetSans';src:url('sweetsans-light.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:'SweetSans';src:url('sweetsans-medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:'SweetSans';src:url('sweetsans-bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+
+/* Imperfetto Scribble (khách cấp) - 7 biến thể độc lập, không phải trục weight.
+   Nguồn: Fonts/imperfetto-scribble-font-family-2026-04-07-06-21-27-utc */
+@font-face{font-family:'Imperfetto One';src:url('imperfetto/imperfetto-one.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Imperfetto Two';src:url('imperfetto/imperfetto-two.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Imperfetto Three';src:url('imperfetto/imperfetto-three.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Imperfetto Four';src:url('imperfetto/imperfetto-four.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Imperfetto Five';src:url('imperfetto/imperfetto-five.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Imperfetto Six';src:url('imperfetto/imperfetto-six.otf') format('opentype');font-display:swap}
+@font-face{font-family:'Imperfetto Seven';src:url('imperfetto/imperfetto-seven.otf') format('opentype');font-display:swap}

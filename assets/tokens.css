@@ -1,0 +1,57 @@
+/* ============================================================
+   WIS — HỆ TOKEN MÀU (seasonal)
+   ------------------------------------------------------------
+   WIS KHÔNG khoá một màu thương hiệu cố định — đổi màu theo mùa.
+   Vì vậy MỌI text/element có màu trên site đều dẫn xuất từ đây.
+
+   ĐỔI MÙA = chỉ sửa 7 dòng --c-* trong "SEASONAL CORE".
+   Kênh màu ghi dạng "R G B" (không dấu phẩy) để mọi biến thể
+   trong suốt (alpha) đều lấy từ cùng một nguồn:  rgb(var(--c-x) / .4)
+
+   Bản gốc (mùa hiện tại) = warm-dark: mực nâu-đen + kem + gold.
+   Muốn đổi mùa: thay số ở --c-accent (điểm nhấn) và/hoặc --c-ink.
+   ============================================================ */
+:root{
+  /* ---------- SEASONAL CORE (sửa ở đây để đổi mùa) ---------- */
+  --c-ink:       22 15 8;     /* nền tối chủ đạo (warm near-black) */
+  --c-ink-hi:    44 33 20;    /* ink sáng hơn: gradient, panel, góc glow */
+  --c-veil:      12 8 3;      /* lớp phủ tối đặt trên ảnh */
+  --c-bone:      238 230 212; /* chữ & nét sáng trên nền tối */
+  --c-dim:       154 142 118; /* chữ phụ / mờ */
+  --c-accent:    198 161 91;  /* ĐIỂM NHẤN — mùa hiện tại = gold */
+  --c-accent-hi: 237 212 155; /* accent sáng (shimmer/hi-light) */
+
+  /* ---------- SEMANTIC (KHÔNG cần sửa khi đổi mùa) ---------- */
+  --ink:        rgb(var(--c-ink));
+  --ink-hi:     rgb(var(--c-ink-hi));
+  --veil:       rgb(var(--c-veil));
+  --bone:       rgb(var(--c-bone));
+  --dim:        rgb(var(--c-dim));
+  --accent:     rgb(var(--c-accent));
+  --accent-hi:  rgb(var(--c-accent-hi));
+
+  /* alias tương thích ngược: code cũ còn gọi --gold */
+  --gold:       var(--accent);
+
+  /* ============================================================
+     TYPOGRAPHY (swappable) — đổi font = sửa 3 dòng --font-* dưới đây
+     + thả file @font-face vào ../assets/fonts/fonts.css.
+     - --font-title : chữ hiển thị lớn (hero, statement) — Bricolage Grotesque
+       (Google Fonts, sans variable, subset "vietnamese" đã verify). Đổi từ
+       Fraunces (serif) sang sans vì khách chê Fraunces vẫn đọc ra "luxury mass
+       serif" — Bricolage là bước ngoặt hẳn khỏi họ serif, đương đại/web-native,
+       có độ "lắp ráp thủ công" (bricolage) trong nét chữ. Optical sizing tự
+       động theo font-size (mặc định trình duyệt), không cần chỉnh tay.
+     - --font-body  : chữ chạy / UI — SweetSans (giữ nguyên, không đổi)
+     - --font-hand  : accent viết tay LỚN — Imperfetto Three (font khách cấp, local
+       tại assets/fonts/imperfetto/).
+     ============================================================ */
+  --font-title: 'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif;
+  --font-body:  'SweetSans','Helvetica Neue',Arial,sans-serif;
+  --font-hand:  'Imperfetto Three',cursive;
+
+  /* tên tiêu dùng trong code (không sửa khi đổi font) */
+  --title: var(--font-title);
+  --body:  var(--font-body);
+  --hand:  var(--font-hand);
+}

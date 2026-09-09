@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wed in Style - Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  @supports (-moz-appearance:none){html{scrollbar-width:thin;scrollbar-color:rgba(198,161,91,.42) transparent}}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:rgba(198,161,91,.38);border-radius:10px;border:3px solid transparent;background-clip:content-box}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(198,161,91,.62);background-clip:content-box}
+  ::-webkit-scrollbar-corner{background:transparent}
+  html,body{height:100%}
+  body{font-family:'Instrument Serif',Georgia,serif;overflow:hidden}
+  .wrap{display:flex;height:100vh}
+  .half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    text-decoration:none;padding:6vh 5vw;transition:flex .7s cubic-bezier(.16,1,.3,1),background .5s ease}
+  .o1{background:#161310;color:#F7F1E6}
+  .o2{background:#F4EEE2;color:#161310}
+  .half:hover{flex:1.35}
+  .o1:hover{background:#1e150c}
+  .o2:hover{background:#efe6d5}
+  .eyebrow{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;opacity:.55;margin-bottom:22px}
+  .name{font-weight:400;font-size:clamp(2.8rem,6.5vw,6.6rem);line-height:.98;letter-spacing:-.01em}
+  .name em{font-style:italic}
+  .o1 .name{color:#F7F1E6}
+  .sub{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;margin-top:26px;opacity:.5}
+  .go{font-family:'Pinyon Script',cursive;font-size:1.9rem;margin-top:20px;opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .5s ease}
+  .o1 .go{color:#E6B26A} .o2 .go{color:#A9633B}
+  .half:hover .go{opacity:1;transform:none}
+  .brand{position:fixed;top:28px;left:0;right:0;text-align:center;z-index:5;
+    font-family:'Pinyon Script',cursive;font-size:2rem;color:#fff;mix-blend-mode:difference;pointer-events:none}
+  @media(max-width:720px){
+    .wrap{flex-direction:column}
+    .half:hover{flex:1}
+    .name{font-size:clamp(2.4rem,11vw,4rem)}
+    .go{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+  <div class="brand">wed in style</div>
+  <div class="wrap">
+    <a class="half o1" href="Homepage.html">
+      <span class="eyebrow">Option 01</span>
+      <span class="name"><em>Editorial</em></span>
+      <span class="sub">Warm-dark, cinematic</span>
+      <span class="go">enter</span>
+    </a>
+    <a class="half o2" href="O2_Homepage.html">
+      <span class="eyebrow">Option 02</span>
+      <span class="name">The Walk</span>
+      <span class="sub">Warm daylight, spatial</span>
+      <span class="go">enter</span>
+    </a>
+  </div>
+</body>
+</html>

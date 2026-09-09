@@ -190,9 +190,9 @@
 .wm-rl{position:relative;display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.02}
 .wm-rl>span{display:block;transition:transform .55s cubic-bezier(.16,1,.3,1)}
 .wm-rl>span:nth-child(2){position:absolute;top:100%;left:0}
-.wm-trigger:hover .wm-rl>span,.wm-close:hover .wm-rl>span,.wm-link:hover .wm-rl>span,.wm-mlink:hover .wm-rl>span{transform:translateY(-100%)}
+.wm-trigger:hover .wm-rl>span,.wm-close:hover .wm-rl>span{transform:translateY(-100%)}
 .wm-trigger{position:fixed;top:20px;right:clamp(16px,3vw,44px);z-index:1900;background:none;border:0;cursor:pointer;padding:8px 2px;
-  font-family:var(--body);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);text-shadow:0 1px 14px rgba(0,0,0,.55);
+  font-family:'Fahkwang',var(--title);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone);text-shadow:0 1px 14px rgba(0,0,0,.55);
   opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .5s ease,transform .5s ease}
 .wm-trigger.show{opacity:1;transform:none;pointer-events:auto}
 .wm{position:fixed;inset:0;z-index:2000;visibility:hidden;pointer-events:none}
@@ -203,33 +203,48 @@
 .wm-head{display:flex;align-items:center;justify-content:space-between;opacity:0;transform:translateY(-12px);transition:opacity .5s ease,transform .6s ease}
 .wm.open .wm-head{opacity:1;transform:none;transition-delay:.32s}
 .wm-brand img{width:clamp(58px,5.5vw,84px);height:auto;filter:brightness(0) invert(1);opacity:.95}
-.wm-close{background:none;border:0;cursor:pointer;padding:8px 2px;font-family:var(--body);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone)}
-.wm-body{flex:1;display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(30px,5vw,80px);align-items:center;padding-top:3vh;overflow:auto}
+.wm-close{background:none;border:0;cursor:pointer;padding:8px 2px;font-family:'Fahkwang',var(--title);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bone)}
+.wm-body{flex:1;display:flex;align-items:center;justify-content:center;padding-top:3vh;overflow:auto}
 .wm-nav{display:flex;flex-direction:column;gap:clamp(6px,1.5vh,20px)}
-.wm-link{display:flex;flex-direction:column;gap:5px;text-decoration:none;opacity:0;transform:translateY(42px);transition:opacity .7s ease,transform .85s cubic-bezier(.16,1,.3,1)}
-.wm-row{display:flex;align-items:baseline;gap:clamp(12px,1.6vw,26px)}
-.wm-word{font-family:var(--title);font-weight:400;font-size:clamp(1.8rem,4.4vw,3.4rem);line-height:1;letter-spacing:-.01em;color:var(--bone);white-space:nowrap;transition:color .3s ease}
-.wm-link:hover .wm-word{color:var(--gold)}
+.wm-link{display:flex;flex-direction:column;gap:5px;text-decoration:none;opacity:0;transition:opacity .6s ease}
+
+.wm-word{font-family:'Fahkwang',var(--title);font-weight:400;font-size:clamp(1.15rem,2.4vw,2rem);line-height:1;letter-spacing:-.01em;color:var(--bone);white-space:nowrap;transition:color .3s ease}
+/* MENU — PHƯƠNG ÁN A: danh sách canh giữa, lột sạch phụ kiện.
+   Đã bỏ: số thứ tự (chỉ có nghĩa trong danh sách căn trái), nhãn "Soon" bo tròn
+   (ngôn ngữ SaaS), mũi tên caret (quy ước UI-kit), và hover cuộn chữ trên từng
+   mục (khi mọi mục cùng làm thì nó thành tiếng ồn).
+   Còn đúng sáu dòng chữ và MỘT cử chỉ hover duy nhất. */
+.wm-nav{align-items:center;text-align:center;gap:48px}
+.wm-link{display:block;align-items:center;transform:none}
+.wm-word{display:block;font-family:'Fahkwang',var(--title);font-weight:300;
+  font-size:clamp(1.4rem,2.6vw,40px);line-height:1;letter-spacing:.01em;
+  color:var(--bone);text-decoration:none;transition:color .35s ease}
+/* Hover = TIÊU ĐIỂM, không phải đổi màu: mục được trỏ đứng yên, năm mục còn lại
+   lùi xuống 25%. Một cử chỉ thay cho bốn hiệu ứng cũ. */
+.wm.open .wm-nav:hover .wm-link{opacity:.25}
+.wm.open .wm-nav .wm-link:hover,.wm.open .wm-nav .wm-link:focus-within{opacity:1}
+/* Bốn dịch vụ con HIỆN SẴN — menu chỉ có sáu mục, không có gì phải giấu; giấu
+   đi rồi bắt bấm mới là thứ làm nó trông như một cái widget. Không accordion,
+   không trạng thái, không JS. */
+.wm-svc{display:block}
+.wm-subs{display:block;margin-top:10px}
+.wm-subs a{font-family:'Fahkwang',var(--title);font-weight:300;font-size:15px;
+  line-height:24px;color:rgb(var(--c-bone) / .55);text-decoration:none;transition:color .3s ease}
+.wm-subs a+a::before{content:"·";margin:0 10px;color:rgb(var(--c-bone) / .3)}
+.wm-subs a:hover{color:var(--bone)}
+
 .wm.open .wm-link{opacity:1;transform:none}
-.wm.open .wm-link:nth-child(1){transition-delay:.34s}.wm.open .wm-link:nth-child(2){transition-delay:.40s}.wm.open .wm-link:nth-child(3){transition-delay:.46s}.wm.open .wm-link:nth-child(4){transition-delay:.52s}.wm.open .wm-link:nth-child(5){transition-delay:.58s}.wm.open .wm-link:nth-child(6){transition-delay:.64s}.wm.open .wm-link:nth-child(7){transition-delay:.70s}.wm.open .wm-link:nth-child(8){transition-delay:.76s}
-.wm-idx{font-family:var(--body);font-size:.58rem;letter-spacing:.22em;color:var(--gold)}
-.wm-soon{font-family:var(--body);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);border:1px solid rgba(238,230,212,.22);padding:3px 8px;border-radius:20px;align-self:center}
-.wm-sub{font-family:var(--body);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-left:calc(clamp(12px,1.6vw,26px) + 2.4ch)}
-.wm-aside{display:flex;flex-direction:column;justify-content:center;gap:clamp(24px,3vh,40px);border-left:1px solid rgba(238,230,212,.14);padding-left:clamp(22px,3vw,54px);opacity:0;transition:opacity .8s ease}
-.wm.open .wm-aside{opacity:1;transition-delay:.6s}
-.wm-feat{display:block;text-decoration:none;color:var(--bone)}
-.wm-feat-img{display:block;width:100%;aspect-ratio:4/3;overflow:hidden;margin-bottom:18px}
-.wm-feat-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
-.wm-feat:hover .wm-feat-img img{transform:scale(1.06)}
-.wm-feat-k{display:block;font-family:var(--body);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.wm-feat-t{display:block;font-family:var(--title);font-size:clamp(1.5rem,2.4vw,2.2rem);line-height:1.1;margin-bottom:6px}
-.wm-feat-s{display:block;font-family:var(--body);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.wm-meta{display:flex;flex-direction:column;gap:14px}
-.wm-mlink{color:rgba(238,230,212,.9);text-decoration:none;width:max-content;font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase}
-.wm-note{color:var(--dim);font-family:var(--body);font-size:.72rem;letter-spacing:.02em}
-.wm-cta{margin-top:8px;align-self:flex-start;font-family:var(--body);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:var(--gold);text-decoration:none;padding:14px 26px;transition:opacity .3s}
-.wm-cta:hover{opacity:.85}
-@media(max-width:860px){ .wm-body{grid-template-columns:1fr;gap:5vh;align-items:start;padding-top:2vh;overflow:auto} .wm-aside{border-left:0;padding-left:0;border-top:1px solid rgba(238,230,212,.14);padding-top:5vh} .wm-feat-img{aspect-ratio:16/9} }
+.wm.open .wm-link:nth-child(1){transition-delay:.30s}.wm.open .wm-link:nth-child(2){transition-delay:.34s}.wm.open .wm-link:nth-child(3){transition-delay:.38s}.wm.open .wm-link:nth-child(4){transition-delay:.42s}.wm.open .wm-link:nth-child(5){transition-delay:.46s}.wm.open .wm-link:nth-child(6){transition-delay:.50s}.wm.open .wm-link:nth-child(7){transition-delay:.54s}.wm.open .wm-link:nth-child(8){transition-delay:.58s}
+
+
+
+.wm.open 
+
+
+
+
+
+@media(max-width:860px){ .wm-body{align-items:flex-start;padding-top:2vh} }
 @media(prefers-reduced-motion:reduce){ .wm-bg,.wm-in,.wm-head,.wm-link,.wm-aside,.wm-rl>span,.wm-trigger{transition:none!important} }
 </style>
 <button class="wm-trigger" type="button" data-wm-open aria-label="Open menu"><span class="wm-rl"><span>Menu</span><span>Menu</span></span></button>
@@ -242,30 +257,16 @@
     </div>
     <div class="wm-body">
       <nav class="wm-nav">
-        <a class="wm-link" href="Homepage.html"><span class="wm-row"><span class="wm-idx">01</span><span class="wm-rl wm-word"><span>Home</span><span>Home</span></span></span></a>
-        <a class="wm-link" href="OurWorks.html"><span class="wm-row"><span class="wm-idx">02</span><span class="wm-rl wm-word"><span>Our Works</span><span>Our Works</span></span></span></a>
-        <a class="wm-link" href="Approach.html"><span class="wm-row"><span class="wm-idx">03</span><span class="wm-rl wm-word"><span>Approach</span><span>Approach</span></span></span></a>
-        <a class="wm-link" href="#" data-soon><span class="wm-row"><span class="wm-idx">04</span><span class="wm-rl wm-word"><span>Destination Weddings</span><span>Destination Weddings</span></span><span class="wm-soon">Soon</span></span><span class="wm-sub">Venue - Vietnam destinations</span></a>
-        <a class="wm-link" href="Services.html"><span class="wm-row"><span class="wm-idx">05</span><span class="wm-rl wm-word"><span>Services</span><span>Services</span></span></span><span class="wm-sub">Standard, Elopement, Premium, Decoration</span></a>
-        <a class="wm-link" href="About.html"><span class="wm-row"><span class="wm-idx">06</span><span class="wm-rl wm-word"><span>About</span><span>About</span></span></span></a>
-        <a class="wm-link" href="Journal.html"><span class="wm-row"><span class="wm-idx">07</span><span class="wm-rl wm-word"><span>Journal</span><span>Journal</span></span></span></a>
-        <a class="wm-link" href="Contact.html"><span class="wm-row"><span class="wm-idx">08</span><span class="wm-rl wm-word"><span>Contact</span><span>Contact</span></span></span></a>
-      </nav>
-      <aside class="wm-aside">
-        <a class="wm-feat" href="Case_CatherineJohnny.html">
-          <span class="wm-feat-img"><img src="assets/cases/cj_g1.jpg" alt=""></span>
-          <span class="wm-feat-k">Featured story</span>
-          <span class="wm-feat-t">Catherine &amp; Johnny</span>
-          <span class="wm-feat-s">Love Flavor - Ninh Binh, 2025</span>
-        </a>
-        <div class="wm-meta">
-          <a class="wm-mlink" href="O2_Homepage.html" style="color:var(--gold);border-bottom:1px solid rgba(238,230,212,.16);padding-bottom:13px;margin-bottom:3px"><span class="wm-rl"><span>Now: Option 1 - switch to Option 2 (The Walk)</span><span>Now: Option 1 - switch to Option 2 (The Walk)</span></span></a>
-          <a class="wm-mlink" href="https://www.instagram.com/wis.vn/" target="_blank" rel="noopener"><span class="wm-rl"><span>Instagram</span><span>Instagram</span></span></a>
-          <a class="wm-mlink" href="https://www.facebook.com/wis.weddingplanners" target="_blank" rel="noopener"><span class="wm-rl"><span>Facebook</span><span>Facebook</span></span></a>
-          <span class="wm-note">Weddings in Vietnam, since 2009</span>
-          <a class="wm-cta" href="Contact.html">Start your story</a>
+        <a class="wm-link" href="OurWorks.html"><span class="wm-word">Our Works</span></a>
+        <a class="wm-link" href="#" data-soon><span class="wm-word">Destination Weddings</span></a>
+        <a class="wm-link" href="Approach.html"><span class="wm-word">Approach</span></a>
+        <div class="wm-link wm-svc">
+          <a class="wm-word" href="Services.html">Services</a>
+          <span class="wm-subs"><a href="Service_Standard.html">Standard</a><a href="Service_Premium.html">Premium</a><a href="Service_Elopement.html">Elopement</a><a href="#" data-soon>Destination</a><a href="Service_Decoration.html">Decoration</a></span>
         </div>
-      </aside>
+        <a class="wm-link" href="Journal.html"><span class="wm-word">Journal</span></a>
+        <a class="wm-link" href="Contact.html"><span class="wm-word">Contact</span></a>
+      </nav>
     </div>
   </div>
 </div>
