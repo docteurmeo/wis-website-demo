@@ -1478,6 +1478,27 @@
      tệ hơn: nó báo "chỗ này không quan trọng". Nâng sàn, KHÔNG hạ cỡ chữ
      lớn: tương phản to/nhỏ chính là thứ thiết kế editorial sống bằng. */
   @media (hover: none) and (pointer: coarse) {
+    /* Huy hiệu "view this story" vốn BÁM CON TRỎ — trên cảm ứng không có con
+       trỏ nên nó biến mất hoàn toàn, mất luôn tín hiệu "ảnh này bấm được".
+       Neo cố định vào góc dưới-trái từng ảnh (vùng ngón cái với tới), hiện khi
+       ảnh vào tầm nhìn: giữ ý đồ, đổi thứ kích hoạt từ chuột sang cuộn. */
+    .g{position:relative}
+    /* HIỆN SẴN, không chờ IntersectionObserver: đây là tín hiệu 'ảnh bấm được'
+       duy nhất trên cảm ứng, ẩn nó sau một điều kiện mình không tự kiểm chứng
+       được trong pane là đánh cược không cần thiết. IO chỉ để nhấn thêm. */
+    /* Toàn bộ style của huy hiệu nằm trong @media(min-width:821px) — trên điện
+       thoại không có gì cả, kể cả nét vẽ .sb-mark. Khai lại đủ ở đây. */
+    .g .story-badge{position:absolute;left:5%;bottom:5%;z-index:5;pointer-events:none;
+      width:clamp(76px,20vw,101.7px);aspect-ratio:101.7/78.1;
+      display:grid;place-items:center;transform:none;opacity:.88;
+      transition:opacity .5s cubic-bezier(.16,1,.3,1)}
+    .g .sb-mark{position:absolute;inset:0;background:var(--bone);
+      -webkit-mask:url('../assets/illustrations/story_badge.svg') no-repeat center/contain;
+      mask:url('../assets/illustrations/story_badge.svg') no-repeat center/contain}
+    .g .story-badge em{position:relative;z-index:1;font-style:normal;text-align:center;
+      font-family:'Fahkwang',var(--title);font-weight:700;font-size:11px;letter-spacing:.3em;
+      margin-right:-.3em;text-transform:uppercase;line-height:1.27;color:var(--ink)}
+    .g.sb-in .story-badge{opacity:1;transform:none}
     .btn,.tm-count,.form-count,.serv-num,.ap-num{font-size:14px}
     .cap,.pl-cap,.pcap b,.pcap span{font-size:13px}
     /* 'Selected glory stories' để nowrap + 6.6vw ⇒ rộng 409 trên khe 393.
@@ -1487,14 +1508,16 @@
     /* Vùng chạm tối thiểu 44px cho mọi link/nút thật. */
     .ft-col a,.wm-subs a,.arw,.navbtn{min-height:44px;display:flex;align-items:center}
     .arw{width:44px;justify-content:flex-start}
-    /* Film grain canvas vẽ lại mỗi frame ở CẢ Hero lẫn Footer = 2 vòng lặp
-       giành main thread với cuộn. Trên touch đổi sang lớp hạt TĨNH — vẫn ra
-       chất phim, chi phí gần bằng 0. */
-    .hero-film-canvas,.ft-film-canvas{display:none}
-    .hero::after,.ft::after{content:"";position:absolute;inset:0;z-index:1;
-      pointer-events:none;opacity:.05;mix-blend-mode:screen;
-      background-image:radial-gradient(rgb(var(--c-accent-hi) / .6) .5px,transparent .5px);
-      background-size:3px 3px}
+    /* Film grain GIỮ NGUYÊN canvas trên cảm ứng. Lần trước đổi sang lớp hạt
+       tĩnh vì sợ 2 canvas giành main thread — nhưng engine vốn đã tự tắt khi
+       ra khỏi viewport, mà Hero với Footer thì ở hai đầu trang nên gần như
+       không bao giờ chạy cùng lúc. Đổi đi là mất chất phim, đúng thứ đắt nhất.
+
+       Nút: trên cảm ứng KHÔNG BAO GIỜ có :hover, nên nút để mặc định trong
+       suốt sẽ đọc ra như chữ trần. Cho nút hiện sẵn trạng thái nền + film. */
+    .btn{background-color:rgb(var(--c-ink-hi) / 1)}
+    .btn .btn-film{opacity:1}
+    .btn:active{opacity:.72}
     /* Bar tự chuyển testimonial: trên touch không có hover ⇒ không có phanh.
        Người ta đang đọc dòng 3 thì nó nhảy. Tắt, chỉ còn bấm mũi tên. */
     .tm-bar i.run{animation:none;transform:scaleX(0)}
@@ -2144,7 +2167,10 @@
      đốt CPU cho một hiệu ứng không ai nhìn. */
   (function(){
     if(reduce) return;
-    if(!(window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches)) return;
+    /* TRƯỚC: chốt này chặn cả thiết bị cảm ứng ⇒ trên iPad nút không bao giờ
+       gắn canvas, cộng với :hover không tồn tại nên nút phẳng lì. Nay chỉ dùng
+       nó để CHỌN CÁCH KÍCH HOẠT, không dùng để loại thiết bị. */
+    var fine = !!(window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches);
     var seed=90210;
     function rnd(){ seed=(seed*1664525+1013904223)>>>0; return seed/4294967296; }
 
@@ -2209,10 +2235,18 @@
       }
       function on(){ if(timer) return; size(); last=Date.now(); tick(); }
       function off(){ clearTimeout(timer); timer=null; if(w&&h) ctx.clearRect(0,0,w,h); }
-      btn.addEventListener('mouseenter',on);
-      btn.addEventListener('mouseleave',off);
-      btn.addEventListener('focus',on);
-      btn.addEventListener('blur',off);
+      if(fine){
+        btn.addEventListener('mouseenter',on);
+        btn.addEventListener('mouseleave',off);
+        btn.addEventListener('focus',on);
+        btn.addEventListener('blur',off);
+      } else if('IntersectionObserver' in window){
+        /* Cảm ứng: chuột không tồn tại nên cho CUỘN kích hoạt — film chạy khi
+           nút vào tầm nhìn, tắt khi ra. Vẫn đúng nguyên tắc không đốt CPU cho
+           thứ không ai nhìn. */
+        new IntersectionObserver(function(es){ es[0].isIntersecting ? on() : off(); },
+          {threshold:.25}).observe(btn);
+      } else { on(); }
     }
     window.attachBtnFilm=attach;   // nút tạo động (Send/Next của form) gọi lại
     [].slice.call(document.querySelectorAll('.btn')).forEach(attach);
@@ -2489,8 +2523,28 @@
      scale/opacity của CSS không bị JS ghi đè. */
   (function(){
     if(reduce) return;
-    if(!(window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches)) return;
     if(!document.querySelector('.gallery .g')) return;
+    var fineP = !!(window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches);
+    if(!fineP){
+      /* Nhánh CẢM ỨNG: mỗi ảnh một huy hiệu riêng, neo trong ảnh, hiện khi ảnh
+         vào tầm nhìn. Không điều hướng — trang case chưa dựng lại (xem quy tắc
+         "xong trang nào mới nối trang đó"). */
+      [].slice.call(document.querySelectorAll('.gallery .g')).forEach(function(g){
+        var b=document.createElement('span');
+        b.className='story-badge'; b.setAttribute('aria-hidden','true');
+        b.innerHTML='<i class="sb-mark"></i><em>view<br>this<br>story</em>';
+        g.appendChild(b);
+      });
+      if('IntersectionObserver' in window){
+        var gio=new IntersectionObserver(function(es){
+          es.forEach(function(e){ e.target.classList.toggle('sb-in', e.isIntersecting); });
+        },{threshold:.35});
+        [].slice.call(document.querySelectorAll('.gallery .g')).forEach(function(g){ gio.observe(g); });
+      } else {
+        [].slice.call(document.querySelectorAll('.gallery .g')).forEach(function(g){ g.classList.add('sb-in'); });
+      }
+      return;
+    }
     /* Tự tạo phần tử thay vì đặt sẵn trong HTML: file có nhiều thẻ <script>,
        đặt markup ở cuối body thì nó vẫn nằm SAU khối script này và
        getElementById trả null. Tạo bằng JS thì không phụ thuộc thứ tự. */
