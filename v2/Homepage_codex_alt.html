@@ -1637,12 +1637,10 @@
      người khác nhìn xéo, và trên điện thoại đang đi, nó không đọc được —
      tệ hơn: nó báo "chỗ này không quan trọng". Nâng sàn, KHÔNG hạ cỡ chữ
      lớn: tương phản to/nhỏ chính là thứ thiết kế editorial sống bằng. */
-  /* Huy hiệu tĩnh phải ẩn ở TẦNG GỐC, không phải trong media query cảm ứng:
-     style nền của .story-badge nằm trong @media(min-width:821px) nên trên
-     desktop nó vẫn là display:grid + position:fixed ⇒ 9 huy hiệu chồng đống
-     ở góc màn. Ẩn ở gốc, chỉ mở lại dưới .no-pointer. */
-  .g .sb-static{display:none}
-  .no-pointer .g .sb-static{display:grid}
+  /* KHÔNG có huy hiệu tĩnh. "View this story" là một CTA BÁM CON TRỎ, chỉ
+     hiện khi rê qua ảnh — dán sẵn một cái vào mỗi ảnh là biến nó thành nhãn
+     trang trí lặp 9 lần. Máy chỉ có ngón tay thì không thấy nó, và đó là
+     hành vi đúng: cả tấm ảnh vốn đã bấm được. */
 
   /* Nút chỉ hiện sẵn nền khi thiết bị THẬT SỰ không có con trỏ nào. iPad có
      bút hoặc trackpad thì giữ nguyên hành vi hover như desktop. */
@@ -1657,18 +1655,6 @@
     /* HIỆN SẴN, không chờ IntersectionObserver: đây là tín hiệu 'ảnh bấm được'
        duy nhất trên cảm ứng, ẩn nó sau một điều kiện mình không tự kiểm chứng
        được trong pane là đánh cược không cần thiết. IO chỉ để nhấn thêm. */
-    /* Toàn bộ style của huy hiệu nằm trong @media(min-width:821px) — trên điện
-       thoại không có gì cả, kể cả nét vẽ .sb-mark. Khai lại đủ ở đây. */
-    .g .sb-static{position:absolute;left:5%;bottom:5%;z-index:5;pointer-events:none;
-      width:clamp(76px,20vw,101.7px);aspect-ratio:101.7/78.1;
-      place-items:center;transform:none;opacity:.88;   /* display do cặp rule ở tầng gốc quyết định */
-      transition:opacity .5s cubic-bezier(.16,1,.3,1)}
-    .g .sb-static .sb-mark{position:absolute;inset:0;background:var(--bone);
-      -webkit-mask:url('../assets/illustrations/story_badge.svg') no-repeat center/contain;
-      mask:url('../assets/illustrations/story_badge.svg') no-repeat center/contain}
-    .g .sb-static em{position:relative;z-index:1;font-style:normal;text-align:center;
-      font-family:'Fahkwang',var(--title);font-weight:700;font-size:11px;letter-spacing:.3em;
-      margin-right:-.3em;text-transform:uppercase;line-height:1.27;color:var(--ink)}
     .btn,.tm-count,.form-count,.serv-num,.ap-num{font-size:14px}
     .cap,.pl-cap,.pcap b,.pcap span{font-size:13px}
     /* 'Selected glory stories' để nowrap + 6.6vw ⇒ rộng 409 trên khe 393.
@@ -2697,15 +2683,6 @@
        định đó ngay lần đầu thấy một pointer không phải ngón tay. */
     var noHover = !!(window.matchMedia && window.matchMedia('(hover:none)').matches);
     if(noHover) document.documentElement.classList.add('no-pointer');
-    /* Lưới an toàn cho máy CHỈ có ngón tay: mỗi ảnh một huy hiệu tĩnh. CSS chỉ
-       hiện chúng dưới .no-pointer, nên khi con trỏ xuất hiện là chúng tự biến
-       mất, nhường lại cho bản bám con trỏ. */
-    [].slice.call(document.querySelectorAll('.gallery .g')).forEach(function(g){
-      var b=document.createElement('span');
-      b.className='story-badge sb-static'; b.setAttribute('aria-hidden','true');
-      b.innerHTML='<i class="sb-mark"></i><em>view<br>this<br>story</em>';
-      g.appendChild(b);
-    });
     /* Tự tạo phần tử thay vì đặt sẵn trong HTML: file có nhiều thẻ <script>,
        đặt markup ở cuối body thì nó vẫn nằm SAU khối script này và
        getElementById trả null. Tạo bằng JS thì không phụ thuộc thứ tự. */
