@@ -1529,6 +1529,21 @@
        neo trái thì mép phải trôi khỏi lưới ở mọi khổ khác 1180. */
     .ap-step{left:auto;right:var(--pm);top:calc(50% - 31px);width:30.678%}
     .ap-hand{font-size:2.5424vw;margin-bottom:24px}
+
+    /* ---- 03 Services (frame Figma "03 — Services", khách căn tay) ------
+       Ba quan hệ phải giữ, không được để trôi:
+         đỉnh tiêu đề  = đỉnh ảnh        (135)
+         đáy nút CTA   = đáy ảnh         (cùng một con số 135 tính từ đáy)
+         mép phải ảnh  = lề trang
+       Danh sách và ghi chú chữ tay dùng CHUNG một mốc dọc calc(50% - 109px)
+       nên chúng dính nhau ở mọi chiều cao màn. */
+    .serv-title{top:135px;font-size:3.7288vw;line-height:1}
+    .serv-media{left:auto;right:var(--pm);width:30.593%;top:135px;bottom:135px}
+    .serv-cta{bottom:135px}
+    .serv-list{top:calc(50% - 109px)}
+    .serv-name{font-size:1.8644vw}
+    .serv-notes{left:50.847%;top:calc(50% - 109px);width:22.627%}
+    .serv-note{font-size:2.3729vw}
   }
   /* --- CHƯƠNG 3: màn RẤT thấp — lưới an toàn -----------------------------
      iPad xoay dọc, điện thoại xoay ngang (852×393), màn chia đôi, cửa sổ
