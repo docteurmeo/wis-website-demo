@@ -3044,9 +3044,30 @@
          phình từ 389 lên 1052 ⇒ form tràn khỏi section 625px, đè xuống footer.
          Đã đo được max rồi thì gán luôn min-height cho section — chính xác
          tuyệt đối và tự cập nhật khi đổi viewport hay đổi copy. */
-      var formTop=cf.querySelector('.cf-form').getBoundingClientRect().top
-                 - cf.getBoundingClientRect().top;
-      cf.style.minHeight=Math.max(800, Math.round(formTop+max+64))+'px';
+      /* HÀNG NÚT BACK/NEXT LÀ MỐC, KHÔNG PHẢI PHẦN THỪA.
+         Nó phải nằm trong section thì mới bấm được, nên ở dải iPad chiều cao
+         section được TÍNH NGƯỢC từ nó chứ không lấy hằng số của bản desktop.
+
+         Bản desktop giữ NGUYÊN công thức cũ: đổi nó thì section Contact
+         phình từ 800 lên 1048, tức sửa một bản đã duyệt để chữa lỗi của bản
+         khác. */
+      var cfTop=cf.getBoundingClientRect().top;
+      var formTop=cf.querySelector('.cf-form').getBoundingClientRect().top - cfTop;
+      var band=window.matchMedia&&window.matchMedia('(min-width:821px) and (max-width:1400px) and (max-height:900px)').matches;
+      if(!band){
+        cf.style.minHeight=Math.max(800, Math.round(formTop+max+64))+'px';
+      } else {
+        var headTop=cf.querySelector('.cf-left').getBoundingClientRect().top - cfTop;
+        /* 2 = thanh tiến độ; marginTop của .form-step = khe dưới thanh;
+           max đã gồm padding-bottom chừa chỗ cho hàng nút. */
+        var gapAboveStep=parseFloat(getComputedStyle(stepEl).marginTop)||0;
+        var formBottom=formTop+2+gapAboveStep+max;
+        /* Đáy chừa đúng bằng đỉnh cho cân, NHƯNG không vượt một màn: vượt thì
+           mối nối sang Footer lệch. Nội dung mà cao hơn màn thật thì lấy
+           đáy form + 40 làm sàn, section cứ dài ra. */
+        var want=Math.min(window.innerHeight, formBottom+headTop);
+        cf.style.minHeight=Math.round(Math.max(formBottom+40, want))+'px';
+      }
     }
     render(0);
     fitSteps();
