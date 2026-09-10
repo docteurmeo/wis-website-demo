@@ -1457,45 +1457,57 @@
   }
 
   /* --- CHƯƠNG 2b: LƯỚI iPad (khách đã căn tay trong Figma) ---------------
-     Dải này là iPad nằm ngang và các máy tỉ lệ tương đương, KHÔNG phải laptop
-     rộng: 821–1366 ngang, ≤900 dọc. Số gốc đọc từ frame Figma "01 — Hero"
-     trang `📱 iPad 1180×744` — mọi công thức dưới đây quy về đúng số đó tại
-     1180×744, và neo theo KHUNG ẢNH chứ không theo một con vh rời rạc, để
-     khi tỉ lệ máy lệch đi thì chữ vẫn không trèo lên ảnh. */
-  @media (min-width:821px) and (max-width:1366px) and (max-height:900px) {
+     Dải: rộng 821–1400, cao ≤900. Mốc trên PHẢI là 1400 chứ không phải 1366 —
+     iPad Pro/Air 13" nằm ngang cho viewport 1373, tức trượt khỏi 1366 đúng
+     7px và rơi về bố cục desktop. Đây là máy dùng để pitch, không phải máy lẻ.
+
+     Số gốc đọc từ frame Figma "01 — Hero" trang `📱 iPad 1180×744`.
+     TOÀN BỘ cụm Hero quy về MỘT biến --img = bề rộng khung ảnh, vì mọi thứ
+     ở đây (chữ tay, hậu tố, spine, header) đều ăn theo mép khung ảnh chứ
+     không ăn theo mép viewport. Neo bằng %vw rời rạc thì ở 1180×744 vẫn
+     đúng nhưng sang 1373×822 sẽ trôi, vì bề rộng ảnh bị chặn bởi CHIỀU CAO
+     (48.66vh) chứ không phải chiều rộng nữa.
+        --img            = bề rộng ảnh            (1180×744 → 362)
+        --img * 2/3      = NỬA chiều cao ảnh      (ảnh tỉ lệ 3/4 → 241.33)
+     Mọi hệ số dưới đây là tỉ lệ so với --img, quy về đúng số Figma tại 1180. */
+  @media (min-width:821px) and (max-width:1400px) and (max-height:900px) {
 
     /* LỀ TRANG 24px — áp cho TOÀN BỘ trang ở dải này, không riêng Hero.
        Mọi section đều ăn qua --pm nên chỉ cần đổi ở đây. Trang mới sau này
        cứ dùng --pm là tự đúng lưới. */
-    :root{--pm:24px;--page-margin:24px}
+    :root{--pm:24px;--page-margin:24px;
+      /* để trên :root chứ không phải .hero, vì .site-hd là ANH EM của .hero
+         nên không thừa hưởng được biến đặt trên .hero. */
+      --img:min(30.678vw,48.66vh)}
 
-    /* Khung ảnh 362×483 @1180 (30.678vw, tỉ lệ 3/4), căn giữa cả hai chiều.
-       Nửa chiều cao ảnh = min(20.452vw,32.44vh) — dùng lại ở 4 chỗ bên dưới. */
-    .hero-frame{width:min(30.678vw,48.66vh)}
+    .hero-frame{width:var(--img)}
 
-    /* Header cao 60, tâm trùng mép trên khung ảnh ⇒ top = mép ảnh − 30. */
+    /* Header: tâm trùng mép trên khung ảnh ⇒ top = mép ảnh − nửa header. */
     .site-hd{--hd-h:clamp(52px,5.085vw,69px);
-      --hd-top:calc(50svh - min(20.452vw,32.44vh) - (var(--hd-h) / 2))}
+      --hd-top:calc(50svh - (var(--img) * 2 / 3) - (var(--hd-h) / 2))}
     .hd-logo{width:clamp(64px,6.3559vw,115px);height:clamp(32.7px,3.3051vw,59px)}
 
-    /* Spine: giãn chữ .4em, ĐÁY khoá vào đáy khung ảnh.
-       transform-origin:left top + rotate(-90deg) ⇒ `top` chính là đáy chữ. */
+    /* Spine: ĐÁY khoá vào đáy khung ảnh. transform-origin:left top +
+       rotate(-90deg) ⇒ `top` chính là đáy chữ, không phải đỉnh. */
     .hero-spine{left:var(--pm);letter-spacing:.4em;
-      top:calc(50% + min(20.452vw,32.44vh))}
+      top:calc(50% + var(--img) * 2 / 3)}
 
-    /* Chữ tay: một khối 3 dòng, nghiêng -5°, neo tại (306.13, 297) @1180.
+    /* Chữ tay: khối 3 dòng nghiêng -5°, đè lên mép TRÁI khung ảnh.
        Bbox trên Figma nằm cao hơn `top` 14.7px vì khối bị xoay — đừng lấy
-       số bbox đó nhét thẳng vào `top`. */
-    .ht-hand{left:25.943%;top:calc(50% - 75px);font-size:4.4068vw}
+       số bbox nhét thẳng vào `top`. */
+    .ht-hand{left:calc(50% - var(--img) / 2 - var(--img) * .28417);
+      top:calc(50% - var(--img) * .2072);
+      font-size:calc(var(--img) * .14365)}
 
-    /* Hậu tố: mép trái 313, đỉnh cách đáy khung ảnh 67.3px @1180. */
-    .ht-suffix{left:26.525%;
-      top:calc(50% + min(20.452vw,32.44vh) - 5.7034vw)}
+    /* Hậu tố: cùng luật, đỉnh nằm trên đáy khung ảnh một quãng. */
+    .ht-suffix{left:calc(50% - var(--img) / 2 - var(--img) * .26519);
+      top:calc(50% + var(--img) * .48068);
+      font-size:calc(var(--img) * .2174)}
 
-    /* Cột chữ phải: nay là MỘT khối chảy liền, cách nhau đúng một dòng trống,
-       không còn kéo giãn hai đầu. Đỉnh neo cách mép trên khung ảnh 82px. */
+    /* Cột chữ phải: MỘT khối chảy liền, hai đoạn cách nhau đúng một dòng
+       trống. Mép phải bám lề trang, đỉnh cách mép trên khung ảnh 82px. */
     .hero-col{right:var(--pm);width:22.4576vw;
-      top:calc(50svh - min(20.452vw,32.44vh) + 82px);bottom:auto;
+      top:calc(50svh - (var(--img) * 2 / 3) + 82px);bottom:auto;
       display:block;font-size:15px;font-weight:300;line-height:1.6}
     .hero-col p+p{margin-top:24px}
   }
