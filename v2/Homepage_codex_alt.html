@@ -1544,6 +1544,64 @@
     .serv-name{font-size:1.8644vw}
     .serv-notes{left:50.847%;top:calc(50% - 109px);width:22.627%}
     .serv-note{font-size:2.3729vw}
+
+    /* ---- 02/04/05/07/08 dùng chung cỡ tiêu đề 44/lh1 = style Display/Small
+       trong Figma. Bản desktop là 46.22/.98 — ở iPad khách hạ về 44. */
+    .whead,.cp-statement,.tm-head,.cf-head{font-size:3.7288vw;line-height:1}
+
+    /* ---- 02 Approach: cột tiêu đề rộng thêm (342 → 361) */
+    .ap-title{max-width:30.593%}
+
+    /* ---- 04: cụm tên C · Love flavor · J đang ĐÈ LÊN ảnh đầu tiên.
+       .namebar cao 0 + sticky, .nm neo top:0 rồi translateY(-50%) ⇒ tâm bar
+       chính là tâm chữ. Đẩy bằng transform chứ KHÔNG dùng margin: bar cao 0
+       nhưng margin âm vẫn kéo cả gallery bên dưới lên theo. */
+    .namebar{transform:translateY(-77px)}
+    /* C và J cách mép trang 313 mỗi bên (đối xứng), chữ tay "Love flavor"
+       giữ nguyên vị trí giữa. */
+    .nm.bride{left:26.525%;right:auto}
+    .nm.groom{right:26.525%;left:auto}
+
+    /* ---- 05 Cultural Perspective · Intro */
+    .cp-statement{width:38.22%;max-width:none}
+    .cp-intro-p{left:51.017%;width:30.593%;font-size:15px;line-height:24px}
+
+    /* ---- 06 Cultural Perspective · Walk
+       Ba dòng chữ nằm trong một cột 454 căn giữa màn, không còn trải hết
+       bề ngang. Dòng mô tả to hẳn lên 23px. */
+    .cp-panel-label{top:calc(50% - 103px)}
+    .cp-panel-name{top:calc(50% - 30px)}
+    .cp-panel-line{top:calc(50% + 74px);width:38.475%;font-size:23px;line-height:1.3}
+
+    /* ---- 07 Testimonial
+       Cột nội dung rộng 746 căn giữa ⇒ lề hai bên 217. Tiêu đề bỏ lùi 7px
+       (bản desktop lùi để bù overhang chữ, ở iPad khách căn thẳng mép cột).
+       Dấu ngoặc kép ĐƯỢC BẬT LẠI — chương 2 đang ẩn nó ở màn thấp. */
+    .tm{--tm-col:min(63.22vw,1145px)}
+    .tm-head{left:var(--tm-l)}
+    .tm-mark{display:block;left:var(--tm-l);top:221px;font-size:120px;line-height:1.1667}
+    .tm-stage{top:calc(50% - 66px)}
+    .tm-q{font-size:22px;line-height:1.2}
+    .tm-photo{width:68px}
+    .tm-name{font-size:36px;line-height:.944}
+    .tm-nav{right:var(--tm-l);width:196px}
+
+    /* ---- 08 Contact
+       Cả hai cột dời hẳn lên: tiêu đề 286→200, thanh tiến độ 306→220.
+       Khoảng cách trong form siết lại để câu hỏi và chip rơi đúng 263/318. */
+    .cf-left{top:200px;width:30.593%}
+    .cf-sub{top:318px;width:30.593%;max-width:none}
+    .cf-form{top:220px}
+    .form-step{margin-top:41px}
+    .form-q{margin-bottom:31px}
+
+    /* ---- 09 Footer: cột 4 (Connect) kéo vào 962; hai dòng đáy tụt xuống 453 */
+    /* Chuyển hai cụm footer sang CHẢY DỌC phải khai LẠI ở đây, không dựa vào
+       chương 2: chương đó chặn ở max-height 820, mà máy pitch cao 822 —
+       trượt đúng 2px là footer rơi về bố cục neo tuyệt đối của desktop. */
+    .ft-top{position:static;margin:96px var(--pm) 0;left:auto;right:auto;top:auto;
+      grid-template-columns:15.1498% 15.1498% 21.635% 17.13%}
+    .ft-bottom{position:static;margin:132px var(--pm) 0;left:auto;bottom:auto}
   }
   /* --- CHƯƠNG 3: màn RẤT thấp — lưới an toàn -----------------------------
      iPad xoay dọc, điện thoại xoay ngang (852×393), màn chia đôi, cửa sổ
