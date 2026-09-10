@@ -1505,11 +1505,30 @@
       font-size:calc(var(--img) * .2174)}
 
     /* Cột chữ phải: MỘT khối chảy liền, hai đoạn cách nhau đúng một dòng
-       trống. Mép phải bám lề trang, đỉnh cách mép trên khung ảnh 82px. */
+       trống. Mép phải bám lề trang, ĐÁY khoá vào đáy khung ảnh. */
     .hero-col{right:var(--pm);width:22.4576vw;
-      top:calc(50svh - (var(--img) * 2 / 3) + 82px);bottom:auto;
+      /* ĐÁY khoá vào ĐÁY KHUNG ẢNH — đúng luật đã chốt cho bản desktop.
+         Neo `top` rồi để đáy tự rơi là SAI: chiều cao khối chữ đổi theo
+         bề rộng cột và theo font, nên đáy sẽ trôi khỏi mép ảnh. */
+      bottom:calc(50% - var(--img) * 2 / 3);top:auto;
       display:block;font-size:15px;font-weight:300;line-height:1.6}
     .hero-col p+p{margin-top:24px}
+
+    /* ---- 02 Approach (frame Figma "02 — Approach", khách căn tay) ------
+       Khung ảnh nay tràn gần hết section: lề 24 bốn phía. CTA khít GÓC DƯỚI
+       TRÁI khung ảnh nên phải dùng CHUNG một con số với đáy khung, không
+       neo rời. Cụm số + chữ của mỗi bước nằm trong .ap-row cao 100svh nên
+       `50%` chính là tâm màn. Minh hoạ căn giữa cả hai chiều bằng
+       inset:0 + margin:auto, chỉ cần đổi kích thước. */
+    .ap-frame{top:24px;bottom:24px}
+    .ap-cta{bottom:24px}
+    .ap-title{top:74px}
+    .ap-ill{width:14.237vw;height:14.237vw}
+    .ap-num{left:59.153%;top:calc(50% - 31px)}
+    /* Mép PHẢI cột chữ khoá vào lề trang (như bản desktop), không neo trái —
+       neo trái thì mép phải trôi khỏi lưới ở mọi khổ khác 1180. */
+    .ap-step{left:auto;right:var(--pm);top:calc(50% - 31px);width:30.678%}
+    .ap-hand{font-size:2.5424vw;margin-bottom:24px}
   }
   /* --- CHƯƠNG 3: màn RẤT thấp — lưới an toàn -----------------------------
      iPad xoay dọc, điện thoại xoay ngang (852×393), màn chia đôi, cửa sổ
