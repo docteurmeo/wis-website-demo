@@ -394,7 +394,7 @@
                   hàng chip y277, khoảng cách 20
      Figma chỉ demo được step 1; các step còn lại dùng lại đúng bộ token này. */
   .cf{position:relative;min-height:800px;padding:0;background:var(--ink);
-    --cf-m:calc(92 / 1920 * 100%);--cf-r:calc(976 / 1920 * 100%);--cf-rw:calc(852 / 1920 * 100%)}
+    --cf-m:var(--pm);--cf-r:calc(976 / 1920 * 100%);--cf-rw:calc(100% - var(--cf-r) - var(--pm))}
   /* Line phân chia với Testimonial: 1726x1 @(97,0), bone 30% — lề 97 chứ
      không phải 92 như chữ, đúng như file thiết kế. */
   .cf::before{content:"";position:absolute;left:calc(97 / 1920 * 100%);top:0;
@@ -487,7 +487,7 @@
   body > section{position:relative;z-index:1}
   .cf{margin-bottom:100svh}
 
-  .ft-top{position:absolute;left:4.7917%;right:4.7917%;top:120.6px;
+  .ft-top{position:absolute;left:var(--pm);right:var(--pm);top:120.6px;
     display:grid;grid-template-columns:15.1498% 15.1498% 23.6175% 15.1498%;
     column-gap:10.311%;align-items:start}
   .ft-logo{width:calc(132 / 263 * 100%);height:auto;margin-top:10px;
@@ -499,7 +499,7 @@
     font-weight:300;font-size:15px;line-height:24px;color:rgb(var(--c-bone) / .76);
     text-decoration:none;margin:0 0 5.5px;transition:color .35s ease}
   .ft-col a:hover{color:var(--bone)}
-  .ft-bottom{position:absolute;left:4.7917%;bottom:411px;display:flex;
+  .ft-bottom{position:absolute;left:var(--pm);bottom:411px;display:flex;
     flex-direction:column;gap:5px;font-family:'Fahkwang',var(--title);font-weight:300;
     font-size:15px;line-height:24px;letter-spacing:0;color:var(--dim)}
   .ft-mark{position:absolute;left:3.2292%;bottom:-9px;width:93.5938%;margin:0;
@@ -800,7 +800,13 @@
 
     .cursor-tag{transition:opacity .3s ease;transform:translate(-50%,-50%)!important}
     .hero-hand .hc{opacity:1!important;transform:none!important;transition:none}
-  }
+  /* (Trước đây ở đây có một `}` thừa không có `{` mở — di chứng của một lần
+     xoá @media từ lượt sửa cũ. Dấu đó khiến trình duyệt NUỐT LUÔN rule ngay
+     sau khối comment Hero bên dưới, nên `:root{--page-margin...}` chết âm
+     thầm từ lâu mà không ai thấy, vì --page-margin còn được khai báo lần nữa
+     trong @media(min-width:821px). Đã xoá dấu thừa. Hai rule ngay trên vẫn
+     để nguyên phạm vi toàn cục đúng như nó đang chạy, không đoán bừa là
+     chúng vốn thuộc @media nào. */
 
   /* ============================================================
      HERO — DỰNG LẠI PIXEL-PERFECT THEO FIGMA (frame "01 — Hero", 2:2)
@@ -815,7 +821,14 @@
      ============================================================ */
   /* --page-margin gốc chỉ được khai báo trong @media(min-width:821px); hero mới
      dùng nó ở mọi bề rộng nên phải có giá trị nền, nếu không left/right thành 0. */
-  :root{--page-margin:clamp(38px,5.2vw,92px)}
+  /* --pm = LỀ TRANG THẬT của bố cục pixel-perfect: 92/1920 trên desktop.
+     Trước đây con số 4.79% nằm rải rác trong 15 rule; nay gom về một token để
+     đổi lưới một chỗ là cả trang theo (xem chương 2b: iPad = 24px). */
+  /* CHỈ khai --pm ở đây. KHÔNG thêm giá trị nền cho --page-margin: nó vốn
+     chỉ sống trong @media(min-width:821px), và suốt thời gian rule này chết
+     thì bố cục ≤820px đã quen với việc không có nó — thêm vào bây giờ là đổi
+     layout điện thoại mà không ai yêu cầu. */
+  :root{--pm:calc(92 / 1920 * 100%)}
   .hero{position:relative;height:100svh;min-height:720px;background:var(--ink);overflow:hidden;isolation:isolate}
   /* Canvas film engine: hạt, bụi, xước và exposure được vẽ theo state riêng.
      Nó chỉ tồn tại trên nền ink (z=0); ảnh bắt đầu ở z=1. */
@@ -1044,7 +1057,7 @@
   .ap-row{position:relative;height:100svh;pointer-events:none}
   .ap-step{pointer-events:auto}
   /* Figma sửa lần 2: ảnh 1736×897 @(92,92) — cao hơn trước, đẩy xuống 92. */
-  .ap-frame{position:absolute;left:4.79%;top:92px;bottom:91px;width:90.42%;overflow:hidden;background:var(--ink-hi)}
+  .ap-frame{position:absolute;left:var(--pm);top:92px;bottom:91px;width:calc(100% - 2 * var(--pm));overflow:hidden;background:var(--ink-hi)}
   /* Crossfade: ảnh nào cũng nằm chồng, chỉ đổi opacity — không dịch chuyển,
      không zoom, để mắt chỉ thấy chất liệu đổi chứ không thấy khung đổi. */
   .ap-bg{position:absolute;inset:0;background-size:cover;background-position:center;
@@ -1055,7 +1068,7 @@
   .ap-frame-veil{position:absolute;inset:0;background:rgb(var(--c-ink) / .45);pointer-events:none}
 
   /* y=142 (khách hạ xuống để lúc header ghim không đè vào EN/VI) */
-  .ap-title{position:absolute;left:4.79%;top:142px;margin:0;max-width:29.02%;
+  .ap-title{position:absolute;left:var(--pm);top:142px;margin:0;max-width:29.02%;
     font-family:'Fahkwang',var(--title);font-weight:400;font-size:clamp(2.6rem,3.917vw,75.2px);
     line-height:.98;letter-spacing:0;color:var(--bone)}
 
@@ -1124,7 +1137,7 @@
      ============================================================ */
   .serv{position:relative;height:100svh;min-height:760px;max-height:none;
     padding:0;background:var(--ink);overflow:hidden;display:block;min-width:0}
-  .serv-title{position:absolute;left:4.79%;top:140px;margin:0;width:29.01%;
+  .serv-title{position:absolute;left:var(--pm);top:140px;margin:0;width:29.01%;
     font-family:'Fahkwang',var(--title);font-weight:400;
     font-size:clamp(2.4rem,3.917vw,75.2px);line-height:.98;letter-spacing:0;color:var(--bone)}
   .serv-title .mk{display:none}
@@ -1137,7 +1150,7 @@
   .serv-note.on{opacity:1}
   /* Ký tự phải là inline-block thì transform của boil mới ăn. */
   .nb-char{display:inline-block;white-space:pre}
-  .serv-list{position:absolute;left:4.79%;top:calc(50% - 124px);margin:0;padding:0;width:29.01%;max-width:none;
+  .serv-list{position:absolute;left:var(--pm);top:calc(50% - 124px);margin:0;padding:0;width:29.01%;max-width:none;
     list-style:none;display:flex;flex-direction:column;gap:clamp(18px,1.667vw,32px)}
   /* Số căn theo BASELINE của tên (Figma: số y=24 trong hàng cao 45, tên y=0)
      — dùng baseline thay vì toạ độ cứng thì số vẫn dính chân chữ khi cỡ chữ
@@ -1177,7 +1190,7 @@
   .serv-fig img{width:100%;height:100%;object-fit:cover;display:block}
   /* margin:0 để huỷ `margin:7vh 0 0` của rule .serv-cta bản cũ — không có nó
      thì nút bị đẩy xuống 76px so với Figma. */
-  .serv-cta{position:absolute;left:4.79%;bottom:140px;top:auto;margin:0;z-index:3}
+  .serv-cta{position:absolute;left:var(--pm);bottom:140px;top:auto;margin:0;z-index:3}
 
   /* ============================================================
      05 — HIGHLIGHT DESTINATION (cơ chế lấy từ Option 2, khách đã chốt)
@@ -1216,12 +1229,12 @@
 
   /* Chỉ báo đổi từ 3 chấm giữa → 3 VẠCH ở góc dưới trái (Figma: 160×2, mỗi
      vạch 50×2, cách 5). Vạch đang xem trắng đặc, còn lại 30%. */
-  .cp-bars{position:absolute;left:4.79%;bottom:50px;z-index:20;display:flex;gap:5px}
+  .cp-bars{position:absolute;left:var(--pm);bottom:50px;z-index:20;display:flex;gap:5px}
   .cp-bars i{width:2.604vw;max-width:50px;height:2px;background:#fff;opacity:.3;
     transition:opacity .4s ease}
   .cp-bars i.on{opacity:1}
   /* CTA giờ nằm TRONG panel, góc dưới phải, lề trùng lề trang. */
-  .cp-cta{position:absolute;right:4.79%;bottom:50px;z-index:20;margin:0}
+  .cp-cta{position:absolute;right:var(--pm);bottom:50px;z-index:20;margin:0}
   @media(max-width:860px),(prefers-reduced-motion:reduce){
     .cp-walk{height:auto}
     .cp-walk-stage{position:static;height:auto}
@@ -1242,7 +1255,7 @@
      Figma đang để đoạn dẫn ở font Inter (font mặc định của Figma) — dùng
      Fahkwang Light cho khớp hệ chữ của site, xem ghi chú trong log. */
   @media(min-width:861px){
-    .cp-intro{position:relative;display:block;min-height:0;padding:10.42vw 4.79% 0;background:var(--ink)}
+    .cp-intro{position:relative;display:block;min-height:0;padding:10.42vw var(--pm) 0;background:var(--ink)}
     /* nowrap + width auto: để <br> quyết định chỗ ngắt (Figma 2 dòng). Khoá
        theo width thì dòng "in the present tense." ở 75.2px vừa khít 770px,
        chỉ hụt vài px là rớt xuống 3 dòng và đội chiều cao section lên 73px. */
@@ -1373,7 +1386,7 @@
      bằng `top` — neo top thì mỗi khi khung ảnh đổi kích thước theo màn, nút
      lại lệch khỏi góc. Không bù trừ padding: toạ độ Figma (92, 933) là mép
      NÚT, không phải mép chữ. */
-  .ap-cta{position:absolute;left:4.79%;bottom:91px;top:auto;z-index:3}
+  .ap-cta{position:absolute;left:var(--pm);bottom:91px;top:auto;z-index:3}
 
   /* Lực hút về center KHÔNG dùng scroll-snap CSS nữa: từ khi có smooth-scroll
      (lerp) toàn trang, snap của trình duyệt và vòng lerp đá nhau — trình duyệt
@@ -1439,17 +1452,60 @@
        bám ngay dưới cột theo chiều cao thật của cột. Neo mép dưới (bottom:411px)
        ở màn 744 rơi vào y=280, tức nằm ĐÈ LÊN cột — mà để static không thôi thì
        nó lại nhảy lên TRÊN cột, vì .ft-top đang absolute nên không chiếm chỗ. */
-    .ft-top{position:static;margin:96px 4.7917% 0;left:auto;right:auto;top:auto}
-    .ft-bottom{position:static;margin:38px 4.7917% 0;left:auto;bottom:auto}
+    .ft-top{position:static;margin:96px var(--pm) 0;left:auto;right:auto;top:auto}
+    .ft-bottom{position:static;margin:38px var(--pm) 0;left:auto;bottom:auto}
   }
 
+  /* --- CHƯƠNG 2b: LƯỚI iPad (khách đã căn tay trong Figma) ---------------
+     Dải này là iPad nằm ngang và các máy tỉ lệ tương đương, KHÔNG phải laptop
+     rộng: 821–1366 ngang, ≤900 dọc. Số gốc đọc từ frame Figma "01 — Hero"
+     trang `📱 iPad 1180×744` — mọi công thức dưới đây quy về đúng số đó tại
+     1180×744, và neo theo KHUNG ẢNH chứ không theo một con vh rời rạc, để
+     khi tỉ lệ máy lệch đi thì chữ vẫn không trèo lên ảnh. */
+  @media (min-width:821px) and (max-width:1366px) and (max-height:900px) {
+
+    /* LỀ TRANG 24px — áp cho TOÀN BỘ trang ở dải này, không riêng Hero.
+       Mọi section đều ăn qua --pm nên chỉ cần đổi ở đây. Trang mới sau này
+       cứ dùng --pm là tự đúng lưới. */
+    :root{--pm:24px;--page-margin:24px}
+
+    /* Khung ảnh 362×483 @1180 (30.678vw, tỉ lệ 3/4), căn giữa cả hai chiều.
+       Nửa chiều cao ảnh = min(20.452vw,32.44vh) — dùng lại ở 4 chỗ bên dưới. */
+    .hero-frame{width:min(30.678vw,48.66vh)}
+
+    /* Header cao 60, tâm trùng mép trên khung ảnh ⇒ top = mép ảnh − 30. */
+    .site-hd{--hd-h:clamp(52px,5.085vw,69px);
+      --hd-top:calc(50svh - min(20.452vw,32.44vh) - (var(--hd-h) / 2))}
+    .hd-logo{width:clamp(64px,6.3559vw,115px);height:clamp(32.7px,3.3051vw,59px)}
+
+    /* Spine: giãn chữ .4em, ĐÁY khoá vào đáy khung ảnh.
+       transform-origin:left top + rotate(-90deg) ⇒ `top` chính là đáy chữ. */
+    .hero-spine{left:var(--pm);letter-spacing:.4em;
+      top:calc(50% + min(20.452vw,32.44vh))}
+
+    /* Chữ tay: một khối 3 dòng, nghiêng -5°, neo tại (306.13, 297) @1180.
+       Bbox trên Figma nằm cao hơn `top` 14.7px vì khối bị xoay — đừng lấy
+       số bbox đó nhét thẳng vào `top`. */
+    .ht-hand{left:25.943%;top:calc(50% - 75px);font-size:4.4068vw}
+
+    /* Hậu tố: mép trái 313, đỉnh cách đáy khung ảnh 67.3px @1180. */
+    .ht-suffix{left:26.525%;
+      top:calc(50% + min(20.452vw,32.44vh) - 5.7034vw)}
+
+    /* Cột chữ phải: nay là MỘT khối chảy liền, cách nhau đúng một dòng trống,
+       không còn kéo giãn hai đầu. Đỉnh neo cách mép trên khung ảnh 82px. */
+    .hero-col{right:var(--pm);width:22.4576vw;
+      top:calc(50svh - min(20.452vw,32.44vh) + 82px);bottom:auto;
+      display:block;font-size:15px;font-weight:300;line-height:1.6}
+    .hero-col p+p{margin-top:24px}
+  }
   /* --- CHƯƠNG 3: màn RẤT thấp — lưới an toàn -----------------------------
      iPad xoay dọc, điện thoại xoay ngang (852×393), màn chia đôi, cửa sổ
      desktop bị kéo méo. iOS không cho khoá xoay từ web ⇒ không ngăn được,
      chỉ có thể không vỡ. Ở đây bỏ HẲN mọi neo tuyệt đối và mọi svh của bốn
      section xếp chồng, cho chảy dọc tự nhiên. Không cần đẹp, cần không vỡ. */
   @media (max-height: 560px) {
-    .tm,.serv,.cf{height:auto;min-height:0;padding:9vh 4.7917% 8vh}
+    .tm,.serv,.cf{height:auto;min-height:0;padding:9vh var(--pm) 8vh}
     .tm-head,.tm-mark,.tm-stage,.tm-bar,.tm-name,.tm-nav,
     .serv-title,.serv-list,.serv-notes,.serv-media,.serv-cta,
     .cf-left,.cf-sub,.cf-form{
@@ -1465,7 +1521,7 @@
     .serv-notes{height:auto;margin-bottom:18px}
     .cf-sub{margin:14px 0 26px}
     .cf-form{margin-top:8px}
-    .ft{position:static;height:auto;padding:9vh 4.7917% 7vh}
+    .ft{position:static;height:auto;padding:9vh var(--pm) 7vh}
     .ft-top,.ft-bottom,.ft-mark{position:static;width:auto;margin-left:0}
     .ft-bottom{margin-top:30px}
     .ft-mark{margin-top:26px;font-size:16vw}
