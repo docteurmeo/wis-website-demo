@@ -1,0 +1,34 @@
+<!doctype html><html lang="vi"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIS — check máy</title>
+<style>
+body{margin:0;padding:28px;background:#160F08;color:#EEE6D4;
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif}
+h1{font-size:19px;margin:0 0 18px;letter-spacing:.04em}
+table{border-collapse:collapse;width:100%;max-width:640px}
+td{padding:9px 12px;border-bottom:1px solid rgba(238,230,212,.16);vertical-align:top}
+td:first-child{color:#9A8E76;white-space:nowrap;width:44%}
+b{font-weight:600}
+.ok{color:#7FD18A}.no{color:#E0736A}
+p{max-width:640px;color:#9A8E76;font-size:14px;margin:20px 0 0}
+</style></head><body>
+<h1>Máy này đang là gì</h1>
+<table id="t"></table>
+<p id="verdict"></p>
+<script>
+var band = matchMedia('(min-width:821px) and (max-width:1366px) and (max-height:900px)').matches;
+var rows = [
+  ['Viewport (CSS px)', innerWidth + ' × ' + innerHeight],
+  ['Màn hình (points)', screen.width + ' × ' + screen.height],
+  ['devicePixelRatio', devicePixelRatio],
+  ['Hướng', innerWidth > innerHeight ? 'ngang' : 'dọc'],
+  ['Có con trỏ (hover)', matchMedia('(hover:hover)').matches ? 'có' : 'không'],
+  ['Lọt dải iPad?', '<b class="' + (band ? 'ok' : 'no') + '">' + (band ? 'CÓ' : 'KHÔNG') + '</b>']
+];
+document.getElementById('t').innerHTML =
+  rows.map(function(r){ return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; }).join('');
+document.getElementById('verdict').textContent = band
+  ? 'Máy này LỌT dải iPad. Nếu trang chủ vẫn hiện bố cục cũ thì đó là CACHE của Safari, không phải code — mở lại trang chủ bằng link có ?v=... để ép tải mới.'
+  : 'Máy này KHÔNG lọt dải iPad, nên trang chủ đang chạy bố cục desktop. Gửi hai con số Viewport ở trên để nới dải cho khớp.';
+</script>
+</body></html>
