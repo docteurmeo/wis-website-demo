@@ -210,14 +210,6 @@
   .approach.in .r3{transition-delay:.2s}
   .approach.in .r4{transition-delay:.3s}
 
-  /* ---------- INTERLUDE (đoạn văn tường thuật, font nhỏ) ---------- */
-  .interlude{padding:13vh clamp(22px,6vw,120px);display:flex;flex-direction:column;align-items:center;background:var(--ink)}
-  .interlude-mark{width:100%;max-width:260px;height:87px;margin-bottom:clamp(28px,4vh,44px);opacity:1}
-  .interlude-txt{max-width:62ch;font-family:'Fahkwang',var(--title);font-weight:300;
-    font-size:clamp(.92rem,1vw,1.05rem);line-height:1.9;color:rgb(var(--c-bone) / .68);
-    text-align:left;opacity:0;transform:translateY(20px);
-    transition:opacity 1.1s ease,transform 1.2s cubic-bezier(.16,1,.3,1)}
-  .interlude-txt.show{opacity:1;transform:none}
 
   /* ---------- SERVICES SECTION ---------- */
   .serv{position:relative;min-height:79.17vw;padding:5.73vw 2.92vw 7vw;background:var(--ink)}
@@ -526,7 +518,7 @@
   @media(max-width:560px){ .ft-top{grid-template-columns:1fr} }
   @media(prefers-reduced-motion:reduce){ .form-step,.form-bar i{transition:none} }
 
-  @media(prefers-reduced-motion:reduce){ .hero-lockup,.w,.interlude-txt{opacity:1!important;filter:none!important;transform:none!important;transition:none!important} .g img,.serv-fig{clip-path:none!important;transition:none!important}.reveal{opacity:1!important;transform:none!important;transition:none!important} .whead{transform:none!important;transition:none!important} }
+  @media(prefers-reduced-motion:reduce){ .hero-lockup,.w{opacity:1!important;filter:none!important;transform:none!important;transition:none!important} .g img,.serv-fig{clip-path:none!important;transition:none!important}.reveal{opacity:1!important;transform:none!important;transition:none!important} .whead{transform:none!important;transition:none!important} }
 
   /* ---------- HOMEPAGE REFRAME: THE WORKING MARGIN ----------
      Một grammar duy nhất: một margin thông tin, một vùng đọc, một hình ảnh có vai trò.
@@ -574,9 +566,6 @@
     .approach .phil-cta{margin:0;padding:6vh 0 10vh;color:rgb(var(--c-ink) / .78)}
 
     /* Đoạn chuyển nhịp là chữ, không cần một mark minh hoạ phụ. */
-    .interlude{display:grid;grid-template-columns:minmax(210px,.48fr) minmax(440px,1.12fr);column-gap:clamp(70px,12vw,220px);align-items:center;padding:17vh var(--page-margin)}
-    .interlude-mark{display:block;width:min(100%,360px);max-width:none;height:120px;margin:0;background:rgb(var(--c-accent-hi) / .94);-webkit-mask:var(--src) no-repeat left center / contain;mask:var(--src) no-repeat left center / contain}
-    .interlude-txt{max-width:58ch;margin:0;font-size:clamp(1.08rem,1.34vw,1.46rem);line-height:1.65;color:rgb(var(--c-bone) / .8)}
 
     /* Services + works: cùng margin và nhịp thông tin, loại các overlay trình diễn. */
     .serv{min-height:0;padding:15vh var(--page-margin);display:grid;grid-template-columns:minmax(340px,.85fr) minmax(360px,1.15fr);column-gap:clamp(70px,11vw,190px);background:var(--ink)}
@@ -686,7 +675,6 @@
     .hero-controls{margin:26px 0 0 clamp(115px,12vw,190px)}
 
     /* Approach is one triangle of evidence, not three equal feature cards. */
-    .interlude{display:none}
     .approach{padding-top:11vh;padding-bottom:9vh}
     .ap-head{padding-bottom:5.5vh}
     .ap-notes{grid-template-columns:minmax(340px,.88fr) minmax(420px,1.12fr);grid-template-rows:1fr 1fr;min-height:380px;column-gap:clamp(74px,13vw,220px);row-gap:0}
@@ -725,7 +713,6 @@
     .hero-controls{position:absolute;right:var(--page-margin);bottom:3.2vh;display:flex;margin:0;gap:14px}
     .hero-control{font-family:var(--body);font-size:.58rem;letter-spacing:.15em}
 
-    .interlude{display:none}
     .approach{min-height:100svh;padding:12vh var(--page-margin) 8vh}
     .ap-head{display:grid;grid-template-columns:minmax(300px,.92fr) minmax(360px,1.08fr);gap:clamp(72px,12vw,190px);padding:0 0 7vh;margin:0;border:0}
     .ap-statement{font-size:clamp(3.25rem,4.9vw,5.5rem);line-height:.92;max-width:10ch}
@@ -797,8 +784,7 @@
      getBoundingClientRect() mỗi frame khi cuộn — content-visibility có thể
      làm sai lệch phép đo ngay tại ranh giới hiện/ẩn). */
   @media(min-width:821px){
-    .serv,.interlude,.tm,.cf{content-visibility:auto}
-    .interlude{contain-intrinsic-size:auto 700px}
+    .serv,.tm,.cf{content-visibility:auto}
     .serv{contain-intrinsic-size:auto 900px}
     .cf{contain-intrinsic-size:auto 900px}
   }
@@ -1240,7 +1226,12 @@
   .cp-bars i.on{opacity:1}
   /* CTA giờ nằm TRONG panel, góc dưới phải, lề trùng lề trang. */
   .cp-cta{position:absolute;right:var(--pm);bottom:50px;z-index:20;margin:0}
-  @media(max-width:860px),(prefers-reduced-motion:reduce){
+  /* CHỈ còn nhánh reduced-motion. Trước đây khối này gộp cả max-width:860,
+     nên trên điện thoại nó bẻ gãy hẳn cơ chế vuốt ngang: track bị
+     transform:none!important — mà !important thì THẮNG CẢ inline style của
+     JS, tức JS đẩy ngang có chạy cũng vô ích. Bản mobile mới dựng lại đúng
+     cơ chế desktop nên không được dính khối này nữa. */
+  @media(prefers-reduced-motion:reduce){
     .cp-walk{height:auto}
     .cp-walk-stage{position:static;height:auto}
     /* position:static BẮT BUỘC — thiếu nó thì track vẫn absolute, bị rút khỏi
@@ -1815,11 +1806,6 @@
   </section>
 
   <!-- INTERLUDE -->
-  <section class="interlude">
-    <img class="ill ill-stitch interlude-mark" src="../assets/illustrations/stitch_with_care.png" alt="">
-    <p class="interlude-txt">A wedding is not a template we resize. It is closer to a piece of furniture — built once, by hand, to fit the room it will live in. We start with the site: the slope of a rice terrace outside Hoi An, the particular gold of afternoon light off Da Nang's coastline, the sound a wooden gate makes when it opens onto the sea. Only then do we begin to design. Nothing here comes from a catalogue.</p>
-  </section>
-
   <!-- SERVICES -->
   <section class="serv" id="serv">
     <h2 class="serv-title reveal">Different kinds<br>of <span class="mk-anchor">care.<svg class="mk mk-underline" viewBox="0 0 130 22" aria-hidden="true">
@@ -2641,14 +2627,6 @@
     apio.observe(ap);
   })();
 
-  /* ===== INTERLUDE ===== */
-  (function(){
-    var el=document.querySelector('.interlude-txt'); if(!el) return;
-    if(reduce){ el.classList.add('show'); return; }
-    var iio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ el.classList.add('show'); iio.disconnect(); } }); },{threshold:.3});
-    iio.observe(el);
-  })();
-
   /* ===== SERVICES ===== */
   (function(){
     var section=document.getElementById('serv');
@@ -3279,68 +3257,177 @@
     .ft-film-canvas{display:none}
     .story-badge,.cursor-tag{display:none!important}
 
-    /* ================= 04 FEATURED WORKS — TÁI SINH, KHÔNG PHẢI CO =====
-       Trước: bố cục so le của desktop bị ép vào một cột giữa rộng 181px,
-       tức 46% bề ngang màn, hai bên trống 106px. Thứ đắt nhất của thương
-       hiệu bị render bằng nửa màn hình.
 
-       Nay mỗi case là MỘT KHỐI tự chứa:
-         chữ tay (slogan riêng của case)   ← lấy từ data-slogan, không cần JS
-         ảnh chính TRÀN VIỀN, tỉ lệ 3/4
-         hai ảnh phụ thành một hàng 2 cột
-         tên case + địa danh
-       Cụm chữ C/J khổng lồ của desktop bỏ trên mobile: nó cần bề ngang mới
-       đọc ra là monogram, ở 393 nó chỉ còn là hai chữ cái to vô nghĩa. */
-    .works{padding-left:0;padding-right:0}
-    .whead,.wintro{padding-left:var(--pm);padding-right:var(--pm)}
-    .namebar{display:none}
+    /* ================= 01 HERO — GIỮ NGUYÊN BỐ CỤC ====================
+       Bố cục desktop/iPad KHÔNG đổi: khung ảnh dọc đặt giữa, chữ tay và
+       hậu tố đè lên MÉP TRÁI khung ảnh, spine chữ dọc bên trái. Chỉ đổi
+       kích thước. Mọi hệ số dưới đây là hệ số của bản iPad, giữ nguyên:
+         chữ tay   lệch trái 28.417% bề rộng ảnh · cỡ 14.365% bề rộng ảnh
+         hậu tố    lệch trái 26.519% · cỡ 21.74%
+         spine     đáy khoá vào đáy khung ảnh
+       Khác duy nhất bắt buộc: cột chữ phải không thể đứng CẠNH ảnh ở 393
+       nên nó chảy xuống DƯỚI ảnh. --hero-stage là vùng dành cho cụm ảnh,
+       để 50% của nó = tâm ảnh, y hệt 50% của section trên desktop. */
+    .hero{--img:min(62vw,40svh);--img-h:calc(var(--img) * 4 / 3);
+      --hero-stage:calc(var(--img-h) + 150px);
+      height:auto;min-height:0;padding:0 0 var(--gap-sec)}
+    .hero-frame{position:absolute;left:50%;top:calc(var(--hero-stage) / 2);
+      transform:translate(-50%,-50%);width:var(--img);height:auto;aspect-ratio:3/4}
+    /* Dải fade đáy chỉ có nghĩa khi ảnh tràn viền — ở đây ảnh là một khung
+       đặt giữa nên nó chỉ làm bẩn mối nối. */
+    .hero-fade{display:none}
+    .hero-tag{position:absolute;left:0;right:0;top:0;bottom:auto;height:var(--hero-stage)}
+    .ht-hand{left:max(var(--pm),calc(50% - var(--img) / 2 - var(--img) * .28417));
+      right:auto;top:calc(50% - var(--img) * .2072);bottom:auto;
+      font-size:calc(var(--img) * .14365)}
+    /* bottom:auto + height:auto BẮT BUỘC — rule mobile cũ để bottom:22%, mà
+       khối absolute có cả top lẫn bottom thì bị kéo giãn chiều cao. */
+    .ht-suffix{left:max(var(--pm),calc(50% - var(--img) / 2 - var(--img) * .26519));
+      right:auto;bottom:auto;height:auto;
+      /* .ht-suffix KHÔNG nằm trong .hero-tag mà là con trực tiếp của .hero,
+         nên `50%` của nó là nửa chiều cao CẢ SECTION (gồm cả đoạn văn bên
+         dưới ảnh) chứ không phải nửa vùng ảnh. Phải tính thẳng từ
+         --hero-stage, y như spine. */
+      top:calc(var(--hero-stage) / 2 + var(--img) * .48068);
+      font-size:calc(var(--img) * .2174)}
+    /* Spine: transform-origin:left top + rotate(-90deg) ⇒ `top` là ĐÁY chữ.
+       Cỡ chữ phải co theo ảnh, nếu không thân chữ dài hơn khung ảnh và
+       trèo lên header. */
+    .hero-spine{display:block;left:var(--pm);right:auto;bottom:auto;
+      top:calc(var(--hero-stage) / 2 + var(--img) * 2 / 3);
+      font-size:calc(var(--img) * .0325);letter-spacing:.34em;line-height:1.3}
+    .hero-col{position:static;width:auto;max-width:none;
+      margin-top:var(--hero-stage);padding:0 var(--pm);display:block;text-align:justify}
+    .hero-col p+p{margin-top:1.6em}
 
-    .gallery{display:flex;flex-wrap:wrap;gap:6px;width:auto;max-width:none;
-      margin:0 0 56px;padding:0}
-    /* Slogan viết tay của TỪNG case, đọc thẳng từ data-slogan có sẵn trên
-       markup — không thêm phần tử, không thêm JS. Line-boil giữ nguyên ở
-       các chỗ khác theo quyết định của khách; riêng chỗ này là pseudo nên
-       không tách ký tự được, đành để tĩnh. */
-    .gallery::before{content:attr(data-slogan);flex:0 0 100%;
-      font-family:var(--hand);font-weight:400;font-size:28px;line-height:1.1;
-      color:var(--bone);padding:0 var(--pm);margin-bottom:16px}
-    .gallery .g{margin:0;overflow:hidden}
-    .gallery .g.gA{flex:0 0 100%}
-    .gallery .g.gB,.gallery .g.gC{flex:1 1 0;min-width:0}
+    /* ================= 04 FEATURED WORKS — GIỮ NGUYÊN BỐ CỤC ==========
+       Bố cục so le của desktop/iPad giữ nguyên tỉ lệ, chỉ phóng cột ảnh từ
+       23% bề ngang lên gần hết bề ngang máy. Tỉ lệ đo từ bản iPad:
+         cột = bề rộng ảnh gA
+         gB  rộng 57.3% cột, dạt PHẢI
+         gC  rộng 78.4% cột, dạt TRÁI
+         khe dọc giữa 3 ảnh = 14.8% bề rộng cột
+       Cụm chữ C · slogan · J giữ nguyên, chỉ co cỡ. */
+    .works{padding-left:var(--pm);padding-right:var(--pm)}
+    .gallery{position:relative;display:block;width:auto;max-width:none;
+      margin:0 0 64px;padding:0}
+    .gallery .g{position:relative;margin:0;overflow:hidden}
     .gallery .g img{display:block;width:100%;height:auto}
-    .gallery .g.gA img{aspect-ratio:3/4;object-fit:cover}
-    .gallery .g.gB img,.gallery .g.gC img{aspect-ratio:4/5;object-fit:cover}
-    .gallery .pcap{flex:0 0 100%;margin:16px 0 0;padding:0 var(--pm);
-      text-align:left;display:flex;flex-direction:column;gap:4px}
-    .works-cta{margin:0 var(--pm)}
+    .gallery .g.gA{width:100%}
+    .gallery .g.gA img{aspect-ratio:270.5 / 360.8;object-fit:cover}
+    .gallery .g.gB{width:57.3%;margin:14.8% 0 0 42.7%}
+    .gallery .g.gB img{aspect-ratio:154.9 / 193.6;object-fit:cover}
+    .gallery .g.gC{width:78.4%;margin:14.8% 0 0}
+    .gallery .g.gC img{aspect-ratio:212 / 169.6;object-fit:cover}
+    .pcap{margin:22px 0 0;padding:0;text-align:left;display:flex;
+      flex-direction:column;gap:4px}
+    /* Cụm C · slogan · J phải nằm TRÊN ảnh đầu tiên như desktop/iPad, không
+       đè lên ảnh. .namebar cao 0 + sticky, .nm neo top:0 rồi translateY(-50%)
+       nên tâm bar = tâm chữ; đẩy bằng transform, KHÔNG dùng margin âm vì bar
+       cao 0 nhưng margin âm vẫn kéo cả gallery bên dưới lên theo. */
+    .namebar{display:block;transform:translateY(-46px)}
+    .nm{font-size:44px;line-height:1}
+    /* left/right = 0 vì .namebar đã nằm trong padding của .works — đặt
+       var(--pm) nữa là cộng đôi, cụm chữ thụt vào hẹp hơn cột ảnh. */
+    .nm.bride{left:0;right:auto}
+    .nm.groom{right:0;left:auto}
+    .slogan{font-size:22px}
 
-    /* ================= 01 HERO — TÁI SINH ==============================
-       Desktop: khung ảnh dọc đặt giữa, chữ tay + hậu tố đè lên mép trái,
-       spine chữ dọc bên trái, cột chữ bên phải. Cả bốn thứ đó neo theo mép
-       khung ảnh — ở 393 thì khung ảnh chỉ còn 244 rộng, tức một cái thẻ
-       nhỏ giữa màn, và mọi quan hệ neo mất nghĩa.
+    /* ================= 02 APPROACH — GIỮ NGUYÊN CƠ CHẾ GHIM ===========
+       Rule mobile cũ giết luôn ý đồ: .ap-backdrop bị position:static,
+       .ap-track bỏ margin-top âm, .ap-row bỏ chiều cao 100svh, và
+       .ap-frame bị display:none ⇒ mất ảnh nền, mất cả việc minh hoạ đứng
+       yên rồi đổi lần lượt qua từng ý. Trả lại nguyên cơ chế của
+       desktop/iPad, chỉ xếp lại cụm chữ vì ở 393 nó không thể đứng CẠNH
+       minh hoạ mà phải nằm DƯỚI. */
+    .approach{padding:0}
+    .ap-backdrop{position:sticky;top:0;height:100svh;padding:0;overflow:hidden}
+    .ap-track{margin-top:-100svh}
+    .ap-row{height:100svh;padding:0}
+    .ap-frame{display:block;left:var(--pm);right:var(--pm);
+      top:var(--pm);bottom:var(--pm);width:auto;height:auto}
+    .ap-title{position:absolute;left:calc(var(--pm) + 16px);top:calc(var(--pm) + 30px);
+      max-width:76%;margin:0}
+    /* Minh hoạ ĐỨNG YÊN ở nửa trên khung, các ý cuộn qua bên dưới nó. */
+    .ap-ill{position:absolute;left:0;right:0;top:24%;bottom:auto;margin:0 auto;
+      width:34vw;height:34vw}
+    /* Số và cụm chữ neo từ ĐỈNH bằng cùng một mốc 42% — neo từ đáy thì số
+       (cao 15px) và cụm chữ (cao đổi theo từng ý) rơi về hai chỗ khác nhau,
+       số chui vào giữa đoạn văn. */
+    .ap-num{position:absolute;left:calc(var(--pm) + 16px);top:42%;bottom:auto;
+      margin:0;z-index:3}
+    .ap-step{position:absolute;left:calc(var(--pm) + 16px);right:calc(var(--pm) + 16px);
+      top:calc(42% + 26px);bottom:auto;width:auto;z-index:3}
+    .ap-hand{margin:0 0 10px}
+    .ap-cta{position:absolute;left:calc(var(--pm) + 16px);right:auto;
+      bottom:calc(var(--pm) + 22px);top:auto;margin:0;z-index:3}
 
-       Mobile: ẢNH TRÀN VIỀN chiếm 62svh, lockup chữ đè lên phần dưới ảnh,
-       hai đoạn dẫn chảy xuống dưới ảnh. Spine bỏ hẳn — không ai đọc chữ
-       xoay 90° trên điện thoại, và nó ăn mất 13px bề ngang quý giá. */
-    .hero{height:auto;min-height:0;padding:0 0 var(--gap-sec)}
-    .hero-frame{position:relative;left:auto;top:auto;transform:none;
-      width:100%;height:62svh;aspect-ratio:auto;overflow:hidden}
-    .hero-frame .slide{width:100%;height:100%;object-fit:cover}
-    .hero-fade{height:26%}
-    .hero-spine{display:none}
-    /* Lockup neo từ ĐỈNH hero xuống, vì hero giờ cao hơn ảnh — neo theo đáy
-       hero thì chữ sẽ rơi xuống giữa đoạn văn. */
-    .ht-hand{left:var(--pm);top:calc(62svh - 176px);font-size:30px;line-height:1.12}
-    .ht-suffix{left:var(--pm);right:auto;top:calc(62svh - 74px);
-      /* bottom:auto BẮT BUỘC: rule mobile cũ đặt `bottom:22%`, mà một khối
-         absolute có CẢ top lẫn bottom thì chiều cao bị KÉO GIÃN giữa hai mốc
-         — "care." một dòng 48px phình thành hộp cao 298. */
-      bottom:auto;height:auto;
-      font-size:48px;line-height:1;mix-blend-mode:normal}
-    .hero-col{position:static;width:auto;padding:28px var(--pm) 0;
-      display:block;text-align:left}
-    .hero-col p+p{margin-top:14px}
+    /* ================= 03 SERVICES — GIỮ NGUYÊN CƠ CHẾ ================
+       Cơ chế desktop/iPad: chọn một dịch vụ thì ẢNH và GHI CHÚ viết tay
+       đổi theo. Giữ nguyên, chỉ đổi từ hai cột sang một cột. Trước đây thứ
+       tự trên mobile bị loạn: ghi chú nhảy lên TRÊN danh sách, còn ảnh rơi
+       xuống DƯỚI cả nút CTA. Dùng order để xếp lại đúng mạch đọc. */
+    .serv{display:flex;flex-direction:column;height:auto;min-height:0;max-height:none;
+      padding:var(--gap-sec) var(--pm)}
+    .serv-title{order:1;position:static;width:auto;max-width:none;margin:0 0 30px}
+    .serv-media{order:2;position:static;left:auto;right:auto;top:auto;bottom:auto;
+      width:100%;height:auto;aspect-ratio:361 / 490;margin:0 0 30px}
+    .serv-list{order:3;position:static;width:auto;max-width:none;margin:0 0 24px}
+    /* height:auto + min-height: ghi chú dài ngắn khác nhau giữa 5 dịch vụ,
+       khoá cứng 240 thì thừa chỗ, bỏ hẳn thì cả trang nhảy khi đổi mục. */
+    .serv-notes{order:4;position:static;width:auto;height:auto;min-height:132px;margin:0 0 34px}
+    .serv-note{position:absolute;left:0;right:0;top:0;width:auto}
+    .serv-cta{order:5;position:static;left:auto;bottom:auto;margin:0}
+
+    /* ================= 05 CULTURAL WALK — TRẢ LẠI VUỐT NGANG ==========
+       Rule mobile cũ bẻ gãy hẳn: .cp-walk-stage hết sticky, .cp-walk-track
+       bị display:block + transform:none!important (tức vô hiệu hoá luôn JS
+       đẩy ngang), .cp-panel thành 3 khối xếp dọc, thanh chỉ vị trí bị ẩn.
+       Trả lại đúng cơ chế của desktop/iPad. */
+    .cp-walk{padding:0}
+    .cp-walk-stage{position:sticky;top:0;height:100svh;overflow:hidden}
+    .cp-walk-track{position:absolute;top:0;left:0;height:100%;display:flex}
+    .cp-panel{position:relative;flex:0 0 100vw;width:100vw;height:100%}
+    .cp-panel-label,.cp-panel-name,.cp-panel-line{position:absolute;left:var(--pm);
+      right:var(--pm);width:auto;text-align:center}
+    .cp-panel-label{top:calc(50% - 108px);margin:0}
+    .cp-panel-name{top:calc(50% - 62px);margin:0}
+    .cp-panel-line{top:calc(50% + 22px);margin:0}
+    .cp-bars{display:flex;left:var(--pm);bottom:26px}
+    .cp-cta{position:absolute;left:var(--pm);right:auto;bottom:76px;margin:0}
+
+    /* ================= 06 TESTIMONIAL — HẾT CHỒNG ĐÈ ==================
+       Trước: hàng mũi tên rơi lên TRÊN thanh tiến độ và thụt ra lề 20 trong
+       khi cả cột chữ ở lề 42 — vừa chồng thứ tự vừa lệch trục. Xếp lại
+       đúng mạch desktop: dấu ngoặc kép → tiêu đề → trích dẫn → thanh →
+       tên → điều hướng, tất cả cùng một trục trái. */
+    .tm{display:flex;flex-direction:column;height:auto;min-height:0;
+      padding:var(--gap-sec) var(--pm)}
+    .tm-mark{display:block;position:static;order:1;margin:0 0 -18px;
+      font-size:64px;line-height:.7}
+    .tm-head{position:static;order:2;width:auto;margin:0 0 26px}
+    .tm-stage{position:static;order:3;width:auto;margin:0 0 30px}
+    .tm-bar{position:static;order:4;width:auto;margin:0 0 22px}
+    .tm-name{position:static;order:5;width:auto;margin:0 0 18px}
+    .tm-nav{position:static;order:6;width:196px;margin:0 0 0 auto}
+    .tm-photo{width:64px;margin:6px 14px 8px 0}
+
+    /* ================= 08 FOOTER — 2 CỘT ==============================
+       Một cột dọc làm footer cao 1173 (≈1.4 màn). Desktop là 4 cột; ở 393
+       hai cột là mức gần nhất còn đọc được. */
+    .ft{padding:var(--gap-sec) var(--pm)}
+    .ft-top{grid-template-columns:1fr 1fr;column-gap:20px;row-gap:34px;margin:0}
+    .ft-logo{grid-column:1 / -1;width:120px;margin:0 0 6px}
+    .ft-bottom{margin:40px 0 0}
+
+    /* Cả trang trôi ngang 3px chỉ vì .form-count neo right:0 rồi kéo
+       margin-right:-.3em để bù khoảng chữ cuối. Trên desktop 3px đó rơi vào
+       lề 92 nên vô hại; ở 393 nó đẩy ra ngoài mép và sinh thanh cuộn ngang.
+       Bỏ margin âm — thụt 3px thì không ai thấy, cuộn ngang thì thấy ngay. */
+    .form-count{margin-right:0}
+
+
+
   }
 </style>
 <button class="wm-trigger" type="button" data-wm-open aria-label="Open menu"><span class="wm-rl"><span>Menu</span><span>Menu</span></span></button>
