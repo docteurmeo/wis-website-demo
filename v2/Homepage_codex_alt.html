@@ -3352,8 +3352,12 @@
          khe dọc giữa 3 ảnh = 14.8% bề rộng cột
        Cụm chữ C · slogan · J giữ nguyên, chỉ co cỡ. */
     .works{padding-left:var(--pm);padding-right:var(--pm)}
-    .gallery{position:relative;display:block;width:auto;max-width:none;
-      margin:0 0 64px;padding:0}
+    /* Cột ảnh HẸP LẠI còn 66% và căn giữa, để hai chữ cái tên dâu rể đứng
+       hai bên NGOÀI cột ảnh như desktop chứ không đè lên ảnh. (.namebar là
+       sticky nên khi cuộn, chữ trượt dọc theo cột ảnh — cột rộng hết màn thì
+       chắc chắn đè.) */
+    .gallery{position:relative;display:block;width:66%;max-width:none;
+      margin:0 auto 64px;padding:0}
     .gallery .g{position:relative;margin:0;overflow:hidden}
     .gallery .g img{display:block;width:100%;height:auto}
     .gallery .g.gA{width:100%}
@@ -3410,15 +3414,19 @@
        đổi theo. Giữ nguyên, chỉ đổi từ hai cột sang một cột. Trước đây thứ
        tự trên mobile bị loạn: ghi chú nhảy lên TRÊN danh sách, còn ảnh rơi
        xuống DƯỚI cả nút CTA. Dùng order để xếp lại đúng mạch đọc. */
+    /* CẢ SECTION PHẢI GỌN TRONG MỘT MÀN — một lần cuộn là thấy hết.
+       Ngân sách chiều cao ở 852: đệm 2×48 + tiêu đề 69 + ảnh + danh sách +
+       ghi chú + nút + 4 khe 18. Ảnh vì thế phải hẹp lại còn 55% bề ngang và
+       DẠT PHẢI, giữ đúng quan hệ 'ảnh là cột phải' của desktop. */
     .serv{display:flex;flex-direction:column;height:auto;min-height:0;max-height:none;
-      padding:var(--gap-sec) var(--pm)}
-    .serv-title{order:1;position:static;width:auto;max-width:none;margin:0 0 30px}
+      padding:48px var(--pm)}
+    .serv-title{order:1;position:static;width:auto;max-width:none;margin:0 0 12px}
     .serv-media{order:2;position:static;left:auto;right:auto;top:auto;bottom:auto;
-      width:100%;height:auto;aspect-ratio:361 / 490;margin:0 0 30px}
-    .serv-list{order:3;position:static;width:auto;max-width:none;margin:0 0 24px}
+      width:55%;height:auto;aspect-ratio:361 / 490;margin:0 0 12px auto}
+    .serv-list{order:3;position:static;width:auto;max-width:none;margin:0 0 12px}
     /* height:auto + min-height: ghi chú dài ngắn khác nhau giữa 5 dịch vụ,
        khoá cứng 240 thì thừa chỗ, bỏ hẳn thì cả trang nhảy khi đổi mục. */
-    .serv-notes{order:4;position:static;width:auto;height:auto;min-height:132px;margin:0 0 34px}
+    .serv-notes{order:4;position:static;width:auto;height:auto;min-height:104px;margin:0 0 12px}
     .serv-note{position:absolute;left:0;right:0;top:0;width:auto}
     /* relative chứ KHÔNG static: lớp phim .btn-film bên trong neo tuyệt đối,
        nút mà static thì lớp phim văng ra trùm cả section (đo được 393×1206). */
