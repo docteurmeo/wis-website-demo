@@ -3220,6 +3220,128 @@
     .wm-link{position:relative}
     .wm-subs{position:absolute;left:0;right:0;top:100%;margin:10px 0 0}
   }
+
+  /* ==================================================================
+     MOBILE — MỘT CHƯƠNG DUY NHẤT  (≤820px)
+     ------------------------------------------------------------------
+     Đặt ở CUỐI thẻ <style> cuối cùng nên nó thắng mọi rule mobile cũ.
+     Bản mobile trước đây là thiết kế của VÒNG 1 còn sống nguyên, rải
+     trong 279 rule / 6 breakpoint (560·680·780·820·860·900). Khối này
+     là chỗ DUY NHẤT được phép quyết định bản mobile từ nay. Sửa xong
+     section nào thì xoá rule cũ của section đó ở các block kia.
+
+     NỀN MÓNG (Phantom):
+       --pm          lề trang 20
+       --gap-sec     nhịp dọc 72 cho MỌI section
+       type scale    4 bậc, không có bậc thứ 5
+       chạm          tối thiểu 44×44, không ngoại lệ
+       chuyển động   giữ line-boil (khách chốt) + reveal + crossfade;
+                     bỏ film Footer và mọi thứ bám con trỏ
+     ================================================================== */
+  @media (max-width:820px){
+    :root{--pm:20px;--page-margin:20px;--gap-sec:72px}
+
+    /* ---- Nhịp dọc: một con số cho mọi section. Trước đây 0/102/110 lẫn lộn. */
+    .hero,.approach,.serv,.works,.cp-intro,.cp-walk,.tm,.cf{
+      padding-left:var(--pm);padding-right:var(--pm)}
+    .approach,.serv,.works,.cp-intro,.cp-walk,.tm,.cf{
+      padding-top:var(--gap-sec);padding-bottom:var(--gap-sec)}
+
+    /* ---- TYPE SCALE — 4 bậc.
+       Trước: 8 cỡ tiêu đề khác nhau (27·30·31·32·35·38·42·54) trên cùng
+       một trang. Desktop/iPad chỉ có MỘT cỡ, mobile cũng phải thế. */
+    .whead,.ap-title,.serv-title,.cf-head,.tm-head,.cp-statement{
+      font-size:34px;line-height:1.02;letter-spacing:0;max-width:none;white-space:normal}
+    /* .ht-suffix KHÔNG nằm trong bậc Display: nó không phải tiêu đề section
+       mà là nửa dưới của lockup Hero, phải lớn hơn chữ tay nằm trên nó thì
+       thứ bậc mới đúng như desktop. Ép nó về 34 là lật ngược thứ bậc. */
+    .serv-name,.wm-word,.cp-panel-name,.tm-name{font-size:22px;line-height:1.25}
+    .ap-body,.hero-col,.wintro,.cp-intro-p,.cp-panel-line,.tm-q,.cf-sub,
+    .ft-col a,.ft-col p,.ft-col span.ln{font-size:16px;line-height:1.55}
+    .serv-num,.ap-num,.pcap,.tm-count,.form-count,.btn,.btn-label,.lang,.hd-menu{
+      font-size:11px;letter-spacing:.3em;margin-right:-.3em}
+    /* Chữ viết tay: MỘT cỡ duy nhất. Line-boil GIỮ NGUYÊN — khách đã chốt
+       đây là DNA thương hiệu, không phải chi tiết trang trí cắt được. */
+    .ap-hand,.serv-note,.slogan,.hand-line{font-size:28px;line-height:1.1}
+
+    /* ---- CHẠM 44×44. Chữ được phép nhỏ, vùng chạm thì không.
+       Trước đây có 12 chỗ dưới ngưỡng: lang 14, nút menu 14, mục menu 22. */
+    .lang,.hd-menu,.wm-close,.wm-trigger,.arw,.chip,.ft-col a,.wm-word,.wm-subs a{
+      min-height:44px;display:inline-flex;align-items:center}
+    .wm-link{min-height:56px;display:flex;align-items:center}
+    .arw{width:44px;justify-content:center}
+    .arw svg{width:36px}
+
+    /* ---- NGÂN SÁCH CHUYỂN ĐỘNG
+       Bỏ film ở Footer (giữ Hero — nó là ấn tượng đầu), bỏ mọi thứ bám
+       con trỏ. Không phải vì máy yếu, mà vì người dùng đang đi bộ, cầm
+       một tay, không nhìn chi tiết rung. */
+    .ft-film-canvas{display:none}
+    .story-badge,.cursor-tag{display:none!important}
+
+    /* ================= 04 FEATURED WORKS — TÁI SINH, KHÔNG PHẢI CO =====
+       Trước: bố cục so le của desktop bị ép vào một cột giữa rộng 181px,
+       tức 46% bề ngang màn, hai bên trống 106px. Thứ đắt nhất của thương
+       hiệu bị render bằng nửa màn hình.
+
+       Nay mỗi case là MỘT KHỐI tự chứa:
+         chữ tay (slogan riêng của case)   ← lấy từ data-slogan, không cần JS
+         ảnh chính TRÀN VIỀN, tỉ lệ 3/4
+         hai ảnh phụ thành một hàng 2 cột
+         tên case + địa danh
+       Cụm chữ C/J khổng lồ của desktop bỏ trên mobile: nó cần bề ngang mới
+       đọc ra là monogram, ở 393 nó chỉ còn là hai chữ cái to vô nghĩa. */
+    .works{padding-left:0;padding-right:0}
+    .whead,.wintro{padding-left:var(--pm);padding-right:var(--pm)}
+    .namebar{display:none}
+
+    .gallery{display:flex;flex-wrap:wrap;gap:6px;width:auto;max-width:none;
+      margin:0 0 56px;padding:0}
+    /* Slogan viết tay của TỪNG case, đọc thẳng từ data-slogan có sẵn trên
+       markup — không thêm phần tử, không thêm JS. Line-boil giữ nguyên ở
+       các chỗ khác theo quyết định của khách; riêng chỗ này là pseudo nên
+       không tách ký tự được, đành để tĩnh. */
+    .gallery::before{content:attr(data-slogan);flex:0 0 100%;
+      font-family:var(--hand);font-weight:400;font-size:28px;line-height:1.1;
+      color:var(--bone);padding:0 var(--pm);margin-bottom:16px}
+    .gallery .g{margin:0;overflow:hidden}
+    .gallery .g.gA{flex:0 0 100%}
+    .gallery .g.gB,.gallery .g.gC{flex:1 1 0;min-width:0}
+    .gallery .g img{display:block;width:100%;height:auto}
+    .gallery .g.gA img{aspect-ratio:3/4;object-fit:cover}
+    .gallery .g.gB img,.gallery .g.gC img{aspect-ratio:4/5;object-fit:cover}
+    .gallery .pcap{flex:0 0 100%;margin:16px 0 0;padding:0 var(--pm);
+      text-align:left;display:flex;flex-direction:column;gap:4px}
+    .works-cta{margin:0 var(--pm)}
+
+    /* ================= 01 HERO — TÁI SINH ==============================
+       Desktop: khung ảnh dọc đặt giữa, chữ tay + hậu tố đè lên mép trái,
+       spine chữ dọc bên trái, cột chữ bên phải. Cả bốn thứ đó neo theo mép
+       khung ảnh — ở 393 thì khung ảnh chỉ còn 244 rộng, tức một cái thẻ
+       nhỏ giữa màn, và mọi quan hệ neo mất nghĩa.
+
+       Mobile: ẢNH TRÀN VIỀN chiếm 62svh, lockup chữ đè lên phần dưới ảnh,
+       hai đoạn dẫn chảy xuống dưới ảnh. Spine bỏ hẳn — không ai đọc chữ
+       xoay 90° trên điện thoại, và nó ăn mất 13px bề ngang quý giá. */
+    .hero{height:auto;min-height:0;padding:0 0 var(--gap-sec)}
+    .hero-frame{position:relative;left:auto;top:auto;transform:none;
+      width:100%;height:62svh;aspect-ratio:auto;overflow:hidden}
+    .hero-frame .slide{width:100%;height:100%;object-fit:cover}
+    .hero-fade{height:26%}
+    .hero-spine{display:none}
+    /* Lockup neo từ ĐỈNH hero xuống, vì hero giờ cao hơn ảnh — neo theo đáy
+       hero thì chữ sẽ rơi xuống giữa đoạn văn. */
+    .ht-hand{left:var(--pm);top:calc(62svh - 176px);font-size:30px;line-height:1.12}
+    .ht-suffix{left:var(--pm);right:auto;top:calc(62svh - 74px);
+      /* bottom:auto BẮT BUỘC: rule mobile cũ đặt `bottom:22%`, mà một khối
+         absolute có CẢ top lẫn bottom thì chiều cao bị KÉO GIÃN giữa hai mốc
+         — "care." một dòng 48px phình thành hộp cao 298. */
+      bottom:auto;height:auto;
+      font-size:48px;line-height:1;mix-blend-mode:normal}
+    .hero-col{position:static;width:auto;padding:28px var(--pm) 0;
+      display:block;text-align:left}
+    .hero-col p+p{margin-top:14px}
+  }
 </style>
 <button class="wm-trigger" type="button" data-wm-open aria-label="Open menu"><span class="wm-rl"><span>Menu</span><span>Menu</span></span></button>
 <div class="wm" id="wm" aria-hidden="true">
