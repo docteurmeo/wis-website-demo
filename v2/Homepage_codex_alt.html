@@ -3188,6 +3188,26 @@
          chiều cao, và gap 62 cố định cho sáu dòng cách đều nhau y hệt.
          62 = nhịp trung bình trong Figma (92.6) trừ chiều cao dòng chữ (31).
      ================================================================ */
+  @media (max-width:820px){
+    /* Lề riêng 16px của menu lệch với lề trang 20 — kéo về cùng token. */
+    .wm-in{padding-left:var(--pm);padding-right:var(--pm)}
+    /* KHÁC bản iPad: ở đây danh sách con để NGUYÊN TRONG LUỒNG.
+       Thử kiểu iPad (thả tuyệt đối xuống dưới) thì hỏng: danh sách 5 dịch vụ
+       ở 393 xuống 2 dòng cao 88px, vượt khe 62px và đè lên mục Journal. Ép
+       một dòng thì cỡ chữ phải xuống ~10px, không đọc nổi. Để trong luồng
+       thì khoảng cách giữa các mục không đều tuyệt đối, nhưng KHÔNG CÓ GÌ
+       ĐÈ NHAU và danh sách con dính đúng vào mục cha của nó. */
+    .wm-nav{gap:34px;justify-content:center}
+    .wm-link{position:relative}
+    .wm-subs{position:static;transform:none;left:auto;right:auto;top:auto;
+      width:auto;max-width:none;margin:12px 0 0}
+    /* Danh sách con của Services có 5 mục; ở 393 nó xuống 9 dòng, cao 220px
+       và đè lên hai mục Journal + Contact bên dưới. Co cỡ chữ và dấu phân
+       cách để nó nằm gọn MỘT dòng, vừa trong khe 62px giữa hai mục. Vẫn giữ
+       vùng chạm 44px cho từng mục con. */
+    .wm-subs a{font-size:12px}
+    .wm-subs a+a::before{margin:0 5px}
+  }
   @media (min-width:821px) and (max-width:1400px) and (max-height:900px) {
     .wm-in{padding-left:var(--pm);padding-right:var(--pm)}
     .wm-nav{gap:62px;justify-content:center}
@@ -3196,7 +3216,9 @@
        thả xuống 26px sẽ ĐÈ LÊN chính dòng chữ. Để hàng tự cao bằng dòng chữ,
        chỉ nhấc danh sách con ra khỏi luồng là đủ. */
     .wm-link{position:relative}
-    .wm-subs{position:absolute;left:0;right:0;top:100%;margin:10px 0 0}
+    .wm-subs{position:absolute;left:50%;right:auto;transform:translateX(-50%);
+      width:max-content;max-width:calc(100vw - 2 * var(--pm));
+      top:100%;margin:10px 0 0}
   }
 
   /* ==================================================================
@@ -3242,9 +3264,20 @@
        đây là DNA thương hiệu, không phải chi tiết trang trí cắt được. */
     .ap-hand,.serv-note,.slogan,.hand-line{font-size:28px;line-height:1.1}
 
+    /* .btn phải là mốc neo cho lớp phim .btn-film bên trong. Đặt ở ĐÂY,
+       trước các khối section — vì .ap-cta/.serv-cta/.cp-cta là absolute và
+       cùng độ cụ thể với .btn, đặt sau là .btn sẽ ĐÈ NGƯỢC lại, kéo nút CTA
+       của Approach từ đáy khung lên đỉnh màn (đã dính đúng lỗi này). */
+    /* Bốn nút CTA đang mỗi cái một kiểu: Approach 232px, Works 210px, còn
+       Services và Destination bị kéo căng 353/352px vì một cái là flex-item
+       (stretch), một cái ăn nhầm width. Desktop thì nút luôn vừa nội dung —
+       ép cả bốn về cùng một luật. */
+    .btn{position:relative;display:inline-flex;width:max-content;
+      align-self:flex-start}
+
     /* ---- CHẠM 44×44. Chữ được phép nhỏ, vùng chạm thì không.
        Trước đây có 12 chỗ dưới ngưỡng: lang 14, nút menu 14, mục menu 22. */
-    .lang,.hd-menu,.wm-close,.wm-trigger,.arw,.chip,.ft-col a,.wm-word,.wm-subs a{
+    .lang,.hd-menu,.wm-close,.wm-trigger,.wm-brand,.arw,.chip,.ft-col a,.wm-word,.wm-subs a{
       min-height:44px;display:inline-flex;align-items:center}
     .wm-link{min-height:56px;display:flex;align-items:center}
     .arw{width:44px;justify-content:center}
@@ -3268,9 +3301,19 @@
        Khác duy nhất bắt buộc: cột chữ phải không thể đứng CẠNH ảnh ở 393
        nên nó chảy xuống DƯỚI ảnh. --hero-stage là vùng dành cho cụm ảnh,
        để 50% của nó = tâm ảnh, y hệt 50% của section trên desktop. */
-    .hero{--img:min(62vw,40svh);--img-h:calc(var(--img) * 4 / 3);
-      --hero-stage:calc(var(--img-h) + 150px);
-      height:auto;min-height:0;padding:0 0 var(--gap-sec)}
+    /* Ba biến này phải ở :root chứ không phải .hero — .site-hd là ANH EM
+       của .hero nên không thừa hưởng được biến đặt trên .hero, mà header
+       cần biết mép trên khung ảnh để đặt mình. */
+    :root{--img:min(62vw,40svh);--img-h:calc(var(--img) * 4 / 3);
+      --hero-stage:calc(var(--img-h) + 150px)}
+    .hero{height:auto;min-height:0;padding:0 0 var(--gap-sec)}
+
+    /* Header: giữ đúng luật của desktop — TÂM header trùng MÉP TRÊN khung
+       ảnh. Trước đó nó vẫn dùng công thức desktop (50svh − nửa ảnh) trong
+       khi ảnh ở mobile nằm trong --hero-stage, nên header rơi xuống y=324,
+       tức lơ lửng giữa Hero. */
+    .site-hd{--hd-h:52px;
+      --hd-top:calc(var(--hero-stage) / 2 - var(--img) * 2 / 3 - (var(--hd-h) / 2))}
     .hero-frame{position:absolute;left:50%;top:calc(var(--hero-stage) / 2);
       transform:translate(-50%,-50%);width:var(--img);height:auto;aspect-ratio:3/4}
     /* Dải fade đáy chỉ có nghĩa khi ảnh tràn viền — ở đây ảnh là một khung
@@ -3377,7 +3420,9 @@
        khoá cứng 240 thì thừa chỗ, bỏ hẳn thì cả trang nhảy khi đổi mục. */
     .serv-notes{order:4;position:static;width:auto;height:auto;min-height:132px;margin:0 0 34px}
     .serv-note{position:absolute;left:0;right:0;top:0;width:auto}
-    .serv-cta{order:5;position:static;left:auto;bottom:auto;margin:0}
+    /* relative chứ KHÔNG static: lớp phim .btn-film bên trong neo tuyệt đối,
+       nút mà static thì lớp phim văng ra trùm cả section (đo được 393×1206). */
+    .serv-cta{order:5;position:relative;left:auto;bottom:auto;margin:0}
 
     /* ================= 05 CULTURAL WALK — TRẢ LẠI VUỐT NGANG ==========
        Rule mobile cũ bẻ gãy hẳn: .cp-walk-stage hết sticky, .cp-walk-track
@@ -3425,6 +3470,34 @@
        lề 92 nên vô hại; ở 393 nó đẩy ra ngoài mép và sinh thanh cuộn ngang.
        Bỏ margin âm — thụt 3px thì không ai thấy, cuộn ngang thì thấy ngay. */
     .form-count{margin-right:0}
+
+    /* ================= SỬA LỖI SƠ ĐẲNG SAU KHI AUDIT ==================
+       Khi chuyển một khối từ absolute sang static để nó chảy theo cột dọc,
+       phải kiểm CON của nó: mọi con đang `position:absolute` sẽ MẤT mốc neo
+       và nhảy lên khối tổ tiên gần nhất còn `position` — tức bay sang chỗ
+       khác của section. Sáu chỗ đã dính lỗi này:
+         .serv-note   → neo vào .serv, nằm đè lên tiêu đề Services
+         .btn-film    → neo vào .serv, lớp phim của nút vẽ lạc chỗ
+         .arw ×2      → neo vào .tm, mũi tên rời khỏi hàng điều hướng
+         .tm-count    → neo vào .tm, số "01 / 08" rời khỏi hàng
+         .form-count  → neo vào .cf, "01 / 09" nhảy lên đỉnh section
+       Trả lại mốc neo cho từng khối cha. */
+    /* position:relative PHẢI kèm reset cả bốn mốc. Các khối này vẫn còn
+       left/right/top của bản desktop; khi còn static thì mốc đó nằm im vô
+       hại, đổi sang relative là chúng lập tức thành ĐỘ DỜI và đẩy cả khối
+       đi (đo được: .serv-notes và .form-bar nhảy từ x20 sang x199, .form-count
+       văng ra x486 ngoài màn). */
+    .serv-notes,.tm-nav,.cf-form{position:relative;
+      left:auto;right:auto;top:auto;bottom:auto}
+
+    /* 05 Cultural Intro: min-height 92vh khiến section cao 784 trong khi
+       nội dung chỉ 212 — trống 294 trên và 277 dưới. Về đúng nhịp 72. */
+    .cp-intro{min-height:0;height:auto;padding:var(--gap-sec) var(--pm);
+      display:block}
+    .cp-statement{position:static;width:auto;max-width:none;margin:0 0 22px;
+      white-space:normal}
+    .cp-intro-p{position:static;left:auto;top:auto;width:auto;max-width:none;margin:0}
+
 
 
 
