@@ -219,3 +219,56 @@
   .thread{ max-width:none; margin:0; padding-left:var(--pad); padding-right:var(--pad) }
   .node{ gap:72px }
 }
+
+/* =============================================================
+   FOOTER — DÙNG NGUYÊN BẢN CỦA TRANG CHỦ
+   =============================================================
+   Footer trang chủ KHÔNG phải một khối xếp dọc bình thường: nó là một khung cao
+   đúng một màn, bên trong ba cụm đặt tuyệt đối —
+       .ft-top    top:120.6px     lưới 4 cột theo %
+       .ft-bottom bottom:411px    xếp dọc
+       .ft-mark   bottom:-9px     chữ 20.7292vw mờ 20%, tràn khỏi mép dưới
+   Trang con thì xếp dọc thường, cao 830px, lưới cột tính bằng px. Nên dù cùng
+   tên class, hai footer đọc ra là hai thiết kế khác nhau.
+
+   Dưới đây bê nguyên công thức của trang chủ sang, đổi `--pm` thành `--pad`
+   (hai token cùng giá trị sau khi đã đồng bộ lề).
+
+   Chỉ áp cho desktop — bản ≤860px có cách dàn riêng, đè vào là vỡ.
+   ============================================================= */
+@media (min-width:861px){
+  .ft{ position:relative; min-height:100svh; padding:0; overflow:hidden }
+
+  .ft-top{
+    position:absolute; left:var(--pad); right:var(--pad); top:120.6px;
+    display:grid; grid-template-columns:15.1498% 15.1498% 23.6175% 15.1498%;
+    column-gap:10.311%; align-items:start;
+  }
+  .ft-logo{ width:calc(132 / 263 * 100%); height:auto; margin:10px 0 0 }
+
+  /* Trang con có thêm .ft-anchor (câu slogan) và .ft-tag trong cột 1 — trang chủ
+     chỉ để logo. Cột 1 nay chỉ rộng 15.15% nên hai dòng đó sẽ bị bóp nát.
+     Ẩn đi cho khớp trang chủ; muốn trả lại thì xoá đúng dòng này. */
+  .ft-anchor, .ft-tag{ display:none }
+
+  .ft-bottom{
+    position:absolute; left:var(--pad); bottom:411px;
+    display:flex; flex-direction:column-reverse; gap:5px; margin:0;
+    border:0; padding:0; letter-spacing:0;
+  }
+  /* column-reverse: HTML trang con để "2026 Wed in Style" trước, trang chủ để
+     "Premium Wedding Planner in Vietnam" trước. Đảo bằng CSS, khỏi sửa 22 file. */
+
+  .ft-mark{
+    position:absolute; left:3.2292%; bottom:-9px; width:93.5938%; margin:0;
+    font-weight:400; font-size:20.7292vw; line-height:.76; letter-spacing:-.02em;
+    text-align:center; white-space:nowrap;
+    color:var(--bone); opacity:.2;
+    /* Trang con đang tô chữ này bằng radial-gradient CHẠY THEO CHUỘT. Trang chủ
+       chỉ là một màu phẳng mờ 20%. Phải huỷ cả ba thuộc tính gradient, không thì
+       chữ vẫn trong suốt. */
+    background:none; -webkit-background-clip:border-box; background-clip:border-box;
+    -webkit-text-fill-color:currentColor;
+    pointer-events:none; user-select:none;
+  }
+}
