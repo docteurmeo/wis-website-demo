@@ -1673,6 +1673,115 @@
        Người ta đang đọc dòng 3 thì nó nhảy. Tắt, chỉ còn bấm mũi tên. */
     .tm-bar i.run{animation:none;transform:scaleX(0)}
   }
+
+  /* ============================================================
+     RESPONSIVE REBUILD — MOBILE + TABLET (2026-09-13)
+     ------------------------------------------------------------
+     Đây là lớp bố cục cuối cùng cho <=1023px. Nó không "co" desktop:
+     giữ từng quan hệ mang DNA của desktop, nhưng đổi thứ tự đọc và cơ chế
+     điều khiển cho tay chạm. Các rule mobile lịch sử ở phía trên chỉ còn là
+     fallback; không được thêm vá lỗi mới vào chúng.
+     ============================================================ */
+  @media (max-width:1023px){
+    :root{--pm:20px;--page-margin:20px;--mobile-hd:60px;--mobile-safe:104px;--mobile-gap:84px}
+
+    /* Header là lớp điều hướng, không được ăn vào vùng đọc. Trên Hero nó vẫn
+       trong suốt để thuộc về khung ảnh; khi rời Hero nó có một nền mực mỏng
+       để chữ bên dưới không bị logo cắt ngang. */
+    .site-hd{height:var(--mobile-hd);padding:0 var(--pm);--hd-h:var(--mobile-hd);--hd-top:0;
+      transform:translate3d(0,0,0)!important;opacity:1!important;transition:background-color .3s ease,opacity .25s ease}
+    .site-hd.is-reading{background:linear-gradient(to bottom,rgb(var(--c-ink) / .96) 0%,rgb(var(--c-ink) / .78) 72%,rgb(var(--c-ink) / 0) 100%);backdrop-filter:blur(8px)}
+    .site-hd.is-footer{opacity:0!important;pointer-events:none}
+    .hd-logo{width:68px;height:auto}.hd-lang{gap:14px}
+
+    /* ---------- HERO: ảnh dọc + chữ tay vẫn là một lockup ---------- */
+    .hero{min-height:0;height:auto;padding:0 0 var(--mobile-gap)}
+    .hero-col{font-size:16px;line-height:1.62;text-align:left}
+
+    /* ---------- APPROACH: một khung ghim, ba trạng thái ---------- */
+    .approach{height:300svh;min-height:0;padding:0;background:var(--ink)}
+    .ap-backdrop{position:sticky;top:0;height:100svh;padding:0;overflow:hidden}
+    .ap-track{margin-top:-100svh}.ap-row{height:100svh;padding:0}
+    .ap-frame{display:block;left:var(--pm);right:var(--pm);top:76px;bottom:20px;width:auto;height:auto}
+    .ap-title{position:absolute;left:calc(var(--pm) + 16px);top:calc(var(--mobile-safe) + 4px);max-width:min(76%,32rem);margin:0}
+    .ap-ill{position:absolute;left:0;right:0;top:25%;width:min(36vw,220px);height:min(36vw,220px);margin:0 auto}
+    .ap-num{position:absolute;left:calc(var(--pm) + 16px);top:49%;margin:0}
+    .ap-step{position:absolute;left:calc(var(--pm) + 16px);right:calc(var(--pm) + 16px);top:calc(49% + 27px);width:auto}
+    .ap-hand{margin:0 0 12px}.ap-body{font-size:16px;line-height:1.55}
+    .ap-cta{position:absolute;left:calc(var(--pm) + 16px);bottom:42px;margin:0}
+
+    /* ---------- SERVICES: một lựa chọn ↔ một note ↔ một ảnh ---------- */
+    .serv{display:grid!important;grid-template-columns:minmax(0,1fr);grid-template-areas:"title" "media" "note" "list" "cta";
+      height:auto;min-height:0;max-height:none;padding:var(--mobile-safe) 0 var(--mobile-gap);overflow:hidden}
+    .serv-title{grid-area:title;position:static;width:auto;max-width:none;margin:0 var(--pm) 28px}
+    .serv-media{grid-area:media;position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;height:min(112vw,520px);margin:0 0 30px;z-index:1}
+    .serv-figs{height:100%}.serv-fig{clip-path:inset(0 0 0 100%)}.serv-fig:first-child,.serv-fig.on{clip-path:inset(0)}
+    .serv-notes{grid-area:note;position:relative;left:auto;right:auto;top:auto;width:auto;height:154px;min-height:0;margin:0 var(--pm) 18px;padding:0}
+    .serv-note{position:absolute;inset:0;width:auto;display:block!important;margin:0!important;padding:0!important;
+      font-size:clamp(22px,6.5vw,29px);line-height:1.27;opacity:0;transition:opacity .3s ease;pointer-events:none}
+    .serv-note.on{opacity:1}
+    .serv-list{grid-area:list;position:relative;left:auto;top:auto;width:auto;max-width:none;margin:0;padding:0 var(--pm) 8px;
+      display:flex;flex-direction:row;gap:0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+    .serv-list::-webkit-scrollbar{display:none}
+    .serv-item{flex:0 0 auto;display:grid;grid-template-columns:30px auto;align-items:baseline;gap:0;min-height:56px;
+      padding:14px 24px 14px 0;margin:0;border:0;border-top:1px solid rgb(var(--c-bone) / .18);scroll-snap-align:start}
+    .serv-item:last-child{padding-right:var(--pm)}.serv-name{font-size:22px;line-height:1.2;white-space:nowrap}.serv-num{font-size:11px}
+    .serv-list .serv-item .serv-name{opacity:.38}.serv-list .serv-item.on .serv-name{opacity:1}.serv-item.on .serv-num{color:var(--accent);opacity:1}
+    .serv-cta{grid-area:cta;position:relative;left:auto;bottom:auto;margin:28px var(--pm) 0;justify-self:start}
+
+    /* ---------- WORKS: cột ảnh dọc và khoảng thở, không sticky UI ---------- */
+    .works{padding:var(--mobile-safe) var(--pm) var(--mobile-gap);text-align:left}
+    .whead-band{height:auto;display:block;overflow:visible;padding:0}.whead{padding:0;margin:0;transform:none!important;text-align:left;font-size:clamp(34px,8.4vw,48px);line-height:1.02}
+    .wintro{padding:0;margin:26px 0 0;max-width:24ch;white-space:normal;text-align:left;font-size:16px;line-height:1.55}
+    .projects{position:relative;margin:76px 0 0;padding:0}.ampbar{display:none}
+    .namebar{position:absolute;top:clamp(106px,22vw,170px);left:0;right:0;height:0;transform:none;opacity:1;z-index:6;pointer-events:none}
+    .nm{font-size:30px;line-height:1;transform:translateY(-50%);color:var(--accent)}
+    .nm.bride,.namebar .bride{left:0;right:auto}.nm.groom,.namebar .groom{right:0;left:auto}
+    .slogan,.namebar .slogan{font-size:21px;line-height:1.1;transform:translate(-50%,-50%);color:var(--bone);white-space:nowrap}
+    .gallery{width:76%;max-width:360px;margin:0 auto 88px;padding:0}.gallery .g{margin:0;overflow:hidden}.gallery .g img{clip-path:none!important;transform:none!important}
+    .gallery .g.gA{width:100%}.gallery .g.gB{width:57.3%;margin:14.8% 0 0 42.7%}.gallery .g.gC{width:78.4%;margin:14.8% 0 0}
+    .pcap{display:flex;margin:18px 0 0;padding:0;gap:4px;text-align:left;font-size:11px;line-height:1.35;letter-spacing:.16em}
+    .works-cta{margin:0;left:auto;position:relative}
+
+    /* ---------- DESTINATION: ảnh trượt, chữ đứng trong chính viewport ---------- */
+    .cp-intro{min-height:0;height:auto;padding:var(--mobile-safe) var(--pm) var(--mobile-gap);display:block}
+    .cp-statement{position:static;width:auto;max-width:11ch;margin:0 0 24px}.cp-intro-p{position:static;width:auto;max-width:34ch;margin:0}
+    .cp-walk{height:300svh;padding:0}.cp-walk-stage{position:sticky;top:0;height:100svh;overflow:hidden}.cp-walk-track{position:absolute;top:0;left:0;height:100%;display:flex}
+    .cp-panel{flex:0 0 100vw;width:100vw;height:100%;overflow:hidden}.cp-panel-txt{will-change:transform;transition:transform .1s linear}
+    .cp-panel-label,.cp-panel-name,.cp-panel-line{left:var(--pm);right:var(--pm);width:auto;text-align:center}.cp-panel-label{top:calc(50% - 108px)}.cp-panel-name{top:calc(50% - 62px)}.cp-panel-line{top:calc(50% + 24px);font-size:16px;line-height:1.45}
+    .cp-bars{left:var(--pm);bottom:30px}.cp-cta{left:auto;right:var(--pm);bottom:66px;margin:0}
+
+    /* ---------- TESTIMONIAL + CONTACT: flow đọc rõ, không neo chồng ---------- */
+    .tm{display:flex;height:auto;min-height:0;padding:var(--mobile-safe) var(--pm) var(--mobile-gap);overflow:visible}
+    .tm-mark{margin:0 0 -14px}.tm-head{margin:0 0 28px}.tm-stage{margin:0 0 30px}.tm-q{font-size:16px;line-height:1.55}.tm-bar{margin:0 0 22px}.tm-name{margin:0 0 18px}
+    .tm-nav{width:100%;margin:0;display:grid;grid-template-columns:44px 1fr 44px;align-items:center}.tm-count{position:static;justify-self:center;margin:0}.arw{width:44px}.tm-nav .next{justify-self:end}
+
+    .cf{display:flex;flex-direction:column;min-height:max(100svh,760px)!important;height:auto;padding:var(--mobile-safe) var(--pm) var(--mobile-gap);margin-bottom:0;overflow:hidden}
+    .cf::before{left:var(--pm);right:var(--pm);width:auto}.cf-left,.cf-sub,.cf-form{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;max-width:none}
+    .cf-head{font-size:clamp(34px,8.4vw,48px);line-height:1.02}.cf-sub{margin:22px 0 48px}.cf-form{display:flex;flex:1;flex-direction:column;margin:0}.form-count{position:static;align-self:flex-end;margin:16px 0 0}
+    .form-step{display:flex;flex:1;flex-direction:column;min-height:330px!important;margin-top:54px;padding-bottom:0}.form-q{margin:0 0 36px;font-size:24px;line-height:1.2}.opts{gap:12px}.chip{min-height:48px;padding:10px 18px;font-size:15px}
+    .form-nav{position:static;margin-top:auto;min-height:54px}.form-nav .arw.next{top:0}
+
+    /* ---------- FOOTER: closing frame, không dính chữ / không cạnh tranh header ---------- */
+    .ft{position:static;height:auto;padding:var(--mobile-safe) var(--pm) 54px}.ft-top{position:static;display:grid;grid-template-columns:1fr 1fr;column-gap:28px;row-gap:38px;margin:0}
+    .ft-brand{grid-column:1 / -1}.ft-logo{width:112px;margin:0}.ft-col{display:flex;flex-direction:column;align-items:flex-start;gap:7px}.ft-label{margin:0 0 6px;font-size:16px;line-height:1.25}
+    .ft-col a,.ft-col p,.ft-col span.ln{margin:0;font-size:15px;line-height:1.48}.ft-col a{min-height:0;display:block}
+    .ft-mark{position:static;width:auto;margin:76px 0 0;font-size:23vw;line-height:.76;white-space:normal;text-align:left}.ft-bottom{position:static;margin:34px 0 0;gap:6px;font-size:14px;line-height:1.45}
+  }
+
+  /* Tablet portrait là một tier riêng: còn đủ chỗ để giữ đối thoại 2 cột
+     của Services, thay vì phóng to layout điện thoại. */
+  @media (min-width:768px) and (max-width:1023px){
+    :root{--pm:32px;--mobile-safe:112px;--mobile-gap:104px}
+    .serv{grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);grid-template-areas:"title media" "list media" "note media" "cta media";column-gap:42px;align-items:start;padding-right:var(--pm);padding-left:var(--pm)}
+    .serv-title{margin:0 0 38px}.serv-media{height:clamp(520px,70vw,680px);margin:0}.serv-notes{height:178px;margin:38px 0 0}.serv-list{display:flex;flex-direction:column;overflow:visible;padding:0;gap:0}.serv-item{width:100%;padding:14px 0;scroll-snap-align:none}.serv-cta{margin:44px 0 0}
+    .works,.cp-intro,.tm,.cf,.ft{padding-left:var(--pm);padding-right:var(--pm)}.gallery{width:48%;max-width:390px}.namebar{top:clamp(160px,23vw,220px)}.nm{font-size:42px}.slogan,.namebar .slogan{font-size:27px}
+    .ft-top{grid-template-columns:1.1fr .9fr 1fr 1fr}.ft-brand{grid-column:auto}
+  }
+
+  @media (max-width:480px){
+    .ft-top{grid-template-columns:1fr 1fr;column-gap:20px}.ft-brand{grid-column:1 / -1}.ft-col{gap:6px}
+  }
 </style>
 </head>
 <body class="locked">
@@ -2290,17 +2399,42 @@
       [].slice.call(n.querySelectorAll('.nb-char')).forEach(function(c){ armBoil(c,.6); });
     });
 
+    /* MỘT bộ điều khiển duy nhất cho cả section. Trước đây có HAI khối cùng
+       điều khiển Services: khối này đổi ảnh + câu chữ tay + sáng/mờ nhưng chỉ
+       nghe 'mouseenter'; một khối khác phía dưới đổi z-index ảnh + class
+       'active' và có nghe 'click'. Trên desktop rê chuột thì cả hai cùng chạy
+       nên trông vẫn đúng — nhưng trên CẢM ỨNG không có mouseenter, nên chạm
+       chỉ đổi được ẢNH còn câu chữ đứng im. Gộp làm một để mọi thiết bị đi qua
+       cùng một đường. */
+    var cur=-1, zc=1;
     function show(i){
-      figs.forEach(function(f,k){ f.classList.toggle('on',k===i); });
+      if(i===cur) return;
+      var first=(cur===-1); cur=i;
       notes.forEach(function(n,k){ n.classList.toggle('on',k===i); n.classList.toggle('boil-on',k===i); });
-      items.forEach(function(t,k){ t.classList.toggle('on',k===i); });
+      items.forEach(function(t,k){ t.classList.toggle('on',k===i); t.classList.toggle('active',k===i); });
+      figs.forEach(function(f,k){ f.classList.toggle('on',k===i); });
+      var fig=figs[i]; if(!fig) return;
+      fig.style.zIndex=(++zc);
+      /* Lần đầu KHÔNG quét: ảnh mặc định phải có sẵn lúc section vào tầm nhìn,
+         quét vào chỗ trống đọc ra như lỗi tải. */
+      if(reduce||first){ fig.style.clipPath='none'; return; }
+      fig.style.transition='none'; fig.style.clipPath='inset(0 0 0 100%)'; fig.getBoundingClientRect();
+      fig.style.transition='clip-path .95s cubic-bezier(.76,0,.20,1)'; fig.style.clipPath='inset(0 0 0 0)';
     }
     show(0);
     items.forEach(function(it,i){
       it.addEventListener('mouseenter',function(){ show(i); });
       it.addEventListener('focusin',function(){ show(i); });
+      /* click: đường DUY NHẤT của cảm ứng. Trước đây nằm ở khối kia nên chạm
+         chỉ chạy được nửa việc. */
+      it.addEventListener('click',function(e){ e.preventDefault(); show(i); });
     });
-    list.addEventListener('mouseleave',function(){ show(0); });
+    /* Chỉ trả về mục đầu khi THẬT SỰ có con trỏ. Trên cảm ứng 'mouseleave'
+       vẫn bắn sau một cú chạm ở vài trình duyệt, đủ để xoá ngay lựa chọn vừa
+       chạm. */
+    if(window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+      list.addEventListener('mouseleave',function(){ show(0); });
+    }
   })();
 
   /* ===== BUTTON — CHẤT LIỆU PHIM CŨ KHI HOVER =====
@@ -2479,11 +2613,20 @@
      (nếu để 1.0 thì y hệt position:absolute, không ai nhận ra có hiệu ứng).
      JS chỉ ghi 1 biến; phần kẹp để CSS max() lo, nên không phải đo DOM và
      không gây layout mỗi frame. */
-  var siteHd=document.getElementById('siteHd'), hdTick=false;
+  var siteHd=document.getElementById('siteHd'), footerEl=document.querySelector('.ft'), hdTick=false;
   function hdMagnet(){
     hdTick=false;
     var y=window.pageYOffset||document.documentElement.scrollTop||0;
     siteHd.style.setProperty('--hd-shift',(y*1.8).toFixed(1)+'px');
+    /* Phone/tablet: Hero cho header thuộc về khung ảnh; từ section chữ trở đi
+       header có lớp nền mực mỏng để logo không cắt ngang heading. Footer là
+       closing frame nên trả hẳn sân cho wordmark. Desktop giữ nguyên logic
+       nam châm đã duyệt. */
+    var compact=window.matchMedia&&window.matchMedia('(max-width:1023px)').matches;
+    if(compact){
+      siteHd.classList.toggle('is-reading',y>hero.offsetHeight*.62);
+      siteHd.classList.toggle('is-footer',!!footerEl&&y>footerEl.offsetTop-90);
+    } else { siteHd.classList.remove('is-reading','is-footer'); }
   }
   if(siteHd){
     window.addEventListener('scroll',function(){
@@ -2631,24 +2774,11 @@
   (function(){
     var section=document.getElementById('serv');
     if(!section) return;
-    var items=[].slice.call(document.querySelectorAll('.serv-item'));
-    var figs=[].slice.call(document.querySelectorAll('.serv-fig'));
-    var cur=-1, zc=1, timer=null, started=false;
-    function setActive(i){
-      if(i===cur)return; cur=i;
-      items.forEach(function(it,k){ it.classList.toggle('active', k===i); });
-      var fig=figs[i]; fig.style.zIndex=(++zc);
-      if(reduce){ fig.style.clipPath='none'; return; }
-      fig.style.transition='none'; fig.style.clipPath='inset(0 0 0 100%)'; fig.getBoundingClientRect();
-      fig.style.transition='clip-path .95s cubic-bezier(.76,0,.20,1)'; fig.style.clipPath='inset(0 0 0 0)';
-    }
-    function auto(){ return; }
-    items.forEach(function(it,i){
-      it.addEventListener('mouseenter',function(){ setActive(i); auto(); });
-      it.addEventListener('click',function(){ setActive(i); auto(); });
-    });
-    section.addEventListener('mouseleave',auto);
-    var sio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting && !started){ started=true; section.classList.add('in'); setActive(0); auto(); } }); },{threshold:.2});
+    /* Khối này TỪNG là bộ điều khiển thứ hai (đổi ảnh + class 'active'), chạy
+       song song và chồng lên khối Services phía trên. Đã gộp lên đó. Ở đây chỉ
+       còn đúng một việc: bật class 'in' để section reveal khi vào tầm nhìn. */
+    var started=false;
+    var sio=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting && !started){ started=true; section.classList.add('in'); } }); },{threshold:.2});
     sio.observe(section);
   })();
 
@@ -2798,6 +2928,7 @@
       [].slice.call(nm.querySelectorAll('.nb-char')).forEach(function(c){ armBoil(c,1.5); });
     });
     var imgs=panels.map(function(p){return p.querySelector('.cp-panel-img img');});
+    var texts=panels.map(function(p){return p.querySelector('.cp-panel-txt');});
     var names=panels.map(function(p){return p.querySelector('.cp-panel-name');});
     var labels=panels.map(function(p){return p.querySelector('.cp-panel-label');});
     var lines=panels.map(function(p){return p.querySelector('.cp-panel-line');});
@@ -2807,15 +2938,21 @@
       var vh=window.innerHeight, range=sec.offsetHeight-vh;
       var p=range>0?clamp(-sec.getBoundingClientRect().top/range,0,1):0;
       var pos=p*(N-1);
+      var compact=window.matchMedia&&window.matchMedia('(max-width:1023px)').matches;
       track.style.transform='translateX('+(-pos*100)+'vw)';
       var active=clamp(Math.round(pos),0,N-1);
       for(var i=0;i<N;i++){
         var d=i-pos;
         if(imgs[i])  imgs[i].style.transform='translateX('+(d*12).toFixed(2)+'vw) scale(1.04)';
+        /* Track dịch cả panel sang ngang. Trên phone/tablet, bù riêng lớp chữ
+           về đúng viewport: chỉ CẢNH trôi, copy không bao giờ ló từ panel kế
+           bên hoặc bị cắt nửa câu. Desktop giữ parallax copy cũ. */
+        if(texts[i]) texts[i].style.transform=compact?'translateX('+(-d*100).toFixed(2)+'vw)':'';
         if(names[i]) names[i].style.transform='translateX('+(d*-7).toFixed(2)+'vw)';
-        var c=clamp(1-Math.abs(d)*1.5,0,1).toFixed(3);
+        var c=compact?(i===active?'1':'0'):clamp(1-Math.abs(d)*1.5,0,1).toFixed(3);
         if(labels[i]) labels[i].style.opacity=c;
         if(lines[i])  lines[i].style.opacity=c;
+        if(names[i])  names[i].style.opacity=c;
         if(dots[i])   dots[i].classList.toggle('on',i===active);
       }
     }
@@ -3414,23 +3551,61 @@
        đổi theo. Giữ nguyên, chỉ đổi từ hai cột sang một cột. Trước đây thứ
        tự trên mobile bị loạn: ghi chú nhảy lên TRÊN danh sách, còn ảnh rơi
        xuống DƯỚI cả nút CTA. Dùng order để xếp lại đúng mạch đọc. */
-    /* CẢ SECTION PHẢI GỌN TRONG MỘT MÀN — một lần cuộn là thấy hết.
-       Ngân sách chiều cao ở 852: đệm 2×48 + tiêu đề 69 + ảnh + danh sách +
-       ghi chú + nút + 4 khe 18. Ảnh vì thế phải hẹp lại còn 55% bề ngang và
-       DẠT PHẢI, giữ đúng quan hệ 'ảnh là cột phải' của desktop. */
+    /* BỎ ràng buộc "gọn trong một màn". Ép cả section vào 852px đã đẻ ra ba
+       lỗi cùng lúc: ảnh teo còn 55% bề ngang để lại một khoảng trống hình chữ
+       L bên trái, các khối lớn chỉ cách nhau 12px trong khi 5 dòng chữ lại
+       giãn 45px (nhịp bị đảo ngược), và 4/5 phần mô tả dịch vụ bị giấu sau
+       một cú chạm không có tín hiệu nào báo là chạm được.
+       Đó cũng đúng bài học đã ghi trong log dự án: chữa bug MẬT ĐỘ bằng cách
+       CẮT nội dung, không phải NÉN khoảng cách. Ở đây không cắt được gì —
+       5 gói dịch vụ là thứ quyết định khách có liên hệ hay không — nên trả
+       lại chiều cao và cho cuộn. */
     .serv{display:flex;flex-direction:column;height:auto;min-height:0;max-height:none;
-      padding:48px var(--pm)}
-    .serv-title{order:1;position:static;width:auto;max-width:none;margin:0 0 12px}
+      padding:var(--gap-sec) var(--pm)}
+    .serv-title{order:1;position:static;width:auto;max-width:none;margin:0 0 26px}
+    /* Ảnh TRÀN VIỀN: âm lề để thoát padding của section. Đây là ảnh lớn duy
+       nhất của section, thu nhỏ nó đi là mất hẳn sức nặng thị giác. */
     .serv-media{order:2;position:static;left:auto;right:auto;top:auto;bottom:auto;
-      width:55%;height:auto;aspect-ratio:361 / 490;margin:0 0 12px auto}
-    .serv-list{order:3;position:static;width:auto;max-width:none;margin:0 0 12px}
-    /* height:auto + min-height: ghi chú dài ngắn khác nhau giữa 5 dịch vụ,
-       khoá cứng 240 thì thừa chỗ, bỏ hẳn thì cả trang nhảy khi đổi mục. */
-    .serv-notes{order:4;position:static;width:auto;height:auto;min-height:104px;margin:0 0 12px}
-    .serv-note{position:absolute;left:0;right:0;top:0;width:auto}
+      width:auto;height:400px;margin:0 calc(var(--pm) * -1) 38px;z-index:1}
+
+    /* display:contents: hoà 5 mục và 5 ghi chú thành con trực tiếp của .serv
+       để 'order' xen kẽ được chúng — mô tả nằm ngay dưới đúng tên dịch vụ.
+       Không phải đụng vào HTML, nên desktop/iPad giữ nguyên từng pixel. */
+    .serv-list,.serv-notes{display:contents}
+    .serv-item:nth-child(1){order:20}  .serv-note:nth-child(1){order:21}
+    .serv-item:nth-child(2){order:22}  .serv-note:nth-child(2){order:23}
+    .serv-item:nth-child(3){order:24}  .serv-note:nth-child(3){order:25}
+    .serv-item:nth-child(4){order:26}  .serv-note:nth-child(4){order:27}
+    .serv-item:nth-child(5){order:28}  .serv-note:nth-child(5){order:29}
+
+    /* Vạch kẻ trên mỗi mục = tín hiệu CHẠM ĐƯỢC nhìn thấy bằng mắt, thay cho
+       cursor:pointer vốn không tồn tại trên cảm ứng. padding 20/12 đưa vùng
+       chạm vượt 44px mà không cần min-height. */
+    .serv-item{position:static;margin:0;padding:20px 0 12px;
+      border-top:1px solid rgb(var(--c-bone) / .16)}
+    /* Mọi tên đều sáng: khi đã hiện đủ mô tả thì làm mờ 4 mục chỉ gây khó đọc.
+       Trạng thái "đang chọn" chuyển sang cột SỐ đổi màu — đủ rõ, không đánh
+       đổi khả năng đọc. */
+    .serv-list .serv-item .serv-name,
+    .serv-list .serv-item.on .serv-name{opacity:1}
+    .serv-name{font-size:26px;line-height:1.2}
+    .serv-num{color:var(--bone);opacity:.4;transition:color .3s ease,opacity .3s ease}
+    .serv-item.on .serv-num{color:var(--accent);opacity:1}
+
+    /* Ghi chú: hiện HẾT, không còn chồng nhau. Line boil vẫn chỉ chạy ở mục
+       đang chọn (class boil-on), nên 4 câu kia không đốt CPU. */
+    .serv-notes{min-height:0;margin:0}
+    .serv-note{position:static;left:auto;right:auto;top:auto;width:auto;display:block;
+      opacity:1;margin:8px 0 0;padding:0 0 0 calc(clamp(34px,2.6vw,50px));
+      font-size:20px;line-height:1.35}
     /* relative chứ KHÔNG static: lớp phim .btn-film bên trong neo tuyệt đối,
        nút mà static thì lớp phim văng ra trùm cả section (đo được 393×1206). */
-    .serv-cta{order:5;position:relative;left:auto;bottom:auto;margin:0}
+    /* Huỷ margin-bottom:5vh của rule .serv-note.on cũ — nó chỉ đúng khi mỗi
+       lần chỉ hiện MỘT ghi chú; nay hiện cả 5 thì nó thành một khe 43px lạc
+       lõng riêng ở mục đang chọn. */
+    .serv-note.on{margin-bottom:0}
+
+    .serv-cta{order:90;position:relative;left:auto;bottom:auto;margin:34px 0 0}
 
     /* ================= 05 CULTURAL WALK — TRẢ LẠI VUỐT NGANG ==========
        Rule mobile cũ bẻ gãy hẳn: .cp-walk-stage hết sticky, .cp-walk-track
@@ -3510,6 +3685,64 @@
 
 
   }
+</style>
+<!-- Lớp này cố ý đứng SAU menu stylesheet: stylesheet menu cũ từng chứa cả
+     một @media mobile cho homepage và đè ngược mọi relayout đặt trong <head>. -->
+<style>
+@media (max-width:1023px){
+  /* Services: hủy hoàn toàn display:contents/order của bản vá cũ. */
+  .serv{display:grid!important;grid-template-columns:minmax(0,1fr);grid-template-areas:"title" "media" "note" "list" "cta";
+    height:auto!important;min-height:0;max-height:none;padding:var(--mobile-safe) 0 var(--mobile-gap)!important;overflow:hidden}
+  .serv-title{grid-area:title;position:static!important;width:auto!important;max-width:none;margin:0 var(--pm) 28px!important}
+  .serv-media{grid-area:media;position:relative!important;left:50%!important;right:auto!important;top:auto!important;bottom:auto!important;
+    width:100vw!important;max-width:none!important;justify-self:center;transform:translateX(-50%);height:min(112vw,520px)!important;margin:0 0 30px!important;z-index:1}
+  .serv-figs{height:100%}.serv-fig{clip-path:inset(0 0 0 100%)}.serv-fig:first-child,.serv-fig.on{clip-path:inset(0)}
+  .serv-notes{grid-area:note;display:block!important;position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+    width:auto!important;height:154px!important;min-height:0;margin:0 var(--pm) 18px!important;padding:0!important}
+  .serv-note{position:absolute!important;inset:0;width:auto!important;display:block!important;margin:0!important;padding:0!important;
+    font-size:clamp(22px,6.5vw,29px)!important;line-height:1.27!important;opacity:0;transition:opacity .3s ease;pointer-events:none}
+  .serv-note.on{opacity:1!important;margin-bottom:0!important}
+  .serv-list{grid-area:list;display:flex!important;position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+    width:auto!important;max-width:none;margin:0!important;padding:0 var(--pm) 8px!important;flex-direction:row!important;gap:0!important;
+    overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory}
+  .serv-list::-webkit-scrollbar{display:none}.serv-item{flex:0 0 auto;display:grid!important;grid-template-columns:30px auto;align-items:baseline;gap:0!important;
+    min-height:56px;padding:14px 24px 14px 0!important;margin:0!important;border:0!important;border-top:1px solid rgb(var(--c-bone) / .18)!important;scroll-snap-align:start}
+  .serv-item:last-child{padding-right:var(--pm)!important}.serv-name{font-size:22px!important;line-height:1.2!important;white-space:nowrap}.serv-num{font-size:11px!important}
+  .serv-list .serv-item .serv-name{opacity:.38}.serv-list .serv-item.on .serv-name{opacity:1}.serv-item.on .serv-num{color:var(--accent);opacity:1}
+  .serv-cta{grid-area:cta;position:relative!important;left:auto!important;bottom:auto!important;order:0!important;margin:28px var(--pm) 0!important;justify-self:start}
+
+  /* Works: desktop sticky label is not a phone navigation system. */
+  .works{padding:var(--mobile-safe) var(--pm) var(--mobile-gap)!important;text-align:left}.whead-band{height:auto!important;display:block!important;overflow:visible!important;padding:0!important}
+  .whead{padding:0!important;margin:0!important;transform:none!important;text-align:left!important;font-size:clamp(34px,8.4vw,48px)!important;line-height:1.02!important}
+  .wintro{padding:0!important;margin:26px 0 0!important;max-width:24ch!important;white-space:normal!important;text-align:left!important;font-size:16px!important;line-height:1.55!important}
+  .projects{position:relative!important;margin:76px 0 0!important;padding:0!important}.ampbar{display:none!important}
+  .namebar{position:absolute!important;top:clamp(106px,22vw,170px)!important;left:0!important;right:0!important;height:0!important;transform:none!important;opacity:1!important;z-index:6;pointer-events:none}
+  .nm{font-size:30px!important;line-height:1!important;transform:translateY(-50%)!important;color:var(--accent)!important}.nm.bride,.namebar .bride{left:0!important;right:auto!important}.nm.groom,.namebar .groom{right:0!important;left:auto!important}
+  .slogan,.namebar .slogan{font-size:21px!important;line-height:1.1!important;transform:translate(-50%,-50%)!important;color:var(--bone)!important;white-space:nowrap}
+  .gallery{width:76%!important;max-width:360px!important;margin:0 auto 88px!important;padding:0!important}.gallery .g{margin:0!important;overflow:hidden}.gallery .g img{clip-path:none!important;transform:none!important}
+  .gallery .g.gA{width:100%!important}.gallery .g.gB{width:57.3%!important;margin:14.8% 0 0 42.7%!important}.gallery .g.gC{width:78.4%!important;margin:14.8% 0 0!important}
+  .pcap{display:flex!important;margin:18px 0 0!important;padding:0!important;gap:4px;text-align:left!important;font-size:11px!important;line-height:1.35!important;letter-spacing:.16em}.works-cta{margin:0!important;left:auto!important;position:relative!important}
+
+  /* Reading sections begin below the fixed header; Contact is a real flow,
+     not a desktop absolute composition stacked into a narrow column. */
+  .cp-intro{padding:var(--mobile-safe) var(--pm) var(--mobile-gap)!important}.tm{padding:var(--mobile-safe) var(--pm) var(--mobile-gap)!important;overflow:visible!important}
+  .cp-panel{overflow:visible!important}.cp-panel-img{overflow:hidden!important}
+  .cp-panel-line{left:50%!important;right:auto!important;width:min(78vw,30ch)!important;max-width:none!important;transform:translateX(-50%)!important;white-space:normal!important}
+  .tm-nav{width:100%!important;margin:0!important;display:grid!important;grid-template-columns:44px 1fr 44px;align-items:center}.tm-count{position:static!important;justify-self:center;margin:0!important}.tm-nav .next{justify-self:end}
+  .cf{display:flex!important;flex-direction:column;min-height:max(100svh,760px)!important;height:auto!important;padding:var(--mobile-safe) var(--pm) var(--mobile-gap)!important;margin-bottom:0!important;overflow:hidden}
+  .cf::before{left:var(--pm)!important;right:var(--pm)!important;width:auto!important}.cf-left,.cf-sub,.cf-form{position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:auto!important;max-width:none!important}
+  .cf-head{font-size:clamp(34px,8.4vw,48px)!important;line-height:1.02!important}.cf-sub{margin:22px 0 48px!important}.cf-form{display:flex!important;flex:1;flex-direction:column;margin:0!important}.form-count{position:static!important;align-self:flex-end;margin:16px 0 0!important}
+  .form-step{display:flex!important;flex:1;flex-direction:column;min-height:330px!important;margin-top:54px!important;padding-bottom:0!important}.form-q{margin:0 0 36px!important;font-size:24px!important;line-height:1.2!important}.opts{gap:12px!important}.chip{min-height:48px!important;padding:10px 18px!important;font-size:15px!important}.form-nav{position:static!important;margin-top:auto!important;min-height:54px}.form-nav .arw.next{top:0!important}
+
+  .ft{position:static!important;height:auto!important;padding:var(--mobile-safe) var(--pm) 54px!important}.ft-top{position:static!important;display:grid!important;grid-template-columns:1fr 1fr;column-gap:28px;row-gap:38px;margin:0!important}
+  .ft-brand{grid-column:1 / -1}.ft-logo{width:112px!important;margin:0!important}.ft-col{display:flex!important;flex-direction:column;align-items:flex-start;gap:7px}.ft-label{margin:0 0 6px!important;font-size:16px!important;line-height:1.25!important}
+  .ft-col a,.ft-col p,.ft-col span.ln{margin:0!important;font-size:15px!important;line-height:1.48!important}.ft-col a{min-height:0!important;display:block!important}.ft-mark{position:static!important;width:auto!important;margin:76px 0 0!important;font-size:23vw!important;line-height:.76!important;white-space:normal!important;text-align:left!important}.ft-bottom{position:static!important;margin:34px 0 0!important;gap:6px!important;font-size:14px!important;line-height:1.45!important}
+}
+@media (min-width:768px) and (max-width:1023px){
+  :root{--pm:32px;--mobile-safe:112px;--mobile-gap:104px}
+  .serv{grid-template-columns:minmax(0,1fr) minmax(280px,.9fr)!important;grid-template-areas:"title media" "list media" "note media" "cta media"!important;column-gap:42px;padding-right:var(--pm)!important;padding-left:var(--pm)!important}.serv-title{margin:0 0 38px!important}.serv-media{left:auto!important;width:100%!important;transform:none!important;height:clamp(520px,70vw,680px)!important;margin:0!important}.serv-notes{height:178px!important;margin:38px 0 0!important}.serv-list{display:flex!important;flex-direction:column!important;overflow:visible!important;padding:0!important;gap:0!important}.serv-item{width:100%;padding:14px 0!important;scroll-snap-align:none}.serv-cta{margin:44px 0 0!important}
+  .works,.cp-intro,.tm,.cf,.ft{padding-left:var(--pm)!important;padding-right:var(--pm)!important}.gallery{width:48%!important;max-width:390px!important}.namebar{top:clamp(160px,23vw,220px)!important}.nm{font-size:42px!important}.slogan,.namebar .slogan{font-size:27px!important}.ft-top{grid-template-columns:1.1fr .9fr 1fr 1fr!important}.ft-brand{grid-column:auto}
+}
 </style>
 <button class="wm-trigger" type="button" data-wm-open aria-label="Open menu"><span class="wm-rl"><span>Menu</span><span>Menu</span></span></button>
 <div class="wm" id="wm" aria-hidden="true">

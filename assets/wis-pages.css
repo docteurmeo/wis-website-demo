@@ -1,0 +1,221 @@
+/* =============================================================
+   WIS · LỚP THỐNG NHẤT CHO CÁC TRANG CON
+   =============================================================
+
+   VÌ SAO FILE NÀY TỒN TẠI
+   11 trang con mỗi trang mang một bản CSS inline riêng, không có file dùng
+   chung nào. Hệ quả: những thứ lẽ ra phải giống hệt nhau đã trôi mỗi trang một
+   kiểu — 6 bề rộng container, 2 hệ lề, 91 cỡ chữ, 26 nhịp dọc. Sửa một thứ nhỏ
+   phải mở 11 file, và không có cách nào biết chúng còn đồng bộ hay không.
+
+   File này được nối SAU khối <style> inline của từng trang, nên thắng cascade ở
+   cùng độ đặc hiệu. Sửa ở đây = sửa cả 11 trang một lần.
+
+   ⚠ KHÔNG BAO GIỜ nối file này vào Homepage_codex_alt.html.
+   Trang chủ đã được khách duyệt tới từng pixel (desktop 1920 + dải iPad) và phải
+   giữ nguyên. Nguyên tắc: hệ thống đi TỪ trang con TIẾN TỚI số đo trang chủ,
+   không bao giờ ngược lại. Cũng vì thế file này chỉ khai biến của riêng trang con
+   (--pad), tuyệt đối không ghi đè tên token trang chủ đang dùng
+   (--page-margin, --title, --ink, --bone, --reading, --rule…).
+
+   ============================================================= */
+
+:root{
+  /* ---- LỀ TRANG ----
+     Lấy ĐÚNG biểu thức của trang chủ (--page-margin: clamp(38px,5.2vw,92px)).
+     Trước: --pad: clamp(22px,4vw,56px) → kịch trần 56px từ 1400px trở lên.
+     Nghĩa là màn càng rộng, trang con càng dính sát mép so với trang chủ:
+     lệch 13px ở 1440 và 36px ở 1920. Bấm từ trang chủ sang trang con là thấy
+     khối nội dung nhảy sang trái — lỗi mắt bắt được ngay mà khó gọi tên. */
+  --pad: clamp(38px, 5.2vw, 92px);
+}
+
+/* ---- CHIỀU CAO HEADER ----
+   Trang chủ (.site-hd) cao 61px; trang con (.hd) cao 95px → đổi trang là logo
+   nhảy 34px, thứ phá cảm giác "một website" nhanh nhất.
+   Logo hai bên vốn ĐÃ cùng cỡ (86×44 ở 1440) — toàn bộ chênh lệch nằm ở đệm dọc
+   24px của trang con. Hạ xuống 8px cho ra 44+16 = 60px, khớp trang chủ. */
+.hd{
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+/* ---- ĐỘ TRỄ REVEAL ----
+   Trước: 9 trang dùng .12/.24/.36s, riêng Services và Journal dùng .1/.2/.3s.
+   Không ai cố ý — đây là dấu vết copy-paste trôi. Chốt về một bộ. */
+.in .d1{ transition-delay:.12s }
+.in .d2{ transition-delay:.24s }
+.in .d3{ transition-delay:.36s }
+
+/* =============================================================
+   THANG CHỮ — 7 BẬC
+   =============================================================
+   Mọi con số dưới đây LẤY TỪ SỐ ĐO THẬT CỦA TRANG CHỦ ở 1440×900, không phải
+   bịa ra. Fahkwang trên trang chủ đang dùng đúng dãy: 96 / 56 / 37 / 27 / 23 /
+   20 / 15 / 12 / 11 px. Gom lại còn 7 bậc.
+
+   Trong khi đó 11 trang con tự khai 91 cỡ khác nhau, mỗi trang 23–59 biểu thức
+   clamp() riêng — tức mỗi trang được căn mắt riêng lẻ, không trang nào tham
+   chiếu trang nào. Đây là thang để kéo chúng về một tiếng nói.
+
+   CHƯA ÁP CHO TIÊU ĐỀ TRANG (h1). Hiện OurWorks 101px · Services 70px ·
+   Case 158px — thống nhất chúng là QUYẾT ĐỊNH THẨM MỸ, phải để designer chốt,
+   không phải việc dọn dẹp kỹ thuật. Token đã sẵn, chỉ việc gán khi có quyết định.
+   ============================================================= */
+:root{
+  --t-display: clamp(3.4rem,  6.67vw, 7rem);    /* 96px @1440 — tiêu đề lớn nhất */
+  --t-h1:      clamp(2.2rem,  3.9vw,  4.2rem);  /* 56px — tiêu đề trang */
+  --t-h2:      clamp(1.7rem,  2.57vw, 2.8rem);  /* 37px — tiêu đề mục */
+  --t-h3:      clamp(1.3rem,  1.88vw, 2rem);    /* 27px — tiêu đề nhỏ */
+  --t-lede:    clamp(1.05rem, 1.39vw, 1.45rem); /* 20px — dẫn nhập, nhãn lớn */
+  --t-body:    clamp(.92rem,  1.04vw, 1.1rem);  /* 15px — chữ chạy */
+  --t-micro:   clamp(.66rem,  .76vw,  .82rem);  /* 11px — nhãn, meta, CTA */
+}
+
+/* ---- FOOTER: KÉO VỀ ĐÚNG CỠ TRANG CHỦ ----
+   Footer dùng CÙNG tên class ở cả trang chủ lẫn 11 trang con, nhưng cỡ chữ lệch
+   hơn gấp đôi. Đo thật ở 1440:
+       nhãn      trang con 9,6px   ↔ trang chủ 20px
+       link      trang con 13,2px  ↔ trang chủ 15px
+       dòng cuối trang con 9,6px   ↔ trang chủ 15px
+   Footer là thành phần lặp lại ở MỌI trang, nên lệch ở đây là lệch khắp nơi.
+   Letter-spacing cũng trả về normal: .26em vốn chỉ hợp với chữ 9,6px, ở 20px
+   nó giãn thành 5px và vỡ hẳn nhịp.
+   KHÔNG đụng .ft-mark — trang chủ để 299px còn to hơn 252px của trang con, nên
+   đó là thủ pháp cố ý của cả site, không phải lỗi. */
+.ft-label{ font-size:var(--t-lede); letter-spacing:normal }
+.ft-col a, .ft-col p, .ft-col span.ln{ font-size:var(--t-body) }
+.ft-bottom{ font-size:var(--t-body); letter-spacing:normal }
+
+/* =============================================================
+   HỆ CHỮ — KÉO TRANG CON VỀ ĐÚNG MẶT CHỮ CỦA TRANG CHỦ
+   =============================================================
+   Đo trang chủ đã duyệt ở 1440: SÁU tiêu đề section (Featured Works · Services ·
+   Approach · Contact · Testimonial · Cultural) đều là **Fahkwang 400, đúng 56px**.
+   Chữ chạy Fahkwang 300/400 14–15px. Tên dịch vụ Fahkwang 500 27px.
+   CTA Fahkwang 700 11px.
+   → Hệ thật của trang chủ là MỘT mặt chữ duy nhất (Fahkwang), phân biệt bằng cân
+   nặng và cỡ. Chính nó tạo ra sự tĩnh và dễ chịu mà khách đã duyệt.
+
+   (Ghi chú: token --title của trang chủ khai 'Bricolage Grotesque' nhưng KHÔNG
+   chỗ nào dùng tới — token chết. Đừng theo tên token, hãy theo số đo.)
+
+   Trang con đang dùng Mirage (serif) + SweetSans — hai mặt chữ khác hẳn. Đây là
+   lý do bấm từ trang chủ sang trang con có cảm giác lạc sang một website khác.
+   ============================================================= */
+:root{
+  --title: 'Fahkwang','Helvetica Neue',Arial,sans-serif;
+  --body:  'Fahkwang','Helvetica Neue',Arial,sans-serif;
+}
+
+/* ---- TIÊU ĐỀ TRANG ----
+   Trước: OurWorks 101px · Services 70px · Case 158px — bốn trang cho cảm giác bốn
+   website. Nay mọi tiêu đề trang về đúng 56px như mọi tiêu đề section của trang chủ. */
+/* Mỗi trang đặt tiêu đề trong một container khác nhau — đã soi từng file:
+   .mast (OurWorks, Services) · .smast (4 trang dịch vụ) · .astate (Approach) ·
+   .cover (About) · .jfeat (Journal). Gom hết về một bậc. */
+.mast h1, .mast h2,
+.smast h1,
+.astate h1,
+.cover h1,
+.jfeat h2{ font-size:var(--t-h1); font-weight:400; line-height:1.04 }
+
+/* Ngoại lệ có lý do: Case là trang KỂ CHUYỆN, tên cặp đôi là màn mở chứ không phải
+   nhãn mục. Cho nó bậc display (96px) — bậc lớn nhất trang chủ dùng cho chữ Fahkwang. */
+.hero-cap h1{ font-size:var(--t-display); font-weight:400; line-height:1 }
+
+/* ---- NÚT CTA: KHỚP TRANG CHỦ ----
+   Đo ở 1440.
+     Trang chủ (.btn):  234×54 · KHÔNG viền · nền ink-hi alpha 0 → hiện dần khi
+                        hover · đệm 20px · nhãn 11px w700 ls3.3px
+     Trang con (.cta):  279×50 · viền 1px bone 40% CỐ ĐỊNH · đệm 18/36 ·
+                        chữ 11px w400 ls2.6 · hover đổi nền sang VÀNG
+   Hai khác biệt đáng kể: (1) viền cố định làm nút đọc ra như nút bán hàng, trong
+   khi trang chủ để nút chìm vào nền và chỉ lộ ra khi chạm tới; (2) hover vàng —
+   khách đã nói không thích cặp đen+vàng. Kéo cả hai về trang chủ. */
+.cta, .proof .cta{
+  border:0;
+  padding:20px;
+  font-weight:700;
+  letter-spacing:.3em;
+  background-color:rgba(44,33,20,0);
+  transition:background-color .35s ease, color .35s ease;
+}
+.cta:hover, .proof .cta:hover{ background-color:rgb(44,33,20); color:var(--bone) }
+
+/* =============================================================
+   NHỊP DỌC — THANG 6 BẬC
+   =============================================================
+   Đo 11 trang: nhịp dọc đang dùng 17 giá trị vh khác nhau
+   (2·3·4·5·6·6.5·8·9·10·11·12·13·14·15·16·18·22·25·26·28).
+   Mắt không phân biệt nổi 12vh với 13vh, nhưng TỔNG của những sai lệch đó tạo ra
+   cảm giác lệch nhịp mà người xem cảm thấy được mà không gọi tên được.
+
+   Thang chốt: 4 / 8 / 12 / 16 / 22 / 28vh.
+   Quy tắc làm tròn: về bậc gần nhất, hoà thì làm tròn LÊN (giữ khoảng thở).
+   ============================================================= */
+
+/* ---- MỞ ĐẦU TRANG: MỘT GIÁ TRỊ DUY NHẤT ----
+   Trước: .mast 25vh/3vh (OurWorks) · 26vh/4vh (Services) · .smast 22vh/9vh
+   (4 trang dịch vụ) · .astate 28vh/2vh (Approach).
+   Hai lỗi cùng lúc: (1) bốn giá trị khác nhau cho cùng một vai trò, chênh 54px;
+   (2) đỉnh gấp 7–14 LẦN đáy, nên tiêu đề trang bị đẩy xuống rất thấp trong một
+   khối rỗng rồi dính sát vào nội dung ngay dưới.
+   Nay: 22vh trên / 8vh dưới — một giá trị, và tỉ lệ đỉnh:đáy về 2.75:1. */
+.mast, .smast, .astate, .jbar{ padding-top:22vh; padding-bottom:8vh }
+
+/* ---- CÁC KHỐI CÒN LẠI: VỀ ĐÚNG BẬC ---- */
+.thread{   padding-top:4vh;  padding-bottom:8vh }   /* 5/8   → 4/8  */
+.gal{      padding-top:8vh;  padding-bottom:4vh }   /* 8/4   → giữ  */
+.forwho{   padding-top:8vh;  padding-bottom:8vh }   /* 8     → giữ  */
+.wiz-done{ padding-top:8vh;  padding-bottom:8vh }   /* 6     → 8    */
+.creed .c{ padding-top:4vh;  padding-bottom:4vh }   /* 5     → 4    */
+.node{     padding-top:8vh;  padding-bottom:8vh }   /* 6.5   → 8    */
+.wnote{    padding-top:12vh; padding-bottom:4vh }   /* 10/2  → 12/4 */
+.bespoke{  padding-top:12vh; padding-bottom:12vh }  /* 11    → 12   */
+.proof{    padding-top:12vh; padding-bottom:12vh }  /* 13    → 12   */
+.ov{       padding-top:12vh; padding-bottom:12vh }  /* 13    → 12   */
+.pract{    padding-top:12vh; padding-bottom:12vh }  /* 13    → 12   */
+.other{    padding-top:12vh; padding-bottom:4vh }   /* 13/4  → 12/4 */
+.pj-text{  padding-top:12vh; padding-bottom:4vh }   /* 10/4  → 12/4 */
+.strip{    padding-top:12vh; padding-bottom:12vh }  /* 12    → giữ  */
+.ft{       padding-top:12vh; padding-bottom:4vh }   /* 12/3  → 12/4 */
+.jnote{    padding-top:8vh;  padding-bottom:16vh }  /* 6/14  → 8/16 */
+.pj-imgs{  padding-top:16vh; padding-bottom:16vh }  /* 18    → 16   */
+
+/* Sót lại sau vòng đo đầu — các khối chỉ có ở một trang. */
+.ledger{ padding-top:4vh;  padding-bottom:8vh }   /* 2/8  → 4/8  */
+.jfeat{  padding-top:4vh;  padding-bottom:8vh }   /* 4/9  → 4/8  */
+.jx{     padding-top:8vh;  padding-bottom:4vh }   /* 7/4  → 8/4  */
+.wiz{    padding-bottom:4vh }                     /* 5    → 4    */
+
+/* .nx trôi giữa các trang: 14vh ở OurWorks/Service_*, 15vh ở Services/Approach —
+   cùng MỘT component copy-paste 11 lần, không ai cố ý làm khác. Chốt về 16/16. */
+.nx{ padding-top:16vh; padding-bottom:16vh }
+
+/* =============================================================
+   APPROACH — TRẢ VỀ MỘT TRỤC
+   =============================================================
+   Trước: cả trang căn trái ở x75, riêng `.thread` dùng `max-width:1080px;
+   margin:0 auto` nên nội dung của nó bắt đầu ở x175. Đọc tới giữa bài thì trục
+   dọc của trang nhảy sang chỗ khác rồi nhảy về — không có lý do nội dung nào.
+
+   Kèm theo đó là ba trục cột-phải nằm trong 7px của nhau, mỗi cái tính từ một
+   hộp khác:
+       x751  cột phải của .proof   (lưới của chính trang)
+       x753  cột 3 của footer      (lưới 4 cột riêng — là component chung, để yên)
+       x758  cột phải của .thread  (do max-width:1080 căn giữa)
+
+   Giải lưới .proof ra: 614 + gutter 62 + 614 = 1290 (đúng bề rộng nội dung ở
+   1440). Cho .thread dùng lại đúng lưới đó thì cột trái về x75 và cột phải về
+   x751 — khớp .proof, và trục trang chỉ còn MỘT.
+
+   Phần thưởng: vạch vàng ::before ở left:50% rơi đúng tâm gutter (x720).
+
+   CHỈ áp cho desktop. Bản ≤860px đã có cách dàn riêng (.thread một cột,
+   padding-left 8px) và rule ở đây sẽ đè mất nếu không khoá lại.
+   ============================================================= */
+@media (min-width:861px){
+  .thread{ max-width:none; margin:0; padding-left:var(--pad); padding-right:var(--pad) }
+  .node{ gap:72px }
+}

@@ -124,10 +124,11 @@
   }
   @media(prefers-reduced-motion:reduce){ .rv{opacity:1!important;transform:none!important;transition:none} .wiz-body{transition:none} }
 </style>
+<link rel="stylesheet" href="assets/wis-pages.css">
 </head>
 <body>
   <header class="hd" id="hd">
-    <a href="Homepage.html" aria-label="Wed in Style - home"><img src="assets/wis_logo_mark.svg" alt="Wed in Style"></a>
+    <a href="v2/Homepage_codex_alt.html" aria-label="Wed in Style - home"><img fetchpriority="high" decoding="async" src="assets/wis_logo_mark.svg" alt="Wed in Style"></a>
     <a href="#" data-wm-open>Menu</a>
   </header>
 
@@ -162,13 +163,13 @@
   <footer class="ft">
     <div class="ft-top">
       <div>
-        <img class="ft-logo" src="assets/wis_logo_mark.svg" alt="Wed in Style">
+        <img loading="lazy" decoding="async" class="ft-logo" src="assets/wis_logo_mark.svg" alt="Wed in Style">
         <p class="ft-anchor">What comes from the heart, goes to the heart.</p>
         <span class="ft-tag">Weddings in Vietnam, since 2009</span>
       </div>
       <div class="ft-col">
         <div class="ft-label">Menu</div>
-        <a href="Homepage.html">Home</a><a href="OurWorks.html">Our Works</a><a href="Approach.html">Approach</a><a href="Services.html">Services</a><a href="About.html">About</a><a href="Journal.html">Journal</a><a href="Contact.html">Contact</a>
+        <a href="v2/Homepage_codex_alt.html">Home</a><a href="OurWorks.html">Our Works</a><a href="Approach.html">Approach</a><a href="Services.html">Services</a><a href="About.html">About</a><a href="Journal.html">Journal</a><a href="Contact.html">Contact</a>
       </div>
       <div class="ft-col">
         <div class="ft-label">Studios</div>
@@ -279,9 +280,9 @@
       html+='<div class="wiz-field"><input type="text" id="wf" placeholder="'+esc(cfg.placeholder||'')+'" value="'+esc(answers[cfg.key]||'')+'"></div>';
     } else if(cfg.type==='contact'){
       html+='<div class="wiz-fields">'
-        +'<div class="fl"><label>Your name</label><input type="text" id="wf_name" placeholder="Two names, ideally" value="'+esc(answers.name||'')+'"></div>'
-        +'<div class="fl"><label>Email</label><input type="email" id="wf_email" placeholder="Where we can reach you" value="'+esc(answers.email||'')+'"></div>'
-        +'<div class="fl"><label>Phone</label><input type="tel" id="wf_phone" placeholder="Optional" value="'+esc(answers.phone||'')+'"></div>'
+        +'<div class="fl"><label>Your name</label><input type="text" id="wf_name" name="name" autocomplete="name" placeholder="Two names, ideally" value="'+esc(answers.name||'')+'"></div>'
+        +'<div class="fl"><label>Email</label><input type="email" id="wf_email" name="email" autocomplete="email" placeholder="Where we can reach you" value="'+esc(answers.email||'')+'"></div>'
+        +'<div class="fl"><label>Phone</label><input type="tel" id="wf_phone" name="tel" autocomplete="tel" placeholder="Optional" value="'+esc(answers.phone||'')+'"></div>'
       +'</div>';
     }
     body.innerHTML=html;
@@ -322,15 +323,59 @@
       var top=document.querySelector('.wiz'); if(top){ window.scrollTo({top:0,behavior:'smooth'}); }
     },320);
   }
+  /* ===== GỬI LEAD =====
+     TRƯỚC: finish() chỉ đổi innerHTML thành "Thank you". Toàn bộ 9 bước khách
+     vừa điền bị vứt đi, trong khi màn hình báo đã nhận được. Đó là mất lead,
+     và là nói dối người dùng.
+     NAY: có endpoint thật thì POST JSON lên đó; chưa có thì mở sẵn mail đã
+     điền đủ nội dung, để lead không bao giờ rơi vào hư không. Khi có backend,
+     chỉ cần điền WIS_FORM_ENDPOINT — không phải sửa gì thêm. */
+  var WIS_FORM_ENDPOINT = '';                      /* vd: 'https://formspree.io/f/xxxxxx' */
+  var WIS_FORM_MAILTO   = 'admin@wedinstyle.net';
+
+  function leadPayload(){
+    var p={};
+    Object.keys(answers).forEach(function(k){
+      var v=answers[k];
+      if(v instanceof Date) v=fmtLong(v);
+      if(v!==undefined && v!==null && v!=='') p[k]=String(v);
+    });
+    p.page=location.href;
+    p.sentAt=new Date().toISOString();
+    return p;
+  }
+  function leadBody(p){
+    return Object.keys(p).map(function(k){ return k+': '+p[k]; }).join(String.fromCharCode(10));
+  }
+  function showDone(html){
+    stepEl.textContent='Sent';
+    bar.style.width='100%';
+    nav.style.display='none';
+    backBtn.hidden=true;
+    body.innerHTML=html;
+    body.classList.remove('out');
+  }
   function finish(){
+    var p=leadPayload();
     body.classList.add('out');
+    var ok=function(){ showDone('<div class="wiz-done"><h2>Thank you - we have your note.</h2><p>We read every one ourselves and will write back soon. What comes from the heart, goes to the heart.</p></div>'); };
+    var byMail=function(){
+      /* KHÔNG tự nhảy sang mailto: đang xem demo mà app mail bật lên là giật
+         mình. Dựng sẵn thư rồi để khách bấm — vẫn không mất lead nào. */
+      var href='mailto:'+WIS_FORM_MAILTO
+        +'?subject='+encodeURIComponent('Wedding enquiry'+(p.name?' - '+p.name:''))
+        +'&body='+encodeURIComponent(leadBody(p));
+      showDone('<div class="wiz-done"><h2>One last step.</h2>'
+        +'<p>Everything you wrote is ready. Press below and it reaches us.</p>'
+        +'<p><a class="cta" href="'+href+'">Send to WIS</a></p>'
+        +'<p class="wiz-alt">Or write to <a href="mailto:'+WIS_FORM_MAILTO+'">'+WIS_FORM_MAILTO+'</a>.</p></div>');
+    };
     setTimeout(function(){
-      stepEl.textContent='Sent';
-      bar.style.width='100%';
-      nav.style.display='none';
-      backBtn.hidden=true;
-      body.innerHTML='<div class="wiz-done"><h2>Thank you - we have your note.</h2><p>We read every one ourselves and will write back soon. What comes from the heart, goes to the heart.</p></div>';
-      body.classList.remove('out');
+      if(WIS_FORM_ENDPOINT){
+        fetch(WIS_FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)})
+          .then(function(r){ if(!r.ok) throw new Error('bad status'); ok(); })
+          .catch(byMail);
+      } else { byMail(); }
     },320);
   }
   nextBtn.addEventListener('click',function(){ if(!valid()) return; if(cur===total-1){ finish(); } else { step(1); } });
@@ -414,7 +459,7 @@
   <div class="wm-bg"></div>
   <div class="wm-in">
     <div class="wm-head">
-      <a class="wm-brand" href="Homepage.html" aria-label="Wed in Style - home"><img src="assets/wis_logo_mark.svg" alt="Wed in Style"></a>
+      <a class="wm-brand" href="v2/Homepage_codex_alt.html" aria-label="Wed in Style - home"><img loading="lazy" decoding="async" src="assets/wis_logo_mark.svg" alt="Wed in Style"></a>
       <button class="wm-close" type="button" data-wm-close aria-label="Close menu"><span class="wm-rl"><span>Close</span><span>Close</span></span></button>
     </div>
     <div class="wm-body">
