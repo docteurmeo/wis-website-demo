@@ -15,9 +15,11 @@ thi giac phai sao chep. Sitemap va bao gia goc chia he thong thanh hai cap:
 | Basic editorial | Approach, Services, 4 service detail, About, Journal, Contact, Venue | Thong tin ro rang va de dung, nhung van co mot tu the bien tap rieng; khong duoc doc nhu template SaaS hay wedding template. |
 | Reusable editorial template | Case detail | Ke mot glory story bang anh va bang chung that. Co chieu sau doc, khong thanh mot homepage thu hai. |
 
-`Destination Weddings` hien chua co trang that trong luong v2. Khong thay bang mot
-landing tam thoi; no la flagship thu ba va can duoc thiet ke rieng khi co content/
-asset dung.
+`Destination Weddings` hien chua co trang that trong luong v2. Day la **mot trang
+canonical duy nhat**: menu chinh goi la `Destination Weddings`, con Services goi
+la `Destination`; ca hai deu tro ve cung route. `Venues in Vietnam` la trang con.
+Khong thay bang mot landing tam thoi, va khong tao them service dossier Destination
+thu nam; no la flagship thu ba va can duoc thiet ke rieng khi co content/asset dung.
 
 ## 2. DNA can ke thua tu Homepage
 
@@ -98,8 +100,9 @@ Muc dich: giup khach tu nhan ra loai dong hanh phu hop, khong ban package.
 
 - Giu ledger/index, nhung hang active phai mo mot doan mo ta ngan va mot anh
   evidence; hang khac lui ve nen.
-- Destination la mot loi hua phat trien, khong dung “coming soon” nhu mot hang
-  san pham ngang cap voi dich vu da co.
+- Destination la mot entry chung den trang flagship canonical, khong dung “coming
+  soon” nhu mot hang san pham ngang cap voi dich vu da co, va khong tao mot service
+  dossier rieng ben canh flagship.
 
 ### Service detail - template chung: **The service dossier**
 
