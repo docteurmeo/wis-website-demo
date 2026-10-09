@@ -18,3 +18,8 @@
   }
   var footer=document.querySelector('.ft'),film=makeFilmLayer(document.getElementById('ftFilmCanvas'),footer,20260909);if(film)film.arm();
 })();
+(function(){
+  var script=document.createElement('script');
+  script.src=(/\/v2\//.test(location.pathname)?'../assets/':'assets/')+'site-menu.js?v=3';
+  document.head.appendChild(script);
+})();
